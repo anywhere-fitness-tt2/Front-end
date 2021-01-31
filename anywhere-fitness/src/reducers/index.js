@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
+// import reducers below
+import { loginReducer } from './loginReducer';
 
-// import reducers here
 
 export default combineReducers ({
-  // export reducers here
-  
+  // export reducers below
+  loginReducer,
+
 })

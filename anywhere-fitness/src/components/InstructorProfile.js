@@ -29,6 +29,27 @@ const initialWorkouts = [
   },
 ]
 
+const StyledInstructorProfile = styled.div`
+display:flex;
+flex-flow:column nowrap;
+background-color: blue;
+align-items:center;
+
+.classContainer {
+  display:flex;
+  flex-flow: row wrap;
+  justify-content:space-between;
+}
+
+.classCard {
+  display:flex;
+  padding: 10px;
+  margin: 20px;
+  color: red;
+  background:green;
+}
+`
+
 const InstructorProfile = props => {
   const [ workouts, setWorkouts ] = useState(initialWorkouts);
   const [ isEditing, setIsEditing ] = useState(false);
@@ -47,7 +68,7 @@ const InstructorProfile = props => {
   // },[])
 
   return (
-    <div>
+    <StyledInstructorProfile>
       {/* pull in loggedInUser name */}
       <h1>Welcome! _username_</h1>
       <div className="classContainer">
@@ -63,7 +84,7 @@ const InstructorProfile = props => {
         })
       }
       </div>
-    </div>
+    </StyledInstructorProfile>
   )
 }
 

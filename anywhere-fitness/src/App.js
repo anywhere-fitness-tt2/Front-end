@@ -1,5 +1,4 @@
 import React from 'react';
-import ClientProfile from '../src/components/ClientProfile';
 
 export default function App() {
   return (

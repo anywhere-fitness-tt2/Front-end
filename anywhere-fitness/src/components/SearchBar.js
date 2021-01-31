@@ -16,7 +16,7 @@ const StyledSearchBar = styled.form`
 `
 
 const SearchBar = props => {
-const [ searchValue, setSearchValue ] = useState("")
+const { searchValue, setSearchValue } = props;
 
 const handleChange = event => {
   const { value } = event.target;
@@ -38,7 +38,7 @@ const handleSubmit = () => {
       onChange={handleChange}
       value={searchValue}
       />
-      <button className="search">asdf</button>
+      <button className="search">Search</button>
     </StyledSearchBar>
   )
 }

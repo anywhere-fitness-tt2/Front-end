@@ -34,14 +34,13 @@ display:flex;
 flex-flow:column nowrap;
 background-color:grey;
 align-items:center;
-
-
 `
 
 const ClientProfile = props => {
   const [ classes, setClasses ] = useState(initialClasses);
 
-  // Renders registered classes
+  // Will render registered classes by client id
+
   // useEffect(() => {
   //   axiosAuth()
   //   .get('stuff')
@@ -53,11 +52,11 @@ const ClientProfile = props => {
   //   })
   // },[])
 
-
   return (
     <StyledClientProfile>
       <h1>Welcome! _username_</h1>
       <SearchBar />
+      <div className="classContainer">
       {
         classes.map(item => {
           return (
@@ -70,6 +69,7 @@ const ClientProfile = props => {
           )
         })
       }
+      </div>
     </StyledClientProfile>
   )
 }

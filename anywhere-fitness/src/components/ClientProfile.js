@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'; 
 import axiosAuth from '../utils/axiosWithAuth'; 
 
+import SearchBar from './SearchBar';
+
 const initialClasses = [
   {
     id:123, // added id for dummy data
@@ -27,6 +29,15 @@ const initialClasses = [
   },
 ]
 
+const StyledClientProfile = styled.div`
+display:flex;
+flex-flow:column nowrap;
+background-color:grey;
+align-items:center;
+
+
+`
+
 const ClientProfile = props => {
   const [ classes, setClasses ] = useState(initialClasses);
 
@@ -44,7 +55,9 @@ const ClientProfile = props => {
 
 
   return (
-    <div>
+    <StyledClientProfile>
+      <h1>Welcome! _username_</h1>
+      <SearchBar />
       {
         classes.map(item => {
           return (
@@ -57,7 +70,7 @@ const ClientProfile = props => {
           )
         })
       }
-    </div>
+    </StyledClientProfile>
   )
 }
 

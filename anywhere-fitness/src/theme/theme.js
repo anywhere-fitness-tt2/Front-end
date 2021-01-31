@@ -3,7 +3,7 @@
 const colors = {
   yellow: '#FAED26',
   darkGray: '#46344E',
-  midGray: '#5A5560',
+  midGray: '#252629',
   lightGray: '#9D8D8F',
   tan: '#9B786F',
 };
@@ -14,8 +14,8 @@ const theme = {
   midGray: colors.midGray,
   lightGray: colors.lightGray,
   tan: colors.tan,
-  titleFont: `'Titillium Web', sans-serif`,
-  bodyFont: `'Open Sans', sans-serif`,
+  titleFont: `'Montserrat', sans-serif;`,
+  bodyFont: `'Roboto Condensed', sans-serif;`,
 };
 
 export default theme;

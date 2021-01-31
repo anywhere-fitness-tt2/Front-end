@@ -6,14 +6,16 @@ import { ThemeProvider } from 'styled-components';
 import App from './App';
 import Login from './components/Login';
 import Registration from './components/Registration';
+import Header from './components/Header';
+import theme from './theme/theme';
 
 import 'normalize.css';
 import './index.css';
-import theme from './theme/theme';
 
 ReactDOM.render(
   <Router>
     <ThemeProvider theme={theme}>
+      <Header />
       <Switch>
         <Route exact path='/registration' component={Registration} />
         <Route exact path='/login' component={Login} />

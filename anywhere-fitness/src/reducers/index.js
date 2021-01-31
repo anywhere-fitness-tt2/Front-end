@@ -1,10 +1,10 @@
-// Redux reducer
+import { combineReducers } from 'redux';
+// import reducers below
+import { loginReducer } from './loginReducer';
 
-const initialState = {};
 
-export const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    default:
-      return state;
-  }
-};
+export default combineReducers ({
+  // export reducers below
+  loginReducer,
+
+})

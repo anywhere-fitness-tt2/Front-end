@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const LOGIN_START = "LOGIN_START"
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
-export const LOGIN_FAILURE = "LOGIN_FAILURE"
+export const LOGIN_START = "LOGIN_START";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILURE = "LOGIN_FAILURE";
 
 export const login = credentials => dispatch => { //credentials will be the state the formValues are contained in
   dispatch({ type: LOGIN_START });
@@ -17,8 +17,11 @@ export const login = credentials => dispatch => { //credentials will be the stat
     })
 }
 
-export const logout = () => dispatch => {
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 
+export const logout = () => dispatch => {
+  dispatch({ type: LOGOUT_SUCCESS })
+  localStorage.removeItem('token');
 }
 
 export const registration = credentials => dispatch => {

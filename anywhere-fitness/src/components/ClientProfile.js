@@ -1,5 +1,6 @@
+// eslint-disable-next-line
 import React, { useEffect, useState } from 'react' 
-import styled from 'styled-components'; 
+import styled from 'styled-components'; // eslint-disable-next-line
 import axiosAuth from '../utils/axiosWithAuth'; 
 
 import SearchBar from './SearchBar';
@@ -51,7 +52,7 @@ align-items:center;
 }
 `
 
-const ClientProfile = props => {
+const ClientProfile = props => { // eslint-disable-next-line
   const [ workouts, setWorkouts ] = useState(initialWorkouts);
   const [ searchValue, setSearchValue ] = useState("");
 

@@ -1,5 +1,6 @@
+// eslint-disable-next-line
 import React, { useEffect, useState } from 'react' 
-import styled from 'styled-components'; 
+import styled from 'styled-components'; // eslint-disable-next-line
 import axiosAuth from '../utils/axiosWithAuth'; 
 
 import InstructorClassCard from './InstructorClassCard';
@@ -50,8 +51,8 @@ align-items:center;
 }
 `
 
-const InstructorProfile = props => {
-  const [ workouts, setWorkouts ] = useState(initialWorkouts);
+const InstructorProfile = props => { // eslint-disable-next-line
+  const [ workouts, setWorkouts ] = useState(initialWorkouts); // eslint-disable-next-line
   const [ isEditing, setIsEditing ] = useState(false);
 
   // Will render upcoming classes by id

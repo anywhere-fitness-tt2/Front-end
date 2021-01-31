@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 const StyledSearchBar = styled.form`
 
-
 #searchBar {
   text-align:center;
   border-radius: 10px;
@@ -14,7 +13,6 @@ const StyledSearchBar = styled.form`
   border-radius: 10px;
 }
 `
-
 const SearchBar = props => {
 const { searchValue, setSearchValue } = props;
 

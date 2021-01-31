@@ -17,12 +17,12 @@ const ClassCard = props => {
   return (
     <StyledClassCard className="classCard">
       <h2>{name}</h2>
-      <p>{type}</p>
-      <p>{duration}</p>
-      <p>{intensity}</p>
-      <p>{location}</p>
-      <p>{registered}</p>
-      <p>{maxClassSize}</p>
+      <p>Exercise: {type}</p>
+      <p>Duration: {duration}</p>
+      <p>Intensity: {intensity}</p>
+      <p>Location: {location}</p>
+      <p>Attending: {registered}</p>
+      <p>Class Limit: {maxClassSize}</p>
     </StyledClassCard>
   )
 }

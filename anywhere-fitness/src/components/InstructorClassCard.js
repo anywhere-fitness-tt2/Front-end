@@ -7,11 +7,11 @@ flex-flow:column nowrap;
 align-items:center;
 justify-content:center;
 padding: 10px;
-border: 4px solid yellow;
+border: 4px solid red;
 
 `
 
-const ClassCard = props => {
+const InstructorClassCard = props => {
   const { workout : { name, type, duration, intensity , location, registered, maxClassSize } } = props;
 
   return (
@@ -27,4 +27,4 @@ const ClassCard = props => {
   )
 }
 
-export default ClassCard
+export default InstructorClassCard;

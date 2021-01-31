@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'; 
 import axiosAuth from '../utils/axiosWithAuth'; 
 
-import SearchBar from './SearchBar';
-import ClientClassCard from './ClientClassCard';
+import InstructorClassCard from './InstructorClassCard';
 
 const initialWorkouts = [
   {
@@ -30,36 +29,15 @@ const initialWorkouts = [
   },
 ]
 
-const StyledClientProfile = styled.div`
-display:flex;
-flex-flow:column nowrap;
-background-color:grey;
-align-items:center;
-
-.classContainer {
-  display:flex;
-  flex-flow: row wrap;
-  justify-content:space-between;
-}
-
-.classCard {
-  display:flex;
-  padding: 10px;
-  margin: 20px;
-  color: cornsilk;
-  background:green;
-}
-`
-
-const ClientProfile = props => {
+const InstructorProfile = props => {
   const [ workouts, setWorkouts ] = useState(initialWorkouts);
-  const [ searchValue, setSearchValue ] = useState("");
+  const [ isEditing, setIsEditing ] = useState(false);
 
-  // Will render registered classes by client id
+  // Will render upcoming classes by id
 
   // useEffect(() => {
   //   axiosAuth()
-  //   .get('stuff')
+  //   .get('instructors classes')
   //   .then(res => {
   //     setWorkouts(res.data) //set to dummy data
   //   })
@@ -69,18 +47,14 @@ const ClientProfile = props => {
   // },[])
 
   return (
-    <StyledClientProfile>
+    <div>
       {/* pull in loggedInUser name */}
       <h1>Welcome! _username_</h1>
-      <SearchBar
-      searchValue={searchValue}
-      setSearchValue={setSearchValue}
-      />
       <div className="classContainer">
       {
         workouts.map(workout => {
           return (
-            <ClientClassCard
+            <InstructorClassCard
             key={workout.id}
             className="classCard"
             workout={workout}
@@ -89,8 +63,8 @@ const ClientProfile = props => {
         })
       }
       </div>
-    </StyledClientProfile>
+    </div>
   )
 }
 
-export default ClientProfile
+export default InstructorProfile;

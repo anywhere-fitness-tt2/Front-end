@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components';
-import axiosAuth from '../utils/axiosWithAuth';
+import React, { useEffect, useState } from 'react' 
+import styled from 'styled-components'; 
+import axiosAuth from '../utils/axiosWithAuth'; 
 
 const initialClasses = [
   {
+    id:123, // added id for dummy data
     name:"Billy's Bootcamp",
     type:"Boxing",
     start:"2pm", // use datetime input for instructor form?
@@ -14,6 +15,7 @@ const initialClasses = [
     maxClassSize:"6"
   },
   {
+    id: 321, // added id for dummy data
     name:"Forrest Gump's Cross Country Training",
     type:"Running",
     start:"3pm", // use datetime input for instructor form?
@@ -29,21 +31,32 @@ const ClientProfile = props => {
   const [ classes, setClasses ] = useState(initialClasses);
 
   // Renders registered classes
-  useEffect(() => {
-    axiosAuth()
-    .get('stuff')
-    .then(res => {
-      setClasses(res.data)
-    })
-    .catch(err => {
-      console.log(err)
-    })
-  },[])
+  // useEffect(() => {
+  //   axiosAuth()
+  //   .get('stuff')
+  //   .then(res => {
+  //     setClasses(res.data) //set to dummy data
+  //   })
+  //   .catch(err => {
+  //     console.log(err)
+  //   })
+  // },[])
 
 
   return (
     <div>
-      I'm the Client Profile!
+      {
+        classes.map(item => {
+          return (
+            <div key={item.id}>
+              <h2>{item.name}</h2>
+              <h2>{item.type}</h2>
+              <h2>{item.duration}</h2>
+              <h2>{item.location}</h2>
+            </div>
+          )
+        })
+      }
     </div>
   )
 }

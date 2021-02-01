@@ -11,23 +11,23 @@ const initialWorkouts = [
     id:123, // added id for dummy data
     name:"Billy's Bootcamp",
     type:"Boxing",
-    start:"2pm", // use datetime input for instructor form?
+    time:"2pm", // use datetime input for instructor form?
     duration:"3 minutes",
-    intensity:"Medium",
+    intensityLvl:"Medium",
     location:"Billy's Basement",
-    registered:"3",
-    maxClassSize:"6"
+    attendees:"3",
+    maxSize:"6"
   },
   {
     id: 321, // added id for dummy data
     name:"Gump's Cross Country",
     type:"Running",
-    start:"3pm", // use datetime input for instructor form?
+    time:"3pm", // use datetime input for instructor form?
     duration:"1 Year",
-    intensity:"High",
+    intensityLvl:"High",
     location:"Highway 61",
-    registered:"1",
-    maxClassSize:"20"
+    attendees:"1",
+    maxSize:"20"
   },
 ]
 

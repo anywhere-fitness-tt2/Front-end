@@ -12,17 +12,18 @@ border: 4px solid red;
 `
 
 const InstructorClassCard = props => {
-  const { workout : { name, type, duration, intensity , location, registered, maxClassSize } } = props;
+  const { workout : { name, type, time, duration, intensityLvl , location, attendees, maxSize } } = props;
 
   return (
     <StyledClassCard className="classCard">
       <h2>{name}</h2>
       <p>Exercise: {type}</p>
+      <p>Time: {time}</p>
       <p>Duration: {duration}</p>
-      <p>Intensity: {intensity}</p>
+      <p>Intensity: {intensityLvl}</p>
       <p>Location: {location}</p>
-      <p>Attending: {registered}</p>
-      <p>Class Limit: {maxClassSize}</p>
+      <p>Attending: {attendees}</p>
+      <p>Class Limit: {maxSize}</p>
     </StyledClassCard>
   )
 }

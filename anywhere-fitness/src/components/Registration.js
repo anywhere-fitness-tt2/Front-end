@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const initialFormValues = {
   username: '',
@@ -14,6 +14,8 @@ const initialFormValues = {
 export default function Registration() {
 
   const [formValues, setFormValues] = useState(initialFormValues)
+  const { push } = useHistory()
+
 
   const onChange = evt => {
     const { name, value } = evt.target
@@ -98,7 +100,7 @@ export default function Registration() {
         </label>
 
         <button onClick={onClick}>Sign Up</button>
-        <Link to="/">Already have an account?</Link>
+        <div className='button' onClick={() => push('/login')}>Already have an account?</div>
 
       </Form>
     </Container>
@@ -132,6 +134,15 @@ const Form = styled.form `
 
   button {
     background-color: ${ props => props.theme.yellow};
+  }
+  //div button ("already have an account?")
+  .button {
+    padding: 4px 0;
+    font-size: 0.9em;
+    :hover{
+      color: whitesmoke;
+      cursor: pointer;
+    }
   }
 `
 

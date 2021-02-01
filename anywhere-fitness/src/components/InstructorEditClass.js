@@ -1,11 +1,21 @@
-import React from 'react'
+import React from 'react';
+import styled from 'styled-components';
 
-const InstructorEditClass = props => {
-  const { setIsEditing, workoutToEdit, setWorkoutToEdit, saveEdit } = props;
+const StyledInstructorEditClass = styled.form`
+display:flex;
+flex-flow:column nowrap;
+align-items:center;
+`
+
+// need to pull data from clicked workout to fill in input lines on editClass form
+
+
+const InstructorEditClass = props => { //eslint-disable-next-line
+  const { setIsEditing, workoutToEdit, setWorkoutToEdit, saveEdit, workouts } = props;
 
   return (
-    <form className="editForm" onSubmit={saveEdit}>
-      <h3>Edit Workout</h3>
+    <StyledInstructorEditClass className="editForm" onSubmit={saveEdit}>
+      <h3>Edit Workout}</h3>
       <label className="formLabel"> Name :
           <input
           type="text"
@@ -90,7 +100,7 @@ const InstructorEditClass = props => {
         </label>
         <button type="submit">Save</button>
         <button onClick={()=> setIsEditing(false)}>Cancel</button>
-    </form>
+    </StyledInstructorEditClass>
   )
 }
 

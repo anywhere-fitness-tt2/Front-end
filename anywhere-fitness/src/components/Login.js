@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { login } from '../actions';
-
+import { useHistory } from 'react-router-dom';
 
 const initialFormValues = {
   username: '',
@@ -10,6 +10,8 @@ const initialFormValues = {
 
 const Login = props => {
   const [formValues, setFormValues] = useState(initialFormValues)
+  //eslint-disable-next-line
+  const history = useHistory();
 
   const onChange = evt => {
     const { name, value } = evt.target
@@ -17,13 +19,15 @@ const Login = props => {
   }
 
   const onSubmit = evt => {
-    evt.preventDefault()
-    login(formValues)
+    evt.preventDefault();
+    if(!formValues.username || !formValues.password){ return };
 
-    //Cancel submit if one field is empty
-    if(!formValues.username || !formValues.password){ return }
+    login(formValues);
+    setFormValues(initialFormValues);
+
+    // push to protected user/instruc profile
+    // history.push() 
   }
-
 
   return (
     <>
@@ -55,7 +59,7 @@ const Login = props => {
 
 const mapStateToProps = state => {
   return {
-    user: state.smurfs,
+    user: state.user,
     instructor: state.instructor,
     loggedIn: state.loggedIn,
     loggingIn: state.loggingIn,

@@ -69,12 +69,12 @@ const InstructorProfile = props => { // eslint-disable-next-line
   const [ workouts, setWorkouts ] = useState(initialWorkouts); // eslint-disable-next-line
   const [ userWorkouts, setUserWorkouts ] = useState(initialWorkouts) // eslint-disable-next-line
   const [ isEditing, setIsEditing ] = useState(false);
-  const [ workoutToEdit, setWorkoutToEdit ] = useState(initialFormValues);
+  const [ workoutToEdit, setWorkoutToEdit ] = useState("");
 
   // Will render upcoming classes by instructor id
   // useEffect(() => {
 
-  // no action yet, getclassbyid
+  // no action yet, getallclassbyid
 
   // },[])
 
@@ -105,7 +105,6 @@ const InstructorProfile = props => { // eslint-disable-next-line
 
   return (
     <StyledInstructorProfile>
-      {/* pull in loggedInUser name */}
       <h1>Welcome! _username_</h1>
       <h2>Click below to start a new class! -(hard-coded for now)-</h2>
       {/* add Link and Route to button | match url/ user id /"new Event"? or w/e endpoint is called */}
@@ -123,11 +122,13 @@ const InstructorProfile = props => { // eslint-disable-next-line
             key={workout.id}
             className="classCard"
             workout={workout}
-            onClick={()=>editWorkout(workout)}
+            editWorkout={editWorkout}
             />
           )
         })
       }
+      </div>
+      <div className="editMenu">
       {isEditing && <InstructorEditClass
         setIsEditing={setIsEditing}
         workoutToEdit={workoutToEdit}

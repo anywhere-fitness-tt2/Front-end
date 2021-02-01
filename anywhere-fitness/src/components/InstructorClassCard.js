@@ -12,10 +12,10 @@ border: 4px solid red;
 `
 
 const InstructorClassCard = props => {
-  const { workout : { name, type, time, duration, intensityLvl , location, attendees, maxSize } } = props;
+  const { editWorkout, workout : { name, type, time, duration, intensityLvl , location, attendees, maxSize } } = props;
 
   return (
-    <StyledClassCard className="classCard">
+    <StyledClassCard className="classCard" onClick={editWorkout}>
       <h2>{name}</h2>
       <p>Exercise: {type}</p>
       <p>Time: {time}</p>

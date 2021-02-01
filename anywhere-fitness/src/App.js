@@ -52,7 +52,7 @@ export default function App() {
           <h2 className='anyone'>Any one</h2>
         </Slide>
         <Slide direction='up' in={slideIn.anywhere} timeout={700}>
-          <h2 className='anywhere'>Any where</h2>
+          <h2>Any where</h2>
         </Slide>
       </TextContent>
       <Buttons>
@@ -113,10 +113,6 @@ const TextContent = styled.div`
 
   .anyone {
     align-self: flex-end;
-  }
-
-  .anywhere {
-    background-color: ${(props) => props.theme.midGray};
   }
 `;
 

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { login } from '../actions';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+
 
 const initialFormValues = {
   username: '',
@@ -11,7 +13,7 @@ const initialFormValues = {
 const Login = props => {
   const [formValues, setFormValues] = useState(initialFormValues)
   //eslint-disable-next-line
-  const history = useHistory();
+  const { push } = useHistory();
 
   const onChange = evt => {
     const { name, value } = evt.target
@@ -30,10 +32,10 @@ const Login = props => {
   }
 
   return (
-    <>
-      <h1>Login Page</h1>
-      <form>
-        <label><span>Username:</span>
+    <Container>
+      <Form>
+        <h1>Login Page</h1>
+        <label><span className='input-name'>Username</span>
           <input
             name='username'
             value= { formValues.username }
@@ -42,7 +44,7 @@ const Login = props => {
           ></input>
         </label>
 
-        <label><span>Password:</span>
+        <label><span className='input-name'>Password</span>
           <input
             name='password'
             value= { formValues.password }
@@ -52,8 +54,9 @@ const Login = props => {
         </label>
 
         <button onClick={onSubmit} >Log In</button>
-      </form>
-    </>
+        <div className='button' onClick={() => push('/registration')}>Create an account.</div>
+      </Form>
+    </Container>
   );
 }
 
@@ -68,3 +71,62 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, { login })(Login)
+
+
+
+const Form = styled.form `
+  display: flex;
+  flex-direction: column;
+  background-color: ${ props => props.theme.midGray};;
+  padding: 2vw 4vw;
+  margin: 8vh 0;
+  
+  font-family: ${ props  => props.theme.bodyFont};
+  color: ${ props  => props.theme.yellow};
+
+  label {
+    display:flex;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
+  input {
+    width: 150px;
+    background-color: ${ props => props.theme.lightGray};
+  }
+  select {
+    width: 157px;
+    background-color: ${ props => props.theme.lightGray};
+  }
+
+
+  button {
+    background-color: ${ props => props.theme.yellow};
+  }
+  //div button ("already have an account?")
+  .button {
+    padding: 4px 0;
+    font-size: 0.9em;
+    :hover{
+      color: whitesmoke;
+      cursor: pointer;
+    }
+  }
+  h1 {
+    font-family: ${(props) => props.theme.titleFont};
+  }
+  .input-name {
+    margin-right: 8px;
+  }
+
+`
+
+const Container = styled.div`
+  background-image: url('https://i.imgur.com/8FndkHz.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 94vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+`;

@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const initialFormValues = {
   username: '',
@@ -48,10 +50,10 @@ export default function Registration() {
 
 
   return (
-    <>
-      <h1>Registration Page</h1>
-      <form className='signup-form'>
-        <label><span>Username</span>
+    <Container>
+      <Form className='signup-form'>
+        <h1>Create an Account</h1>
+        <label><span className='input-name'>Username</span>
           <input
             name='username'
             type='text'
@@ -60,15 +62,15 @@ export default function Registration() {
           ></input>
         </label>
 
-        <label><span>Role</span>
+        <label><span className='input-name'>Role</span>
           <select onChange={onChange} value={formValues.role} name='role'>
-            <option value=''>-- Role --</option>
+            <option value=''>--- Role ---</option>
             <option value='member' >Member</option>
             <option value='coach' >Coach</option>
           </select>
         </label>
 
-        <label><span>Password</span>
+        <label><span className='input-name'>Password</span>
           <input
             name='password'
             type='password'
@@ -77,7 +79,7 @@ export default function Registration() {
           ></input>
         </label>
 
-        <label><span>Confirm Password</span>
+        <label><span className='input-name'>Confirm Password</span>
           <input
             name='confirmPassword'
             type='password'
@@ -86,7 +88,7 @@ export default function Registration() {
           ></input>
         </label>
 
-        <label><span>Email</span>
+        <label><span className='input-name'>Email</span>
           <input
             name='email'
             type='email'
@@ -96,8 +98,50 @@ export default function Registration() {
         </label>
 
         <button onClick={onClick}>Sign Up</button>
+        <Link to="/">Already have an account?</Link>
 
-      </form>
-    </>
+      </Form>
+    </Container>
   );
 }
+
+const Form = styled.form `
+  display: flex;
+  flex-direction: column;
+  background-color: ${ props => props.theme.midGray};;
+  padding: 2vw 4vw;
+  margin: 8vh 0;
+  
+  font-family: ${ props  => props.theme.bodyFont};
+  color: ${ props  => props.theme.yellow};
+
+  label {
+    display:flex;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
+
+  input {
+    width: 150px;
+    background-color: ${ props => props.theme.lightGray};
+  }
+  select {
+    width: 157px;
+    background-color: ${ props => props.theme.lightGray};
+  }
+
+  button {
+    background-color: ${ props => props.theme.yellow};
+  }
+`
+
+const Container = styled.div`
+  background-image: url('https://i.imgur.com/8FndkHz.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 94vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+`;

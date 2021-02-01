@@ -13,6 +13,8 @@ import Login from './components/Login';
 import Registration from './components/Registration';
 import Header from './components/Header';
 import theme from './theme/theme';
+import ClientProfile from './components/ClientProfile';
+import InstructorProfile from './components/InstructorProfile';
 
 import 'normalize.css';
 import './index.css';
@@ -26,6 +28,8 @@ ReactDOM.render(
       <Header />
       <Provider store={store}>
       <Switch>
+        <Route exact path='/instructor-profile' component={InstructorProfile} />
+        <Route exact path='/client-profile' component={ClientProfile} />
         <Route exact path='/registration' component={Registration} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/' component={App} />

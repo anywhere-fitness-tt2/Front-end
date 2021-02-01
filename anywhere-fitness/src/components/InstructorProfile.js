@@ -4,6 +4,7 @@ import styled from 'styled-components'; // eslint-disable-next-line
 import axiosAuth from '../utils/axiosWithAuth'; 
 
 import InstructorClassCard from './InstructorClassCard';
+import ClassForm from './ClassForm';
 
 const initialWorkouts = [
   {
@@ -30,10 +31,21 @@ const initialWorkouts = [
   },
 ]
 
+const initialFormValues = {
+    name:"",
+    type:"",
+    time:"",
+    duration:"",
+    intensityLvl:"",
+    location:"",
+    attendees:"",
+    maxSize:""
+}
+
 const StyledInstructorProfile = styled.div`
 display:flex;
 flex-flow:column nowrap;
-background-color: blue;
+background-color: gray;
 align-items:center;
 
 .classContainer {
@@ -46,13 +58,15 @@ align-items:center;
   display:flex;
   padding: 10px;
   margin: 20px;
-  color: red;
-  background:green;
+  color: black;
+  background: cornsilk;
 }
 `
 
 const InstructorProfile = props => { // eslint-disable-next-line
+  const [ formValues, setFormValues ] = useState(initialFormValues);
   const [ workouts, setWorkouts ] = useState(initialWorkouts); // eslint-disable-next-line
+  const [ userWorkouts, setUserWorkouts ] = useState(initialWorkouts)
   const [ isEditing, setIsEditing ] = useState(false);
 
   // Will render upcoming classes by id
@@ -68,10 +82,31 @@ const InstructorProfile = props => { // eslint-disable-next-line
   //   })
   // },[])
 
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setFormValues({
+      ...formValues,
+      [name]:value
+    })
+  }
+
+  const handleClassSubmit = event => {
+    event.preventDefault();
+  
+  }
+
   return (
     <StyledInstructorProfile>
       {/* pull in loggedInUser name */}
       <h1>Welcome! _username_</h1>
+      <h2>Click below to start a new class!</h2>
+      {/* add Link and Route to button | match url/ user id /"new Event"? or w/e endpoint is called */}
+      <button className="eventBtn">Create new Class!</button>
+      <ClassForm 
+        formValues={formValues}
+        handleChange={handleChange}
+        handleClassSubmit={handleClassSubmit}
+      />
       <div className="classContainer">
       {
         workouts.map(workout => {

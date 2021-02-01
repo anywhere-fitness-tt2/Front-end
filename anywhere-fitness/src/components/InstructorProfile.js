@@ -72,11 +72,10 @@ const InstructorProfile = props => { // eslint-disable-next-line
   const [ workoutToEdit, setWorkoutToEdit ] = useState(initialFormValues);
 
   // Will render upcoming classes by instructor id
-
   // useEffect(() => {
-  // 
+
   // no action yet, getclassbyid
-  //  
+
   // },[])
 
   const handleChange = event => {
@@ -129,15 +128,12 @@ const InstructorProfile = props => { // eslint-disable-next-line
           )
         })
       }
-      {
-        isEditing &&
-        <InstructorEditClass
+      {isEditing && <InstructorEditClass
         setIsEditing={setIsEditing}
         workoutToEdit={workoutToEdit}
         setWorkoutToEdit={setWorkoutToEdit}
         saveEdit={saveEdit}
-        />
-      }
+        />}
       </div>
     </StyledInstructorProfile>
   )

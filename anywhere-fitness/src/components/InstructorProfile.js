@@ -4,6 +4,7 @@ import styled from 'styled-components'; // eslint-disable-next-line
 import axiosAuth from '../utils/axiosWithAuth'; 
 
 import InstructorClassCard from './InstructorClassCard';
+import InstructorEditClass from './InstructorEditClass';
 import ClassForm from './ClassForm';
 
 const initialWorkouts = [
@@ -64,22 +65,18 @@ align-items:center;
 `
 
 const InstructorProfile = props => { // eslint-disable-next-line
-  const [ formValues, setFormValues ] = useState(initialFormValues);
+  const [ formValues, setFormValues ] = useState(initialFormValues);// eslint-disable-next-line
   const [ workouts, setWorkouts ] = useState(initialWorkouts); // eslint-disable-next-line
-  const [ userWorkouts, setUserWorkouts ] = useState(initialWorkouts)
+  const [ userWorkouts, setUserWorkouts ] = useState(initialWorkouts) // eslint-disable-next-line
   const [ isEditing, setIsEditing ] = useState(false);
+  const [ workoutToEdit, setWorkoutToEdit ] = useState(initialFormValues);
 
-  // Will render upcoming classes by id
+  // Will render upcoming classes by instructor id
 
   // useEffect(() => {
-  //   axiosAuth()
-  //   .get('instructors classes')
-  //   .then(res => {
-  //     setWorkouts(res.data) //set to dummy data
-  //   })
-  //   .catch(err => {
-  //     console.log(err)
-  //   })
+  // 
+  // no action yet, getclassbyid
+  //  
   // },[])
 
   const handleChange = event => {
@@ -92,14 +89,26 @@ const InstructorProfile = props => { // eslint-disable-next-line
 
   const handleClassSubmit = event => {
     event.preventDefault();
-  
+    console.log('form submitted!')
+    // no action yet, addClass
+    // history.push to instructor profile
+  }
+
+  const editWorkout = workout => {
+    setIsEditing(true);
+    setWorkoutToEdit(workout)
+  }
+
+  const saveEdit = () => {
+    // action needed
+    // put 
   }
 
   return (
     <StyledInstructorProfile>
       {/* pull in loggedInUser name */}
       <h1>Welcome! _username_</h1>
-      <h2>Click below to start a new class!</h2>
+      <h2>Click below to start a new class! -(hard-coded for now)-</h2>
       {/* add Link and Route to button | match url/ user id /"new Event"? or w/e endpoint is called */}
       <button className="eventBtn">Create new Class!</button>
       <ClassForm 
@@ -115,9 +124,19 @@ const InstructorProfile = props => { // eslint-disable-next-line
             key={workout.id}
             className="classCard"
             workout={workout}
+            onClick={()=>editWorkout(workout)}
             />
           )
         })
+      }
+      {
+        isEditing &&
+        <InstructorEditClass
+        setIsEditing={setIsEditing}
+        workoutToEdit={workoutToEdit}
+        setWorkoutToEdit={setWorkoutToEdit}
+        saveEdit={saveEdit}
+        />
       }
       </div>
     </StyledInstructorProfile>

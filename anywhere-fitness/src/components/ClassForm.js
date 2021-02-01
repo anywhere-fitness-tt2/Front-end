@@ -6,13 +6,23 @@ display:flex;
 flex-flow:column nowrap;
 align-items:center;
 text-align:center;
-background:green;
+background: lightblue;
+padding: 20px;
+
+.formInput {
+  padding: 8px;
+  margin: 8px;
+  border-radius:15px;
+  text-align:center;
+}
+
+.submitBtn {
+  padding: 5px;
+}
 `
 
 const ClassForm = props => {
   const { formValues, handleChange, handleClassSubmit } = props;
-
-
 
   return (
       <StyledClassForm className="formGroup" onSubmit={handleClassSubmit}>
@@ -38,7 +48,7 @@ const ClassForm = props => {
         </label>
         <label className="formLabel"> Time :
           <input
-          type="text"
+          type="time"
           name="time"
           className="formInput"
           placeholder="Enter Time"
@@ -58,7 +68,9 @@ const ClassForm = props => {
         </label>
         <label className="formLabel"> Intensity :
           <input
-          type="text"
+          type="range"
+          min="0"
+          max="10"
           name="intensityLvl"
           className="formInput"
           placeholder="Enter Intensity"
@@ -76,19 +88,19 @@ const ClassForm = props => {
           value={formValues.location}
           />
         </label>
-        <label className="formLabel"> Attending :
+        {/* <label className="formLabel"> Attending :
           <input
-          type="text"
+          type="number"
           name="attendees"
           className="formInput"
           placeholder="Enter Attendees"
           onChange={handleChange}
           value={formValues.attendees}
           />
-        </label>
+        </label> */}
         <label className="formLabel"> Class Limit :
           <input
-          type="text"
+          type="number"
           name="maxSize"
           className="formInput"
           placeholder="Enter Class Limit"
@@ -96,9 +108,9 @@ const ClassForm = props => {
           value={formValues.maxSize}
           />
         </label>
-        <button>Add Class!</button>
+        <button className="submitBtn">Add Class!</button>
       </StyledClassForm>
   )
 }
 
-export default ClassForm
+export default ClassForm;

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { login } from '../actions';
+
 
 const initialFormValues = {
-  email: '',
+  username: '',
   password: '',
 }
 
-export default function Login() {
+const Login = props => {
   const [formValues, setFormValues] = useState(initialFormValues)
 
   const onChange = evt => {
@@ -16,17 +18,10 @@ export default function Login() {
 
   const onSubmit = evt => {
     evt.preventDefault()
+    login(formValues)
 
     //Cancel submit if one field is empty
-    if(!formValues.email || !formValues.password){ return }
-
-    axios
-        .post('fakeapi.com', formValues)
-        .then(res => {
-          console.log("POST RESPONSE:", res) //NEED UPDATE WITH BACKEND
-          setFormValues(initialFormValues)
-        })
-        .catch(err => console.log(err))
+    if(!formValues.username || !formValues.password){ return }
   }
 
 
@@ -34,11 +29,11 @@ export default function Login() {
     <>
       <h1>Login Page</h1>
       <form>
-        <label><span>Email:</span>
+        <label><span>Username:</span>
           <input
-            name='email'
-            value= { formValues.email }
-            type='email'
+            name='username'
+            value= { formValues.username }
+            type='text'
             onChange={ onChange }
           ></input>
         </label>
@@ -57,3 +52,15 @@ export default function Login() {
     </>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.smurfs,
+    instructor: state.instructor,
+    loggedIn: state.loggedIn,
+    loggingIn: state.loggingIn,
+    error: state.error
+  }
+}
+
+export default connect(mapStateToProps, { login })(Login)

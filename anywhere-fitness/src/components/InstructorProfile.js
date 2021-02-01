@@ -98,17 +98,25 @@ const InstructorProfile = props => { // eslint-disable-next-line
     setWorkoutToEdit(workout)
   }
 
-  const saveEdit = () => {
+  const saveEdit = (workout) => {
     // action needed
     // put 
   }
+
+  const deleteWorkout = () => {
+    // action needed
+    // delete
+    console.log('workout deleted')
+    setIsEditing(false);
+  }
+
 
   return (
     <StyledInstructorProfile>
       <h1>Welcome! _username_</h1>
       <h2>Click below to start a new class! -(hard-coded for now)-</h2>
       {/* add Link and Route to button | match url/ user id /"new Event"? or w/e endpoint is called */}
-      <button className="eventBtn">Create new Class!</button>
+      <button className="formBtn">Create new Class!</button>
       <ClassForm 
         formValues={formValues}
         handleChange={handleChange}
@@ -123,6 +131,7 @@ const InstructorProfile = props => { // eslint-disable-next-line
             className="classCard"
             workout={workout}
             editWorkout={editWorkout}
+            deleteWorkout={deleteWorkout}
             />
           )
         })

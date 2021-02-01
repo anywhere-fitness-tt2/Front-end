@@ -5,9 +5,8 @@ import {
   LOGOUT_SUCCESS
 } from '../actions';
 
-
 const initialState = {
-  user:"",
+  user:[],
   instructor:false,
   loggedIn:false,
   loggingIn:false,
@@ -21,33 +20,30 @@ export const loginReducer = (state = initialState, action) => {
     case LOGIN_START:
       return {
         ...state,
-        user:"",
+        user:[],
         instructor: false, // how to handle instructor, boolean activated by checkbox/drop down menu?
         loggedIn: false,
         loggingIn: true,
         error:""
       }
-
     case LOGIN_SUCCESS:
       return {
         ...state,
         user: action.payload,
-        instructor: false,    // TBD
+        instructor: false,
         loggedIn: true,
         loggingIn: false,
         error:"",
       }
-
     case LOGIN_FAILURE:
       return {
         ...state,
-        user:"",
-        instructor: false,    // TBD
+        user:[],
+        instructor: false,
         loggedIn: false,
         loggingIn: false,
         error: action.payload,
       }
-      
     case LOGOUT_SUCCESS:
       return {
         ...state,

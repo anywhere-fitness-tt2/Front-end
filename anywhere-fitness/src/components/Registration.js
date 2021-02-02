@@ -36,12 +36,11 @@ const Registration = props => {
       console.log(props.user.userId)
       setFormValues(initialFormValues);
       
-
-      // if ( props.user.role === 'student') {
-      //   push(`/client-profile/${props.user.userId}`)
-      // } else if ( props.user.role === 'instructor' ) {
-      //   push(`/instructor-profile/${props.user.userId}`)
-      // }
+      if ( props.user.role === 'student') {
+        props.history.push(`/client-profile/${props.user.userId}`)
+      } else if ( props.user.role === 'instructor' ) {
+        props.history.push(`/instructor-profile/${props.user.userId}`)
+      }
   }
 
   return (

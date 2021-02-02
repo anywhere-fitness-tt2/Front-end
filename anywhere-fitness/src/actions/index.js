@@ -30,15 +30,18 @@ export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAILURE = "REGISTER_FAILURE";
 
 export const register = credentials => dispatch => {
+  console.log('register action start')
   dispatch({ type: REGISTER_START })
   axios
-  .post('enter endpoint here that gets token', credentials)
+  .post('https://af-api-tt2.herokuapp.com/api/auth/register', credentials)
   .then(res => {
-    dispatch({ type:REGISTER_SUCCESS, payload: res.data.token })
-    localStorage.setItem("token", res.data.token)
+    dispatch({ type:REGISTER_SUCCESS, payload: res.data })
+    localStorage.setItem("token", res.data)
+    console.log('register action success')
   })
   .catch(err => {
     dispatch({ type: REGISTER_FAILURE, payload: err.message })
+    console.log('register action fail')
   })
 }
 

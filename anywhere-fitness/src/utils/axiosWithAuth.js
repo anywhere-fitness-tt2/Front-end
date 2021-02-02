@@ -4,7 +4,7 @@ export default function axiosAuth() {
   const token = localStorage.getItem('token');
 
   return axios.create({
-    baseURL: '',
+    baseURL: 'https://af-api-tt2.herokuapp.com',
     headers: {
       Authorization: token,
     },

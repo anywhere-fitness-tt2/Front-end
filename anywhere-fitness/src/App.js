@@ -6,46 +6,43 @@ import { Slide, Fade } from '@material-ui/core';
 export default function App() {
   const [slideIn, setSlideIn] = useState({
     title: false,
-    anyone: false,
     anytime: false,
+    anyone: false,
     anywhere: false,
   });
   const [fadeIn, setFadeIn] = useState(false);
   const { push } = useHistory();
 
   useEffect(() => {
-    setTimeout(() => {
-      setSlideIn({ title: true });
+    const slideArray = Object.keys(slideIn);
+    const newState = {};
+    for (let i = 0; i < slideArray.length; i++) {
       setTimeout(() => {
-        setSlideIn({ title: true, anytime: true });
-        setTimeout(() => {
-          setSlideIn({ title: true, anytime: true, anyone: true });
-          setTimeout(() => {
-            setSlideIn({
-              title: true,
-              anytime: true,
-              anyone: true,
-              anywhere: true,
-            });
-          }, 1500);
-        }, 1500);
-      }, 1500);
-    }, 1000);
+        newState[slideArray[i]] = true;
+        setSlideIn({ ...slideIn, ...newState });
+      }, i * 1300);
+    }
+    //eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     setTimeout(() => {
       setFadeIn(true);
-    }, 6500);
+    }, 5300);
   }, []);
 
   return (
     <Container>
       <TextContent>
-        <Slide direction='down' in={slideIn.title} timeout={500}>
+        <Slide
+          direction='down'
+          in={slideIn.title}
+          unmountOnExit={false}
+          timeout={500}
+        >
           <h1>Health should have no boundaries</h1>
         </Slide>
-        <Slide direction='left' in={slideIn.anytime} timeout={700}>
+        <Slide direction='left' in={slideIn.anytime} exit={false} timeout={700}>
           <h2 className='anytime'>Any time</h2>
         </Slide>
         <Slide direction='right' in={slideIn.anyone} timeout={700}>
@@ -56,12 +53,12 @@ export default function App() {
         </Slide>
       </TextContent>
       <Buttons>
-        <Fade in={fadeIn} timeout={1000}>
+        <Fade in={fadeIn} timeout={950}>
           <div className='button' onClick={() => push('/registration')}>
             <h3>SIGN UP</h3>
           </div>
         </Fade>
-        <Fade in={fadeIn} timeout={1000}>
+        <Fade in={fadeIn} timeout={950}>
           <div className='button' onClick={() => push('/login')}>
             <h3>LOGIN</h3>
           </div>

@@ -23,6 +23,12 @@ const Registration = props => {
     setFormValues({...formValues, [name]:value})
   }
 
+  const registerRedirect = () => {
+    props.user.role === 'instuctor'
+      ? push(`/client-profile/${props.user.userId}`)
+      : push(`/instructor-profile/${props.user.userId}`);
+  };
+
   const onClick = evt => {
     evt.preventDefault()
     
@@ -31,8 +37,7 @@ const Registration = props => {
       console.log("Some input is not filled!")
       return
     }
-
-      props.register(formValues);
+      props.register(formValues, registerRedirect);
       console.log(props.user.userId)
       setFormValues(initialFormValues);
       

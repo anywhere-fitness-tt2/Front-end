@@ -4,7 +4,6 @@ import { login } from '../actions';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-
 const initialFormValues = {
   username: '',
   password: '',
@@ -13,7 +12,7 @@ const initialFormValues = {
 const Login = props => {
   const [formValues, setFormValues] = useState(initialFormValues)
   //eslint-disable-next-line
-  const { push } = useHistory();
+  const { push } = useHistory()
 
   const onChange = evt => {
     const { name, value } = evt.target
@@ -23,8 +22,9 @@ const Login = props => {
   const onSubmit = evt => {
     evt.preventDefault();
     if(!formValues.username || !formValues.password){ return };
+    console.log('Login submit')
 
-    login(formValues);
+    props.login(formValues);
     setFormValues(initialFormValues);
 
     // push to protected user/instruc profile
@@ -33,9 +33,9 @@ const Login = props => {
 
   return (
     <Container>
-      <Form>
+      <Form onSubmit={onSubmit}>
         <h1>Login Page</h1>
-        <label><span className='input-name'>Username</span>
+        <label><span>Username</span>
           <input
             name='username'
             value= { formValues.username }
@@ -43,8 +43,7 @@ const Login = props => {
             onChange={ onChange }
           ></input>
         </label>
-
-        <label><span className='input-name'>Password</span>
+        <label><span>Password</span>
           <input
             name='password'
             value= { formValues.password }
@@ -52,8 +51,7 @@ const Login = props => {
             onChange={ onChange }
           ></input>
         </label>
-
-        <button onClick={onSubmit} >Log In</button>
+        <button>Log In</button>
         <div className='button' onClick={() => push('/registration')}>Create an account.</div>
       </Form>
     </Container>
@@ -73,7 +71,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, { login })(Login)
 
 
-
 const Form = styled.form `
   display: flex;
   flex-direction: column;
@@ -84,11 +81,16 @@ const Form = styled.form `
   font-family: ${ props  => props.theme.bodyFont};
   color: ${ props  => props.theme.yellow};
 
+  h1 {
+    font-family: ${ props  => props.theme.titleFont};
+  }
+
   label {
     display:flex;
     justify-content: space-between;
     padding: 8px 0;
   }
+
   input {
     width: 150px;
     background-color: ${ props => props.theme.lightGray};
@@ -97,7 +99,6 @@ const Form = styled.form `
     width: 157px;
     background-color: ${ props => props.theme.lightGray};
   }
-
 
   button {
     background-color: ${ props => props.theme.yellow};
@@ -111,13 +112,6 @@ const Form = styled.form `
       cursor: pointer;
     }
   }
-  h1 {
-    font-family: ${(props) => props.theme.titleFont};
-  }
-  .input-name {
-    margin-right: 8px;
-  }
-
 `
 
 const Container = styled.div`

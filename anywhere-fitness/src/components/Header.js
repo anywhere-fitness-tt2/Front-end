@@ -10,14 +10,14 @@ export default function Header() {
   useEffect(() => {
     setTimeout(() => {
       setFadeIn(true);
-    }, 6500);
+    }, 5300);
   }, []);
 
   return (
     <Container>
       <Fade
         in={location.pathname === '/' ? fadeIn : true}
-        timeout={location.pathname === '/' ? 1500 : 0}
+        timeout={location.pathname === '/' ? 1000 : 0}
       >
         <h1>
           Anywhere<span>Fitness</span>
@@ -25,7 +25,7 @@ export default function Header() {
       </Fade>
       <Fade
         in={location.pathname === '/' ? fadeIn : true}
-        timeout={location.pathname === '/' ? 1500 : 0}
+        timeout={location.pathname === '/' ? 1000 : 0}
       >
         <button>Buttons will go here</button>
       </Fade>

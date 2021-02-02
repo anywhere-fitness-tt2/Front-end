@@ -8,7 +8,7 @@ export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const login = credentials => dispatch => { 
   dispatch({ type: LOGIN_START });
     axios
-    .post('something/login', credentials)
+    .post('https://af-api-tt2.herokuapp.com/api/auth/login', credentials)
     .then(res => {
       dispatch({ type:LOGIN_SUCCESS, payload: res.data.token })
       localStorage.setItem("token", res.data.token)

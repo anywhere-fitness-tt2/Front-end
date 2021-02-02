@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 import reducer from './reducers';
 
 
@@ -19,7 +20,7 @@ import InstructorProfile from './components/InstructorProfile';
 import 'normalize.css';
 import './index.css';
 
-const store = createStore(reducer, applyMiddleware(thunk))
+const store = createStore(reducer, applyMiddleware(thunk, logger))
 console.log(store.getState());
 
 ReactDOM.render(

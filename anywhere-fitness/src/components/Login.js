@@ -35,7 +35,7 @@ const Login = props => {
     <Container>
       <Form onSubmit={onSubmit}>
         <h1>Login Page</h1>
-        <label><span>Username</span>
+        <label><span className='input-name'>Username</span>
           <input
             name='username'
             value= { formValues.username }
@@ -43,7 +43,7 @@ const Login = props => {
             onChange={ onChange }
           ></input>
         </label>
-        <label><span>Password</span>
+        <label><span className='input-name'>Password</span>
           <input
             name='password'
             value= { formValues.password }
@@ -83,6 +83,10 @@ const Form = styled.form `
 
   h1 {
     font-family: ${ props  => props.theme.titleFont};
+  }
+
+  .input-name{
+    margin-right: 75px;
   }
 
   label {

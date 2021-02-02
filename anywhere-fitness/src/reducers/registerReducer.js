@@ -5,7 +5,8 @@ import {
 } from '../actions';
 
 const initialState = {
-  user:[],
+  user:{},
+  role:"",
   error:"",
   creatingUser: false
 }
@@ -15,23 +16,18 @@ export const registerReducer = (state = initialState, action) => {
     case REGISTER_START:
       return {
         ...state,
-        user:[],
-        error:"",
         creatingUser: true
       }
     case REGISTER_SUCCESS:
       return {
         ...state,
         user: action.payload,
-        error:"",
         creatingUser:false
       }
     case REGISTER_FAILURE:
       return {
         ...state,
-        user:[],
         error: action.payload,
-        creatingUser: false
       }
     default:
       return state;

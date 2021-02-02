@@ -31,7 +31,13 @@ const Registration = props => {
       console.log("Some input is not filled!")
       return
     }
+    
       props.register(formValues);
+      if(formValues.role === 'student') {
+        push("/client-profile")
+      } else {
+        push("/instructor-profile")
+      }
       setFormValues(initialFormValues);
   }
 

@@ -1,35 +1,44 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { login } from '../actions';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { login } from '../actions';
 
 const initialFormValues = {
   username: '',
   password: '',
-}
+};
 
-const Login = props => {
-  const [formValues, setFormValues] = useState(initialFormValues)
-  //eslint-disable-next-line
-  const { push } = useHistory()
+const Login = (props) => {
+  const [formValues, setFormValues] = useState(initialFormValues);
+  const { push } = useHistory();
 
-  const onChange = evt => {
-    const { name, value } = evt.target
-    setFormValues({...formValues, [name]:value})
-  }
+  const onChange = (evt) => {
+    const { name, value } = evt.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
 
-  const onSubmit = evt => {
+  const loginRedirect = () => {
+    props.user.role === 'instuctor'
+      ? push('/client-profile')
+      : push('/instructor-profile');
+  };
+
+  const onSubmit = (evt) => {
     evt.preventDefault();
-    if(!formValues.username || !formValues.password){ return };
-    console.log('Login submit')
+    if (!formValues.username || !formValues.password) {
+      return;
+    }
+    console.log('Login submit');
 
-    props.login(formValues);
+    props.login(formValues, loginRedirect);
     setFormValues(initialFormValues);
+  };
 
-    // push to protected user/instruc profile
-    // history.push() 
-  }
+  // useEffect(() => {
+
+  // }, []);
 
   return (
     <Container>
@@ -38,51 +47,49 @@ const Login = props => {
         <label><span className='input-name'>Username</span>
           <input
             name='username'
-            value= { formValues.username }
+            value={formValues.username}
             type='text'
-            onChange={ onChange }
+            onChange={onChange}
           ></input>
         </label>
         <label><span className='input-name'>Password</span>
           <input
             name='password'
-            value= { formValues.password }
+            value={formValues.password}
             type='password'
-            onChange={ onChange }
+            onChange={onChange}
           ></input>
         </label>
         <button>Log In</button>
-        <div className='button' onClick={() => push('/registration')}>Create an account.</div>
+        <div className='button' onClick={() => push('/registration')}>
+          Create an account.
+        </div>
       </Form>
     </Container>
   );
-}
+};
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user,
-    instructor: state.instructor,
-    loggedIn: state.loggedIn,
-    loggingIn: state.loggingIn,
-    error: state.error
-  }
-}
+    user: state.loginReducer.user,
+    error: state.loginReducer.error,
+  };
+};
 
-export default connect(mapStateToProps, { login })(Login)
+export default connect(mapStateToProps, { login })(Login);
 
-
-const Form = styled.form `
+const Form = styled.form`
   display: flex;
   flex-direction: column;
-  background-color: ${ props => props.theme.midGray};;
+  background-color: ${(props) => props.theme.midGray};
   padding: 2vw 4vw;
   margin: 8vh 0;
-  
-  font-family: ${ props  => props.theme.bodyFont};
-  color: ${ props  => props.theme.yellow};
+
+  font-family: ${(props) => props.theme.bodyFont};
+  color: ${(props) => props.theme.yellow};
 
   h1 {
-    font-family: ${ props  => props.theme.titleFont};
+    font-family: ${(props) => props.theme.titleFont};
   }
 
   .input-name{
@@ -90,33 +97,33 @@ const Form = styled.form `
   }
 
   label {
-    display:flex;
+    display: flex;
     justify-content: space-between;
     padding: 8px 0;
   }
 
   input {
     width: 150px;
-    background-color: ${ props => props.theme.lightGray};
+    background-color: ${(props) => props.theme.lightGray};
   }
   select {
     width: 157px;
-    background-color: ${ props => props.theme.lightGray};
+    background-color: ${(props) => props.theme.lightGray};
   }
 
   button {
-    background-color: ${ props => props.theme.yellow};
+    background-color: ${(props) => props.theme.yellow};
   }
   //div button ("already have an account?")
   .button {
     padding: 4px 0;
     font-size: 0.9em;
-    :hover{
+    :hover {
       color: whitesmoke;
       cursor: pointer;
     }
   }
-`
+`;
 
 const Container = styled.div`
   background-image: url('https://i.imgur.com/8FndkHz.jpg');

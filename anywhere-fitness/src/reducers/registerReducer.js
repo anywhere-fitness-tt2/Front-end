@@ -6,7 +6,6 @@ import {
 
 const initialState = {
   user:{},
-  role:"",
   error:"",
   creatingUser: false
 }

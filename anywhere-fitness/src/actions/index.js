@@ -46,11 +46,12 @@ export const register = (credentials, registerRedirect) => dispatch => {
     dispatch({ type:REGISTER_SUCCESS, payload: res.data })
     
     dispatch({ type: LOGIN_START })
+
     axiosAuth()
     .post('https://af-api-tt2.herokuapp.com/api/auth/login', credentials)
     .then(res => {
       dispatch({ type:LOGIN_SUCCESS, payload: res.data.user })
-      localStorage.setItem('token',res.data.token)
+      localStorage.setItem('token', res.data.token)
       registerRedirect()
     })
     .catch(err => {

@@ -42,7 +42,7 @@ export default function App() {
         >
           <h1>Health should have no boundaries</h1>
         </Slide>
-        <Slide direction='left' in={slideIn.anytime} exit={false} timeout={700}>
+        <Slide direction='left' in={slideIn.anytime} timeout={700}>
           <h2 className='anytime'>Any time</h2>
         </Slide>
         <Slide direction='right' in={slideIn.anyone} timeout={700}>

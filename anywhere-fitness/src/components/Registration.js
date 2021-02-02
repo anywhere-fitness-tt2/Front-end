@@ -117,6 +117,10 @@ const Form = styled.form `
   font-family: ${ props  => props.theme.bodyFont};
   color: ${ props  => props.theme.yellow};
 
+  h1 {
+    font-family: ${ props  => props.theme.titleFont};
+  }
+
   label {
     display:flex;
     justify-content: space-between;

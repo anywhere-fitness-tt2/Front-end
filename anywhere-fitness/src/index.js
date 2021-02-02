@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import PrivateRoute from './utils/PrivateRoute';
 import { ThemeProvider } from 'styled-components';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -32,13 +31,21 @@ ReactDOM.render(
     <ThemeProvider theme={theme}>
       <Header />
       <Provider store={store}>
-      <Switch>
-        <PrivateRoute exact path='/instructor-profile/:id' component={InstructorProfile} />
-        <PrivateRoute exact path='/client-profile/:id' component={ClientProfile} />
-        <Route exact path='/registration' component={Registration} />
-        <Route exact path='/login' component={Login} />
-        <Route exact path='/' component={App} />
-      </Switch>
+        <Switch>
+          <PrivateRoute
+            exact
+            path='/instructor-profile/:id'
+            component={InstructorProfile}
+          />
+          <PrivateRoute
+            exact
+            path='/client-profile/:id'
+            component={ClientProfile}
+          />
+          <Route exact path='/registration' component={Registration} />
+          <Route exact path='/login' component={Login} />
+          <Route exact path='/' component={App} />
+        </Switch>
       </Provider>
     </ThemeProvider>
   </Router>,

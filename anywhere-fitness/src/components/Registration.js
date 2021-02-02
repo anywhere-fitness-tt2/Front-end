@@ -31,14 +31,17 @@ const Registration = props => {
       console.log("Some input is not filled!")
       return
     }
-    
+
       props.register(formValues);
-      if(formValues.role === 'student') {
-        push("/client-profile")
-      } else {
-        push("/instructor-profile")
-      }
+      console.log(props.user.userId)
       setFormValues(initialFormValues);
+      
+
+      // if ( props.user.role === 'student') {
+      //   push(`/client-profile/${props.user.userId}`)
+      // } else if ( props.user.role === 'instructor' ) {
+      //   push(`/instructor-profile/${props.user.userId}`)
+      // }
   }
 
   return (
@@ -94,7 +97,6 @@ const Registration = props => {
 const mapStateToProps = state => {
   return {
     user: state.registerReducer.user,
-    role: state.registerReducer.role,
     loggedIn: state.registerReducer.loggedIn,
     loggingIn: state.registerReducer.loggingIn,
     error: state.registerReducer.error

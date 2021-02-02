@@ -67,8 +67,8 @@ export default function Registration() {
         <label><span className='input-name'>Role</span>
           <select onChange={onChange} value={formValues.role} name='role'>
             <option value=''>--- Role ---</option>
-            <option value='member' >Member</option>
-            <option value='coach' >Coach</option>
+            <option value='student' >Student</option>
+            <option value='instructor' >Instructor</option>
           </select>
         </label>
 

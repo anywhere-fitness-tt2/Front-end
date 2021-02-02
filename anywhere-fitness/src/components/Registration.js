@@ -1,17 +1,18 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { register } from '../actions';
 
 const initialFormValues = {
   username: '',
   role: '',
   password: '',
-  confirmPassword: '',
+  // confirmPassword: '',
   email: '',
 }
 
-export default function Registration() {
+const Registration = props => {
 
   const [formValues, setFormValues] = useState(initialFormValues)
   const { push } = useHistory()
@@ -24,32 +25,15 @@ export default function Registration() {
 
   const onClick = evt => {
     evt.preventDefault()
-    //check for password validity
-    if(formValues.password !== formValues.confirmPassword) {
-      console.log("WRONG PASSWORD!")
-      return
-    }
+    
     //check if one of the fields is empty
     if(!formValues.username || !formValues.password || !formValues.email || !formValues.role){
       console.log("Some input is not filled!")
       return
     }
-    const newSignUp = {
-      username: formValues.username,
-      role: formValues.role,
-      password: formValues.password,
-      email: formValues.email,
-    }
-
-    axios
-        .post('some.api', newSignUp)
-        .then(res => {
-          console.log(res)
-          setFormValues(initialFormValues)
-        })
-        .catch(err => console.log(err))
+      props.register(formValues);
+      setFormValues(initialFormValues);
   }
-
 
   return (
     <Container>
@@ -63,15 +47,13 @@ export default function Registration() {
             onChange={onChange}
           ></input>
         </label>
-
         <label><span className='input-name'>Role</span>
           <select onChange={onChange} value={formValues.role} name='role'>
             <option value=''>--- Role ---</option>
-            <option value='member' >Member</option>
-            <option value='coach' >Coach</option>
+            <option value='student' >Student</option>
+            <option value='instructor' >Instructor</option>
           </select>
         </label>
-
         <label><span className='input-name'>Password</span>
           <input
             name='password'
@@ -80,16 +62,14 @@ export default function Registration() {
             onChange={onChange}
           ></input>
         </label>
-
-        <label><span className='input-name'>Confirm Password</span>
+        {/* <label><span className='input-name'>Confirm Password</span>
           <input
             name='confirmPassword'
             type='password'
             value={formValues.confirmPassword}
             onChange={onChange}
           ></input>
-        </label>
-
+        </label> */}
         <label><span className='input-name'>Email</span>
           <input
             name='email'
@@ -98,14 +78,24 @@ export default function Registration() {
             onChange={onChange}
           ></input>
         </label>
-
         <button onClick={onClick}>Sign Up</button>
         <div className='button' onClick={() => push('/login')}>Already have an account?</div>
-
       </Form>
     </Container>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.registerReducer.user,
+    role: state.registerReducer.role,
+    loggedIn: state.registerReducer.loggedIn,
+    loggingIn: state.registerReducer.loggingIn,
+    error: state.registerReducer.error
+  }
+}
+
+export default connect(mapStateToProps, { register })(Registration)
 
 const Form = styled.form `
   display: flex;
@@ -116,6 +106,10 @@ const Form = styled.form `
   
   font-family: ${ props  => props.theme.bodyFont};
   color: ${ props  => props.theme.yellow};
+
+  h1 {
+    font-family: ${ props  => props.theme.titleFont};
+  }
 
   label {
     display:flex;

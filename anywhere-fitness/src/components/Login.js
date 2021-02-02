@@ -21,8 +21,9 @@ const Login = props => {
   const onSubmit = evt => {
     evt.preventDefault();
     if(!formValues.username || !formValues.password){ return };
+    console.log('Login submit')
 
-    login(formValues);
+    props.login(formValues);
     setFormValues(initialFormValues);
 
     // push to protected user/instruc profile
@@ -32,7 +33,7 @@ const Login = props => {
   return (
     <>
       <h1>Login Page</h1>
-      <form>
+      <form onSubmit={onSubmit}>
         <label><span>Username:</span>
           <input
             name='username'
@@ -41,7 +42,6 @@ const Login = props => {
             onChange={ onChange }
           ></input>
         </label>
-
         <label><span>Password:</span>
           <input
             name='password'
@@ -50,8 +50,7 @@ const Login = props => {
             onChange={ onChange }
           ></input>
         </label>
-
-        <button onClick={onSubmit} >Log In</button>
+        <button>Log In</button>
       </form>
     </>
   );

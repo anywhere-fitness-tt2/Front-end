@@ -29,8 +29,8 @@ const store = createStore(
 ReactDOM.render(
   <Router>
     <ThemeProvider theme={theme}>
-      <Header />
       <Provider store={store}>
+        <Header />
         <Switch>
           <PrivateRoute
             exact

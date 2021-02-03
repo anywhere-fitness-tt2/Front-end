@@ -128,8 +128,16 @@ export const SIGNUP_CLASS_START = "SIGNUP_CLASS_START";
 export const SIGNUP_CLASS_SUCCESS = "SIGNUP_CLASS_SUCCESS";
 export const SIGNUP_CLASS_FAILURE = "SIGNUP_CLASS_FAILURE";
 
-export const signupClass = classId => dispatch => {
+export const signupClass = id => dispatch => {
   dispatch ({ type: SIGNUP_CLASS_START })
 
+  axiosAuth()
+  .put(`/api/users/${id}`, id)
+  .then(res => {
+    dispatch({ type:SIGNUP_CLASS_SUCCESS, payload: res.data })
+  })
+  .catch(err => {
+    dispatch({ type:SIGNUP_CLASS_FAILURE, payload: err.message })
+  })
 }
 

@@ -9,6 +9,7 @@ import {
 
 const initialState = {
   clientClasses: [],
+  clientSignup: [],
   isLoading: false,
   error:""
 }
@@ -34,15 +35,20 @@ export const clientReducer = (state = initialState, action) => {
       }
     case SIGNUP_CLASS_START:
       return {
-        ...state
+        ...state,
+        isLoading:true,
       }
     case SIGNUP_CLASS_SUCCESS:
       return {
-        ...state
+        ...state,
+        isLoading: false,
+        clientSignup: action.payload,
       }
     case SIGNUP_CLASS_FAILURE:
       return {
-        ...state
+        ...state,
+        isLoading:false,
+        error:action.payload
       }
     default:
       return state;

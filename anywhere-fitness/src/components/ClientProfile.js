@@ -63,16 +63,10 @@ const ClientProfile = props => { // eslint-disable-next-line
 
   useEffect(() => {
     props.getClientClassById(id)
-  
-    setTimeout(() => {
       setWorkouts(props.clientClasses)
-    },4000)
-    
   //eslint-disable-next-line
   },[]);
   
-  console.log('client Classes', props.clientClasses)
-
   return (
     <StyledClientProfile>
       <h1>Welcome! {props.user.username}</h1>
@@ -80,10 +74,9 @@ const ClientProfile = props => { // eslint-disable-next-line
       searchValue={searchValue}
       setSearchValue={setSearchValue}
       />
-
     <h2>Upcoming Workouts!</h2>
       <div className="classContainer">
-      {
+      { props.isLoading ? <h2>Loading Classes...</h2> : (
         workouts.map(workout => {
           return (
             <ClientClassCard
@@ -91,9 +84,7 @@ const ClientProfile = props => { // eslint-disable-next-line
             className="classCard"
             workout={workout}
             />
-          )
-        })
-      }
+          )}))}
       </div>
     </StyledClientProfile>
   )

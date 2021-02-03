@@ -61,6 +61,12 @@ const ClientProfile = props => { // eslint-disable-next-line
 
   const { id } = useParams();
 
+  const searchFor = () => {
+    console.log(searchValue);
+    setSearchValue("");
+    
+  }
+
   useEffect(() => {
     props.getClientClassById(id)
       setWorkouts(props.clientClasses)
@@ -68,7 +74,7 @@ const ClientProfile = props => { // eslint-disable-next-line
   },[]);
 
   const leaveClass = () => {
-    console.log('click')
+    console.log('click, leaving class')
   }
   
   return (
@@ -77,6 +83,7 @@ const ClientProfile = props => { // eslint-disable-next-line
       <SearchBar
       searchValue={searchValue}
       setSearchValue={setSearchValue}
+      searchFor={searchFor}
       />
     <h2>Upcoming Workouts!</h2>
       <div className="classContainer">

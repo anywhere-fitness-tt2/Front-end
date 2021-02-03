@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 
@@ -14,16 +15,16 @@ const StyledSearchBar = styled.form`
 }
 `
 const SearchBar = props => {
-const { searchValue, setSearchValue } = props;
+const { searchValue, setSearchValue, searchFor } = props;
 
 const handleChange = event => {
   const { value } = event.target;
   setSearchValue(value)
 }
 
-const handleSubmit = () => {
-  // query for search input
-  // use dropdown menu to set search type?
+const handleSubmit = event => {
+  event.preventDefault();
+  searchFor();
 }
 
   return (
@@ -41,4 +42,10 @@ const handleSubmit = () => {
   )
 }
 
-export default SearchBar
+const mapStateToProps = state => {
+  return {
+    ...state
+  }
+}
+
+export default connect(mapStateToProps, {})(SearchBar);

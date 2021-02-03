@@ -73,13 +73,12 @@ const ClientProfile = props => { // eslint-disable-next-line
   };
 
   const leaveClass = id => {
-    console.log('click, leaving class');
     props.quitClass(id);
   };
   
-  const signUp = id => {
+  const signUp = () => {
     console.log('signed up!');
-    props.signupClass();
+    props.signupClass(id);
   };
 
   return (

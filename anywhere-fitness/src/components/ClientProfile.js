@@ -1,7 +1,9 @@
 // eslint-disable-next-line
 import React, { useEffect, useState } from 'react' 
 import styled from 'styled-components'; // eslint-disable-next-line
-import axiosAuth from '../utils/axiosWithAuth'; 
+import { connect } from 'react-redux';
+import { getClientClassById } from '../actions';
+import { useParams } from 'react-router-dom';
 
 import SearchBar from './SearchBar';
 import ClientClassCard from './ClientClassCard';
@@ -56,23 +58,16 @@ const ClientProfile = props => { // eslint-disable-next-line
   const [ workouts, setWorkouts ] = useState(initialWorkouts);
   const [ searchValue, setSearchValue ] = useState("");
 
-  // Will render registered classes by client id
+  const { id } = useParams();
 
-  // useEffect(() => {
-  //   axiosAuth()
-  //   .get('stuff')
-  //   .then(res => {
-  //     setWorkouts(res.data) //set to dummy data
-  //   })
-  //   .catch(err => {
-  //     console.log(err)
-  //   })
-  // },[])
+  useEffect(() => {
+    props.getClientClassById(id) //eslint-disable-next-line
+  },[]);
 
   return (
     <StyledClientProfile>
       {/* pull in loggedInUser name */}
-      <h1>Welcome! _username_</h1>
+      <h1>Welcome! {props.user.username}</h1>
       <SearchBar
       searchValue={searchValue}
       setSearchValue={setSearchValue}
@@ -94,4 +89,12 @@ const ClientProfile = props => { // eslint-disable-next-line
   )
 }
 
-export default ClientProfile
+const mapStateToProps = state => {
+  return {
+  user: state.loginReducer.user,
+  loggingIn: state.loginReducer.logginIn,
+  clientClasses: state.loginReducer.clientClasses
+  } 
+}
+
+export default connect(mapStateToProps, { getClientClassById })(ClientProfile);

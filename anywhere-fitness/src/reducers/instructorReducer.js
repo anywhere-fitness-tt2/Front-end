@@ -8,9 +8,9 @@ import {
   DELETE_CLASS_START,
   DELETE_CLASS_SUCCESS,
   DELETE_CLASS_FAILURE,
-  GET_CLASS_BY_ID_START,
-  GET_CLASS_BY_ID_SUCCESS,
-  GET_CLASS_BY_ID_FAILURE
+  GET_INSTRUCTOR_CLASS_BY_ID_START,
+  GET_INSTRUCTOR_CLASS_BY_ID_SUCCESS,
+  GET_INSTRUCTOR_CLASS_BY_ID_FAILURE
 } from '../actions';
 
 const initialState = {
@@ -57,15 +57,15 @@ export const instructorReducer = (state = initialState, action) => {
       return {
         ...state,
       }
-    case GET_CLASS_BY_ID_START:
+    case GET_INSTRUCTOR_CLASS_BY_ID_START:
       return {
           ...state,
       }
-    case GET_CLASS_BY_ID_SUCCESS:
+    case GET_INSTRUCTOR_CLASS_BY_ID_SUCCESS:
       return {
         ...state,
       }
-    case GET_CLASS_BY_ID_FAILURE:
+    case GET_INSTRUCTOR_CLASS_BY_ID_FAILURE:
       return {
         ...state,
       }

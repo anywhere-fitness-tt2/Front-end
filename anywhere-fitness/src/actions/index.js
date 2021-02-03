@@ -69,13 +69,42 @@ export const UPDATE_CLASS_START = 'UPDATE_CLASS_START';
 export const UPDATE_CLASS_SUCCESS = 'UPDATE_CLASS_SUCCESS';
 export const UPDATE_CLASS_FAILURE = 'UPDATE_CLASS_FAILURE';
 
-export const updateClass = (classId) => (dispatch) => {
-  dispatch({ type: UPDATE_CLASS_START });
-};
 
-export const DELETE_CLASS_START = 'DELETE_CLASS_START';
-export const DELETE_CLASS_SUCCESS = 'DELETE_CLASS_SUCCESS';
-export const DELETE_CLASS_FAILURE = 'DELETE_CLASS_FAILURE';
+export const GET_CLIENT_CLASS_BY_ID_START = "GET_CLIENT_CLASS_BY_ID_START";
+export const GET_CLIENT_CLASS_BY_ID_SUCCESS = "GET_CLIENT_CLASS_BY_ID_SUCCESS";
+export const GET_CLIENT_CLASS_BY_ID_FAILURE = "GET_CLIENT_CLASS_BY_ID_FAILURE";
+
+export const getClientClassById = id => dispatch => {
+  dispatch({ type: GET_CLIENT_CLASS_BY_ID_START })
+
+  axiosAuth()
+  .get(`/api/users/${id}/classes`)
+  .then(res => {
+    dispatch({ type: GET_CLIENT_CLASS_BY_ID_SUCCESS, payload: res.data })
+  })
+  .catch(err => {
+    dispatch({ type: GET_CLIENT_CLASS_BY_ID_FAILURE, payload: err.message })
+  })
+}
+
+
+export const GET_INSTRUCTOR_CLASS_BY_ID_START = "GET_INSTRUCTOR_CLASS_BY_ID_START";
+export const GET_INSTRUCTOR_CLASS_BY_ID_SUCCESS = "GET_INSTRUCTOR_CLASS_BY_ID_SUCCESS";
+export const GET_INSTRUCTOR_CLASS_BY_ID_FAILURE = "GET_INSTRUCTOR_CLASS_BY_ID_FAILURE";
+
+export const getInstructorClassById = id => dispatch => {
+  dispatch({ type: GET_INSTRUCTOR_CLASS_BY_ID_START })
+
+  axiosAuth()
+  .get(`api/classes/${id}/students`)
+  .then(res => {
+    console.log(res)
+    dispatch({ type: GET_INSTRUCTOR_CLASS_BY_ID_SUCCESS, payload: res.data })
+  })
+  .catch(err => {
+    dispatch({ type: GET_INSTRUCTOR_CLASS_BY_ID_FAILURE, payload: err.message })
+  })
+}
 
 export const deleteClass = (classId) => (dispatch) => {
   dispatch({ type: DELETE_CLASS_START });
@@ -84,6 +113,7 @@ export const deleteClass = (classId) => (dispatch) => {
 export const GET_CLASS_BY_ID_START = 'GET_CLASS_BY_ID_START';
 export const GET_CLASS_BY_ID_SUCCESS = 'GET_CLASS_BY_ID_SUCCESS';
 export const GET_CLASS_BY_ID_FAILURE = 'GET_CLASS_BY_ID_FAILURE';
+
 
 export const getClassById = (id) => (dispatch) => {
   dispatch({ type: GET_CLASS_BY_ID_START });

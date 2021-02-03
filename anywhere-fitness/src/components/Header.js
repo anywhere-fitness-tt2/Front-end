@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Fade } from '@material-ui/core';
 
-export default function Header() {
+import { logout } from '../actions/index';
+
+function Header(props) {
   const [fadeIn, setFadeIn] = useState(false);
   const location = useLocation();
+  const { push } = useHistory();
 
   useEffect(() => {
     setTimeout(() => {
@@ -13,25 +17,72 @@ export default function Header() {
     }, 5300);
   }, []);
 
+  const profileClickHandler = () => {
+    props.loggedIn === true && props.user.role === 'instructor'
+      ? push(`/instructor-profile/${props.user.userId}`)
+      : push(`/client-profile/${props.user.userId}`);
+  };
+
+  const logOutHandler = () => {
+    props.logout();
+    push('/');
+  };
+
   return (
     <Container>
       <Fade
         in={location.pathname === '/' ? fadeIn : true}
         timeout={location.pathname === '/' ? 1000 : 0}
       >
-        <h1>
-          Anywhere<span>Fitness</span>
-        </h1>
+        <div onClick={() => push('/')} className='logo'>
+          <h1>
+            Anywhere<span>Fitness</span>
+          </h1>
+        </div>
       </Fade>
-      <Fade
-        in={location.pathname === '/' ? fadeIn : true}
-        timeout={location.pathname === '/' ? 1000 : 0}
-      >
-        <button>Buttons will go here</button>
-      </Fade>
+      {props.loggedIn === true ? (
+        <div className='buttons'>
+          <Fade
+            in={location.pathname === '/' ? fadeIn : true}
+            timeout={location.pathname === '/' ? 1000 : 0}
+          >
+            <button onClick={profileClickHandler}>Profile</button>
+          </Fade>
+          <Fade
+            in={location.pathname === '/' ? fadeIn : true}
+            timeout={location.pathname === '/' ? 1000 : 0}
+          >
+            <button onClick={logOutHandler}>Logout</button>
+          </Fade>
+        </div>
+      ) : (
+        <div className='buttons'>
+          <Fade
+            in={location.pathname === '/' ? fadeIn : true}
+            timeout={location.pathname === '/' ? 1000 : 0}
+          >
+            <button onClick={() => push('/registration')}>Sign up</button>
+          </Fade>
+          <Fade
+            in={location.pathname === '/' ? fadeIn : true}
+            timeout={location.pathname === '/' ? 1000 : 0}
+          >
+            <button onClick={() => push('/login')}>Login</button>
+          </Fade>
+        </div>
+      )}
     </Container>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    loggedIn: state.loginReducer.loggedIn,
+    user: state.loginReducer.user,
+  };
+};
+
+export default connect(mapStateToProps, { logout })(Header);
 
 const Container = styled.div`
   height: 6vh;
@@ -41,8 +92,12 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  .logo {
+    cursor: pointer;
+  }
+
   h1 {
-    margin: 0 15px;
+    margin: 0 30px;
     font-family: ${(props) => props.theme.titleFont};
     color: ${(props) => props.theme.yellow};
 
@@ -51,7 +106,22 @@ const Container = styled.div`
     }
   }
 
+  .buttons {
+    margin: 0 30px;
+  }
+
   button {
-    margin: 0 15px;
+    margin: 10px;
+    padding: 5px;
+    width: 80px;
+    font-family: ${(props) => props.theme.bodyFont};
+    border: 1px solid ${(props) => props.theme.yellow};
+    background-color: ${(props) => props.theme.midGray};
+    color: whitesmoke;
+
+    &:hover {
+      background-color: ${(props) => props.theme.yellow};
+      color: ${(props) => props.theme.midGray};
+    }
   }
 `;

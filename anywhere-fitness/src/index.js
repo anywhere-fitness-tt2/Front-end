@@ -12,6 +12,7 @@ import App from './App';
 import Login from './components/Login';
 import Registration from './components/Registration';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import theme from './theme/theme';
 import ClientProfile from './components/ClientProfile';
 import InstructorProfile from './components/InstructorProfile';
@@ -29,8 +30,8 @@ const store = createStore(
 ReactDOM.render(
   <Router>
     <ThemeProvider theme={theme}>
-      <Header />
       <Provider store={store}>
+        <Header />
         <Switch>
           <PrivateRoute
             exact
@@ -47,6 +48,7 @@ ReactDOM.render(
           <Route exact path='/' component={App} />
         </Switch>
       </Provider>
+      <Footer />
     </ThemeProvider>
   </Router>,
   document.getElementById('root'),

@@ -160,7 +160,7 @@ const Container = styled.div`
   background-image: url('https://i.imgur.com/8FndkHz.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  height: 94vh;
+  height: 88vh;
   display: flex;
   flex-direction: column;
   align-items: center;

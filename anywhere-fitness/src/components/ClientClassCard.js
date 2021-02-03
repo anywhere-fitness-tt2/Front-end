@@ -11,7 +11,7 @@ border: 4px solid yellow;
 
 `
 
-const ClientClassCard = props => {
+const ClientClassCard = props => { //eslint-disable-next-line
   const { signUp, leaveClass, workout : { name, type, time, duration, intensityLvl , location, attendees, maxSize } } = props;
 
   return (

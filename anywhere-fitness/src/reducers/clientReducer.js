@@ -62,13 +62,8 @@ export const clientReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        clientSignup: state.clientSignup.filter(item => {
-          let newArr = [];
-          if (item.id !== action.payload) {
-            newArr.push(item);
-          }
-          return newArr;
-        })
+        clientSignup: action.payload
+        
       }
     case QUIT_CLASS_FAILURE:
       return {

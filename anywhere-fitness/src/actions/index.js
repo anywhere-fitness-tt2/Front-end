@@ -119,9 +119,9 @@ export const quitClass = classId => dispatch => {
   })
   .catch(err => {
     dispatch({ type: QUIT_CLASS_FAILURE, payload: err.message })
+    console.log('quit fail', err)
   })
 }
-
 
 export const GET_INSTRUCTOR_CLASS_BY_ID_START =
   'GET_INSTRUCTOR_CLASS_BY_ID_START';

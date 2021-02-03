@@ -62,25 +62,25 @@ const ClientProfile = props => { // eslint-disable-next-line
   const { id } = useParams();
 
   useEffect(() => {
-    props.getClientClassById(id)
-      setWorkouts(props.clientClasses)
+    props.getClientClassById(id);
+      setWorkouts(props.clientClasses);
   //eslint-disable-next-line
   },[]);
 
   const searchFor = () => {
     console.log(searchValue);
     setSearchValue("");
-  }
+  };
 
   const leaveClass = id => {
     console.log('click, leaving class');
-
-  }
+    props.quitClass(id);
+  };
   
-  const signUp = () => {
+  const signUp = id => {
     console.log('signed up!');
-    signupClass();
-  }
+    props.signupClass();
+  };
 
   return (
     <StyledClientProfile>

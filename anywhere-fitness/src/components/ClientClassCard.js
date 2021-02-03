@@ -12,7 +12,15 @@ border: 4px solid yellow;
 `
 
 const ClientClassCard = props => {
-  const { workout : { name, type, time, duration, intensityLvl , location, attendees, maxSize } } = props;
+  const { 
+    attend, setAttend,
+    workout : { name, type, time, duration, intensityLvl , location, attendees, maxSize }
+  } = props;
+
+  const handleClick = () => {
+    console.log('click');
+    setAttend(!attend);
+  }
 
   return (
     <StyledClassCard className="classCard">
@@ -24,8 +32,9 @@ const ClientClassCard = props => {
       <p>Location: {location}</p>
       <p>Attending: {attendees}</p>
       <p>Class Limit: {maxSize}</p>
+      <button onClick={handleClick}>{attend ? "Leave Class": "Join Class"}</button>
     </StyledClassCard>
   )
 }
 
-export default ClientClassCard
+export default ClientClassCard;

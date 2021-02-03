@@ -57,6 +57,7 @@ height: 100vh;
 
 const ClientProfile = props => { // eslint-disable-next-line
   const [ workouts, setWorkouts ] = useState([]);
+  const [ attend, setAttend ] = useState(true)
   const [ searchValue, setSearchValue ] = useState("");
 
   const { id } = useParams();
@@ -83,6 +84,8 @@ const ClientProfile = props => { // eslint-disable-next-line
             key={workout.id}
             className="classCard"
             workout={workout}
+            attend={attend}
+            setAttend={setAttend}
             />
           )}))}
       </div>

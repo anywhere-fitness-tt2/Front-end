@@ -10,66 +10,71 @@ import {
   DELETE_CLASS_FAILURE,
   GET_INSTRUCTOR_CLASS_BY_ID_START,
   GET_INSTRUCTOR_CLASS_BY_ID_SUCCESS,
-  GET_INSTRUCTOR_CLASS_BY_ID_FAILURE
+  GET_INSTRUCTOR_CLASS_BY_ID_FAILURE,
 } from '../actions';
 
 const initialState = {
   instructorClasses: [],
   isLoading: false,
-  error:""
-}
+  error: '',
+};
 
 export const instructorReducer = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case CREATE_CLASS_START:
       return {
         ...state,
-      }
+      };
     case CREATE_CLASS_SUCCESS:
       return {
         ...state,
-      }
+      };
     case CREATE_CLASS_FAILURE:
       return {
         ...state,
-      }
+      };
     case UPDATE_CLASS_START:
       return {
         ...state,
-      }
+      };
     case UPDATE_CLASS_SUCCESS:
       return {
         ...state,
-      }
+      };
     case UPDATE_CLASS_FAILURE:
       return {
         ...state,
-      }
+      };
     case DELETE_CLASS_START:
       return {
         ...state,
-      }
+      };
     case DELETE_CLASS_SUCCESS:
       return {
         ...state,
-      }
+      };
     case DELETE_CLASS_FAILURE:
       return {
         ...state,
-      }
+      };
     case GET_INSTRUCTOR_CLASS_BY_ID_START:
       return {
-          ...state,
-      }
+        ...state,
+        isLoading: true,
+      };
     case GET_INSTRUCTOR_CLASS_BY_ID_SUCCESS:
       return {
         ...state,
-      }
+        instructorClasses: action.payload,
+        isLoading: false,
+      };
     case GET_INSTRUCTOR_CLASS_BY_ID_FAILURE:
       return {
         ...state,
-      }
+        isLoading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }
-}
+};

@@ -97,7 +97,6 @@ export const getClientClassById = id => dispatch => {
   axiosAuth()
   .get(`/api/users/${id}/classes`)
   .then(res => {
-    console.log(res)
     dispatch({ type: GET_CLIENT_CLASS_BY_ID_SUCCESS, payload: res.data })
   })
   .catch(err => {

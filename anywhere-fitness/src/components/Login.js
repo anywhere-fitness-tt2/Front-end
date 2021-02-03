@@ -19,10 +19,10 @@ const Login = (props) => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const loginRedirect = () => {
-    props.user.role === 'instuctor'
-      ? push('/client-profile')
-      : push('/instructor-profile');
+  const loginRedirect = (id, role) => {
+    role === 'instructor'
+      ? push(`/instructor-profile/${id}`)
+      : push(`/client-profile/${id}`);
   };
 
   const onSubmit = (evt) => {
@@ -36,6 +36,8 @@ const Login = (props) => {
     setFormValues(initialFormValues);
   };
 
+  console.log(props.user.userId);
+
   // useEffect(() => {
 
   // }, []);
@@ -44,7 +46,8 @@ const Login = (props) => {
     <Container>
       <Form onSubmit={onSubmit}>
         <h1>Login Page</h1>
-        <label><span className='input-name'>Username</span>
+        <label>
+          <span className='input-name'>Username</span>
           <input
             name='username'
             value={formValues.username}
@@ -52,7 +55,8 @@ const Login = (props) => {
             onChange={onChange}
           ></input>
         </label>
-        <label><span className='input-name'>Password</span>
+        <label>
+          <span className='input-name'>Password</span>
           <input
             name='password'
             value={formValues.password}
@@ -72,6 +76,7 @@ const Login = (props) => {
 const mapStateToProps = (state) => {
   return {
     user: state.loginReducer.user,
+    loggedIn: state.loginReducer.loggedIn,
     error: state.loginReducer.error,
   };
 };
@@ -92,7 +97,7 @@ const Form = styled.form`
     font-family: ${(props) => props.theme.titleFont};
   }
 
-  .input-name{
+  .input-name {
     margin-right: 75px;
   }
 

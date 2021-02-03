@@ -7,12 +7,13 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
 export const login = (credentials, loginRedirect) => (dispatch) => {
   dispatch({ type: LOGIN_START });
+
   axios
     .post('https://af-api-tt2.herokuapp.com/api/auth/login', credentials)
     .then((res) => {
       dispatch({ type: LOGIN_SUCCESS, payload: res.data.user });
       localStorage.setItem('token', res.data.token);
-      loginRedirect();
+      loginRedirect(res.data.user.userId, res.data.user.role);
     })
     .catch((err) => {
       dispatch({ type: LOGIN_FAILURE, payload: err.message });
@@ -31,26 +32,25 @@ export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 
 export const register = (credentials, registerRedirect) => (dispatch) => {
+  const userInfo = {
+    username: credentials.username,
+    password: credentials.password,
+  };
   dispatch({ type: REGISTER_START });
   axios
     .post('https://af-api-tt2.herokuapp.com/api/auth/register', credentials)
     .then((res) => {
       dispatch({ type: REGISTER_SUCCESS, payload: res.data });
-
-      dispatch({ type: LOGIN_START });
-
-      axiosAuth()
-        .post('/api/auth/login', credentials)
+      axios
+        .post('https://af-api-tt2.herokuapp.com/api/auth/login', userInfo)
         .then((res) => {
           dispatch({ type: LOGIN_SUCCESS, payload: res.data.user });
           localStorage.setItem('token', res.data.token);
-          registerRedirect();
+          registerRedirect(res.data.user.userId, res.data.user.role);
         })
         .catch((err) => {
           dispatch({ type: LOGIN_FAILURE, payload: err.message });
-          console.log(err);
         });
-      console.log(res);
     })
     .catch((err) => {
       dispatch({ type: REGISTER_FAILURE, payload: err.message });

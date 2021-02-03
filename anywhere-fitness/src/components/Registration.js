@@ -10,49 +10,48 @@ const initialFormValues = {
   password: '',
   // confirmPassword: '',
   email: '',
-}
+};
 
-const Registration = props => {
+const Registration = (props) => {
+  const [formValues, setFormValues] = useState(initialFormValues);
+  const { push } = useHistory();
 
-  const [formValues, setFormValues] = useState(initialFormValues)
-  const { push } = useHistory()
-
-
-  const onChange = evt => {
-    const { name, value } = evt.target
-    setFormValues({...formValues, [name]:value})
-  }
-
-  const registerRedirect = () => {
-    props.user.role === 'instuctor'
-      ? push(`/client-profile/${props.user.userId}`)
-      : push(`/instructor-profile/${props.user.userId}`);
+  const onChange = (evt) => {
+    const { name, value } = evt.target;
+    setFormValues({ ...formValues, [name]: value });
   };
 
-  const onClick = evt => {
-    evt.preventDefault()
-    
+  const registerRedirect = (id, role) => {
+    role === 'instructor'
+      ? push(`/instructor-profile/${id}`)
+      : push(`/client-profile/${id}`);
+  };
+
+  const onSubmit = (evt) => {
+    evt.preventDefault();
+
     //check if one of the fields is empty
-    if(!formValues.username || !formValues.password || !formValues.email || !formValues.role){
-      console.log("Some input is not filled!")
-      return
+    if (
+      !formValues.username ||
+      !formValues.password ||
+      !formValues.email ||
+      !formValues.role
+    ) {
+      console.log('Some input is not filled!');
+      return;
     }
-      props.register(formValues, registerRedirect);
-      console.log(props.user.userId)
-      setFormValues(initialFormValues);
-      
-      if ( props.user.role === 'student') {
-        props.history.push(`/client-profile/${props.user.userId}`)
-      } else if ( props.user.role === 'instructor' ) {
-        props.history.push(`/instructor-profile/${props.user.userId}`)
-      }
-  }
+    props.register(formValues, registerRedirect);
+    console.log(props.user.userId);
+
+    setFormValues(initialFormValues);
+  };
 
   return (
     <Container>
-      <Form className='signup-form'>
+      <Form className='signup-form' onSubmit={onSubmit}>
         <h1>Create an Account</h1>
-        <label><span className='input-name'>Username</span>
+        <label>
+          <span className='input-name'>Username</span>
           <input
             name='username'
             type='text'
@@ -60,14 +59,16 @@ const Registration = props => {
             onChange={onChange}
           ></input>
         </label>
-        <label><span className='input-name'>Role</span>
+        <label>
+          <span className='input-name'>Role</span>
           <select onChange={onChange} value={formValues.role} name='role'>
             <option value=''>--- Role ---</option>
-            <option value='student' >Student</option>
-            <option value='instructor' >Instructor</option>
+            <option value='student'>Student</option>
+            <option value='instructor'>Instructor</option>
           </select>
         </label>
-        <label><span className='input-name'>Password</span>
+        <label>
+          <span className='input-name'>Password</span>
           <input
             name='password'
             type='password'
@@ -83,7 +84,8 @@ const Registration = props => {
             onChange={onChange}
           ></input>
         </label> */}
-        <label><span className='input-name'>Email</span>
+        <label>
+          <span className='input-name'>Email</span>
           <input
             name='email'
             type='email'
@@ -91,66 +93,68 @@ const Registration = props => {
             onChange={onChange}
           ></input>
         </label>
-        <button onClick={onClick}>Sign Up</button>
-        <div className='button' onClick={() => push('/login')}>Already have an account?</div>
+        <button>Sign Up</button>
+        <div className='button' onClick={() => push('/login')}>
+          Already have an account?
+        </div>
       </Form>
     </Container>
   );
-}
+};
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.registerReducer.user,
-    loggedIn: state.registerReducer.loggedIn,
-    loggingIn: state.registerReducer.loggingIn,
-    error: state.registerReducer.error
-  }
-}
+    user: state.loginReducer.user,
+    loggedIn: state.loginReducer.loggedIn,
+    loggingIn: state.loginReducer.loggingIn,
+    error: state.loginReducer.error,
+  };
+};
 
-export default connect(mapStateToProps, { register })(Registration)
+export default connect(mapStateToProps, { register })(Registration);
 
-const Form = styled.form `
+const Form = styled.form`
   display: flex;
   flex-direction: column;
-  background-color: ${ props => props.theme.midGray};;
+  background-color: ${(props) => props.theme.midGray};
   padding: 2vw 4vw;
   margin: 8vh 0;
-  
-  font-family: ${ props  => props.theme.bodyFont};
-  color: ${ props  => props.theme.yellow};
+
+  font-family: ${(props) => props.theme.bodyFont};
+  color: ${(props) => props.theme.yellow};
 
   h1 {
-    font-family: ${ props  => props.theme.titleFont};
+    font-family: ${(props) => props.theme.titleFont};
   }
 
   label {
-    display:flex;
+    display: flex;
     justify-content: space-between;
     padding: 8px 0;
   }
 
   input {
     width: 150px;
-    background-color: ${ props => props.theme.lightGray};
+    background-color: ${(props) => props.theme.lightGray};
   }
   select {
     width: 157px;
-    background-color: ${ props => props.theme.lightGray};
+    background-color: ${(props) => props.theme.lightGray};
   }
 
   button {
-    background-color: ${ props => props.theme.yellow};
+    background-color: ${(props) => props.theme.yellow};
   }
   //div button ("already have an account?")
   .button {
     padding: 4px 0;
     font-size: 0.9em;
-    :hover{
+    :hover {
       color: whitesmoke;
       cursor: pointer;
     }
   }
-`
+`;
 
 const Container = styled.div`
   background-image: url('https://i.imgur.com/8FndkHz.jpg');

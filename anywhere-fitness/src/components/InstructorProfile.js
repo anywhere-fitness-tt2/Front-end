@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components'; // eslint-disable-next-line
-import axiosAuth from '../utils/axiosWithAuth';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 import InstructorClassCard from './InstructorClassCard';
 import InstructorEditClass from './InstructorEditClass';
@@ -42,27 +42,6 @@ const initialFormValues = {
   attendees: '',
   maxSize: '',
 };
-
-const StyledInstructorProfile = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  background-color: gray;
-  align-items: center;
-
-  .classContainer {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-  }
-
-  .classCard {
-    display: flex;
-    padding: 10px;
-    margin: 20px;
-    color: black;
-    background: cornsilk;
-  }
-`;
 
 const InstructorProfile = (props) => {
   // eslint-disable-next-line
@@ -112,16 +91,14 @@ const InstructorProfile = (props) => {
   };
 
   return (
-    <StyledInstructorProfile>
-      <h1>Welcome! _username_</h1>
-      <h2>Click below to start a new class! -(hard-coded for now)-</h2>
-      {/* add Link and Route to button | match url/ user id /"new Event"? or w/e endpoint is called */}
-      <button className='formBtn'>Create new Class!</button>
+    <Container>
+      <h1>Welcome {props.user.username}</h1>
       <ClassForm
         formValues={formValues}
         handleChange={handleChange}
         handleClassSubmit={handleClassSubmit}
       />
+
       <div className='classContainer'>
         {workouts.map((workout) => {
           return (
@@ -145,8 +122,20 @@ const InstructorProfile = (props) => {
           />
         )}
       </div>
-    </StyledInstructorProfile>
+    </Container>
   );
 };
 
-export default InstructorProfile;
+const mapStateToProps = (state) => {
+  return {
+    user: state.loginReducer.user,
+  };
+};
+
+export default connect(mapStateToProps)(InstructorProfile);
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;

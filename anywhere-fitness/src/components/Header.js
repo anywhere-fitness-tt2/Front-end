@@ -18,7 +18,7 @@ function Header(props) {
   }, []);
 
   const profileClickHandler = () => {
-    props.loggedIn === true && props.user.role === 'instructor'
+    localStorage.getItem('token') && props.user.role === 'instructor'
       ? push(`/instructor-profile/${props.user.userId}`)
       : push(`/client-profile/${props.user.userId}`);
   };
@@ -40,7 +40,7 @@ function Header(props) {
           </h1>
         </div>
       </Fade>
-      {props.loggedIn === true ? (
+      {localStorage.getItem('token') ? (
         <div className='buttons'>
           <Fade
             in={location.pathname === '/' ? fadeIn : true}

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react' 
 import styled from 'styled-components'; // eslint-disable-next-line
 import { connect } from 'react-redux';
-import { getClientClassById } from '../actions';
+import { getClientClassById, signupClass } from '../actions';
 import { useParams } from 'react-router-dom';
 
 import SearchBar from './SearchBar';
@@ -61,22 +61,27 @@ const ClientProfile = props => { // eslint-disable-next-line
 
   const { id } = useParams();
 
-  const searchFor = () => {
-    console.log(searchValue);
-    setSearchValue("");
-    
-  }
-
   useEffect(() => {
     props.getClientClassById(id)
       setWorkouts(props.clientClasses)
   //eslint-disable-next-line
   },[]);
 
+  const searchFor = () => {
+    console.log(searchValue);
+    setSearchValue("");
+
+  }
+
   const leaveClass = () => {
     console.log('click, leaving class')
   }
   
+  const signUp = () => {
+    console.log('signed up!')
+    signupClass();
+  }
+
   return (
     <StyledClientProfile>
       <h1>Welcome! {props.user.username}</h1>
@@ -95,6 +100,7 @@ const ClientProfile = props => { // eslint-disable-next-line
             className="classCard"
             workout={workout}
             leaveClass={leaveClass}
+            signUp={signUp}
             />
           )}))}
       </div>
@@ -112,4 +118,4 @@ const mapStateToProps = state => {
   } 
 }
 
-export default connect(mapStateToProps, { getClientClassById })(ClientProfile);
+export default connect(mapStateToProps, { getClientClassById, signupClass })(ClientProfile);

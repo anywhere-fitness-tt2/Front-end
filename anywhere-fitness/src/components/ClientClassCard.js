@@ -12,7 +12,7 @@ border: 4px solid yellow;
 `
 
 const ClientClassCard = props => {
-  const { leaveClass, workout : { name, type, time, duration, intensityLvl , location, attendees, maxSize } } = props;
+  const { signUp, leaveClass, workout : { name, type, time, duration, intensityLvl , location, attendees, maxSize } } = props;
 
   return (
     <StyledClassCard className="classCard">

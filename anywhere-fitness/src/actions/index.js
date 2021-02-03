@@ -86,6 +86,25 @@ export const getClientClassById = (id) => (dispatch) => {
     });
 };
 
+export const SIGNUP_CLASS_START = 'SIGNUP_CLASS_START';
+export const SIGNUP_CLASS_SUCCESS = 'SIGNUP_CLASS_SUCCESS';
+export const SIGNUP_CLASS_FAILURE = 'SIGNUP_CLASS_FAILURE';
+
+export const signupClass = classId => (dispatch) => {
+  dispatch({ type: SIGNUP_CLASS_START });
+
+  axiosAuth()
+  .post('/api/users/enrollment', classId)
+  .then(res => {
+    dispatch({ type: SIGNUP_CLASS_SUCCESS, payload: res.data })
+    console.log(res)
+  })
+  .catch(err => {
+    dispatch({ type:SIGNUP_CLASS_FAILURE, payload: err.message })
+  })
+};
+
+
 export const GET_INSTRUCTOR_CLASS_BY_ID_START =
   'GET_INSTRUCTOR_CLASS_BY_ID_START';
 export const GET_INSTRUCTOR_CLASS_BY_ID_SUCCESS =
@@ -126,10 +145,4 @@ export const getClassById = (id) => (dispatch) => {
   dispatch({ type: GET_CLASS_BY_ID_START });
 };
 
-export const SIGNUP_CLASS_START = 'SIGNUP_CLASS_START';
-export const SIGNUP_CLASS_SUCCESS = 'SIGNUP_CLASS_SUCCESS';
-export const SIGNUP_CLASS_FAILURE = 'SIGNUP_CLASS_FAILURE';
 
-export const signupClass = (classId) => (dispatch) => {
-  dispatch({ type: SIGNUP_CLASS_START });
-};

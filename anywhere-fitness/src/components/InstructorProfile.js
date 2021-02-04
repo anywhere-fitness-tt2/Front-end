@@ -5,8 +5,12 @@ import { connect } from 'react-redux';
 import InstructorClassCard from './InstructorClassCard';
 import InstructorEditClass from './InstructorEditClass';
 import ClassForm from './ClassForm';
+
 import { getInstructorClasses } from '../actions';
 import { createClass } from '../actions';
+
+
+import CustomizedSteppers from '../components/Onboarding';
 
 const initialFormValues = {
   name: '',
@@ -24,10 +28,22 @@ const InstructorProfile = (props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [workoutToEdit, setWorkoutToEdit] = useState('');
 
+
   useEffect(() => {
     props.getInstructorClasses(props.user.username);
     //eslint-disable-next-line
   }, []);
+
+   //turn onboarding On and Off.
+   const [displayOnboard, setDisplayOnboard] = useState(true);
+   const onboardSwitch = () => {
+     setDisplayOnboard(!displayOnboard)
+   };
+
+  // Will render upcoming classes by instructor id
+  // useEffect(() => {
+
+  // no action yet, getallclassbyid
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -64,8 +80,14 @@ const InstructorProfile = (props) => {
   };
 
   return (
+        <>
+      {displayOnboard && <CustomizedSteppers onboardSwitch={onboardSwitch} />}
     <Container>
       <h1>Welcome {props.user.username}</h1>
+            <button onClick={onboardSwitch} style={{
+          color:'#FAED26',
+          backgroundColor:'#252629'
+        }}>Turn Onboarding On</button>
       <ClassForm
         formValues={formValues}
         handleChange={handleChange}
@@ -96,6 +118,8 @@ const InstructorProfile = (props) => {
         )}
       </div>
     </Container>
+</>
+
   );
 };
 

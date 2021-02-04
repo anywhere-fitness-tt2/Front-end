@@ -5,27 +5,30 @@ const StyledClassCard = styled.div`
 display:flex;
 flex-flow:column nowrap;
 align-items:center;
-justify-content:center;
-padding: 10px;
-border: 4px solid yellow;
 
 `
 
-const ClientClassCard = props => {
-  const { workout : { name, type, time, duration, intensityLvl , location, attendees, maxSize } } = props;
+const ClientClassCard = props => { //eslint-disable-next-line
+  const { signUp, leaveClass, workout : { name, type, time, duration, intensityLvl , location, attendees, maxSize } } = props;
 
   return (
     <StyledClassCard className="classCard">
-      <h2>{name}</h2>
-      <p>Exercise: {type}</p>
-      <p>Time: {time}</p>
-      <p>Duration: {duration}</p>
-      <p>Intensity: {intensityLvl}</p>
-      <p>Location: {location}</p>
-      <p>Attending: {attendees}</p>
-      <p>Class Limit: {maxSize}</p>
+      <h2 className="title">{name}</h2>
+      <h3 className="label">Time</h3>
+      <p>{time}</p>
+      <h3 className="label">Duration</h3>
+      <p>{duration}</p>
+      <h3 className="label">Intensity</h3>
+      <p>{intensityLvl}</p>
+      <h3 className="label">Location</h3>
+      <p>{location}</p>
+      <h3 className="label">Attending</h3>
+      <p>{attendees}</p>
+      <h3 className="label">Class Limit</h3>
+      <p>{maxSize}</p>
+      <button onClick={leaveClass}>Leave Class</button>
     </StyledClassCard>
   )
 }
 
-export default ClientClassCard
+export default ClientClassCard;

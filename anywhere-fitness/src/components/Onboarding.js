@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -9,6 +9,7 @@ import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+import { useLocation, useHistory } from 'react-router-dom';
 
 const ColorlibConnector = withStyles({
   alternativeLabel: {
@@ -46,13 +47,11 @@ const useColorlibStepIconStyles = makeStyles({
     alignItems: 'center',
   },
   active: {
-    backgroundColor:
-      '#FAED26',
+    backgroundColor: '#FAED26',
     boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
   },
   completed: {
-    backgroundColor:
-      '#FAED26',
+    backgroundColor: '#FAED26',
   },
 });
 
@@ -61,9 +60,9 @@ function ColorlibStepIcon(props) {
   const { active, completed } = props;
 
   const icons = {
-    1: "1",
-    2: "2",
-    3: "3",
+    1: '1',
+    2: '2',
+    3: '3',
   };
 
   return (
@@ -125,15 +124,29 @@ function getStepContent(step) {
   }
 }
 
-export default function CustomizedSteppers(props) {
+export default function CustomizedSteppers() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
 
-  const { onboardSwitch } = props;
+  const { pathname } = useLocation();
+  const { push } = useHistory();
+
+  let splicedPath = pathname.split('/');
+  splicedPath.pop();
+  const joinedPath = splicedPath.join('/');
+
+  const [displayOnboard, setDisplayOnboard] = useState(true);
+  const onboardSwitch = () => {
+    push(joinedPath);
+    setDisplayOnboard(!displayOnboard);
+  };
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep === steps.length - 1) {
+      push(joinedPath);
+    }
   };
 
   const handleBack = () => {
@@ -145,15 +158,22 @@ export default function CustomizedSteppers(props) {
   };
 
   return (
-    <div className={classes.root} style={{
-      backgroundColor:'#252629',
-      color:'whitesmoke',
-      zIndex:'10',
-      position:"absolute",
-      top:"30vh",
-    }}>
-
-      <Stepper alternativeLabel style={{backgroundColor:'#252629'}} activeStep={activeStep}connector={<ColorlibConnector />}>
+    <div
+      className={classes.root}
+      style={{
+        backgroundColor: '#252629',
+        color: 'whitesmoke',
+        zIndex: '10',
+        position: 'absolute',
+        top: '30vh',
+      }}
+    >
+      <Stepper
+        alternativeLabel
+        style={{ backgroundColor: '#252629' }}
+        activeStep={activeStep}
+        connector={<ColorlibConnector />}
+      >
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
@@ -171,34 +191,42 @@ export default function CustomizedSteppers(props) {
             </Button>
           </div>
         ) : (
-          <div> 
+          <div>
             <Typography>{getStepContent(activeStep)}</Typography>
-            <div className='buttons-line' style={{
-              display:'flex',
-              justifyContent: 'space-between'
-          }}>
-            <div>
-              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                Back
-              </Button>
+            <div
+              className='buttons-line'
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
+              <div>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  className={classes.button}
+                >
+                  Back
+                </Button>
+                <Button
+                  variant='contained'
+                  onClick={handleNext}
+                  className={classes.button}
+                >
+                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                </Button>
+              </div>
               <Button
-                variant="contained"
-                onClick={handleNext}
-                className={classes.button}
-              >
-                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-              </Button>
-            </div>
-              <Button
-                variant="contained"
+                variant='contained'
                 onClick={onboardSwitch}
                 className={classes.button}
-              >Skip</Button>
-              </div>
+              >
+                Skip
+              </Button>
+            </div>
           </div>
         )}
       </div>
     </div>
   );
 }
-

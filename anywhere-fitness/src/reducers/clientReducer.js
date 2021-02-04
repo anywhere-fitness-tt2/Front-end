@@ -4,7 +4,10 @@ import {
   GET_CLIENT_CLASS_BY_ID_FAILURE,
   SIGNUP_CLASS_START,
   SIGNUP_CLASS_SUCCESS,
-  SIGNUP_CLASS_FAILURE
+  SIGNUP_CLASS_FAILURE,
+  QUIT_CLASS_START,
+  QUIT_CLASS_SUCCESS,
+  QUIT_CLASS_FAILURE,
 } from '../actions';
 
 const initialState = {
@@ -49,6 +52,24 @@ export const clientReducer = (state = initialState, action) => {
         ...state,
         isLoading:false,
         error:action.payload
+      }
+    case QUIT_CLASS_START:
+      return {
+        ...state,
+        isLoading: true,
+      }
+    case QUIT_CLASS_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        clientSignup: action.payload
+        
+      }
+    case QUIT_CLASS_FAILURE:
+      return {
+        ...state,
+        isLoading:false,
+        error: action.payload
       }
     default:
       return state;

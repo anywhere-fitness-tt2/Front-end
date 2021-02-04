@@ -22,6 +22,8 @@ const ClassForm = ({ formValues, handleChange, handleClassSubmit }) => {
           <div className='form-input'>
             <label htmlFor='name'> Name:</label>
             <input
+              required
+              maxLength='30'
               type='text'
               name='name'
               onChange={handleChange}
@@ -31,6 +33,8 @@ const ClassForm = ({ formValues, handleChange, handleClassSubmit }) => {
           <div className='form-input'>
             <label htmlFor='type'>Excercise Type:</label>
             <input
+              required
+              maxLength='30'
               type='text'
               name='type'
               className='form-input'
@@ -41,6 +45,8 @@ const ClassForm = ({ formValues, handleChange, handleClassSubmit }) => {
           <div className='form-input'>
             <label htmlFor='time'>Time:</label>
             <input
+              required
+              maxLength='30'
               type='time'
               name='time'
               className='form-input'
@@ -51,6 +57,8 @@ const ClassForm = ({ formValues, handleChange, handleClassSubmit }) => {
           <div className='form-input'>
             <label htmlFor='duration'>Duration:</label>
             <input
+              required
+              maxLength='30'
               type='text'
               name='duration'
               className='form-input'
@@ -61,6 +69,7 @@ const ClassForm = ({ formValues, handleChange, handleClassSubmit }) => {
           <div className='form-input'>
             <label htmlFor='intensityLvl'>Intensity:</label>
             <select
+              required
               className='form-input'
               onChange={handleChange}
               value={formValues.intensityLvl}
@@ -75,6 +84,8 @@ const ClassForm = ({ formValues, handleChange, handleClassSubmit }) => {
           <div className='form-input'>
             <label htmlFor='location'>Location:</label>
             <input
+              required
+              maxLength='30'
               type='text'
               name='location'
               className='form-input'
@@ -85,6 +96,8 @@ const ClassForm = ({ formValues, handleChange, handleClassSubmit }) => {
           <div className='form-input'>
             <label htmlFor='maxSize'>Attendance Limit:</label>
             <input
+              required
+              maxLength='30'
               type='number'
               name='maxSize'
               className='form-input'

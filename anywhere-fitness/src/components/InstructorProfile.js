@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 import InstructorClassCard from './InstructorClassCard';
-import InstructorEditClass from './InstructorEditClass';
 import ClassForm from './ClassForm';
 
 import { getInstructorClasses } from '../actions';
@@ -22,20 +21,11 @@ const initialFormValues = {
 
 const InstructorProfile = (props) => {
   const [formValues, setFormValues] = useState(initialFormValues);
-  const [isEditing, setIsEditing] = useState(false);
-  const [workoutToEdit, setWorkoutToEdit] = useState('');
 
   useEffect(() => {
     props.getInstructorClasses(props.user.username);
     //eslint-disable-next-line
   }, []);
-
-  //turn onboarding On and Off.
-
-  // Will render upcoming classes by instructor id
-  // useEffect(() => {
-
-  // no action yet, getallclassbyid
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -49,23 +39,13 @@ const InstructorProfile = (props) => {
     event.preventDefault();
     console.log(props.newClass);
     props.createClass(formValues, props.user.username);
-  };
-
-  const editWorkout = (workout) => {
-    setIsEditing(true);
-    setWorkoutToEdit(workout);
-  };
-
-  const saveEdit = (workout) => {
-    // action needed
-    // put
+    setFormValues(initialFormValues);
   };
 
   const deleteWorkout = () => {
     // action needed
     // delete
     console.log('workout deleted');
-    setIsEditing(false);
   };
 
   return (
@@ -77,29 +57,18 @@ const InstructorProfile = (props) => {
         handleClassSubmit={handleClassSubmit}
       />
 
-      <div className='classContainer'>
+      <CardWrapper>
         {props.classes.map((workout) => {
           return (
             <InstructorClassCard
               key={workout.classId}
               className='classCard'
               workout={workout}
-              editWorkout={editWorkout}
               deleteWorkout={deleteWorkout}
             />
           );
         })}
-      </div>
-      <div className='editMenu'>
-        {isEditing && (
-          <InstructorEditClass
-            setIsEditing={setIsEditing}
-            workoutToEdit={workoutToEdit}
-            setWorkoutToEdit={setWorkoutToEdit}
-            saveEdit={saveEdit}
-          />
-        )}
-      </div>
+      </CardWrapper>
     </Container>
   );
 };
@@ -142,4 +111,10 @@ const Container = styled.div`
   ::-webkit-scrollbar-thumb {
     background-color: #252629;
   }
+`;
+
+const CardWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 `;

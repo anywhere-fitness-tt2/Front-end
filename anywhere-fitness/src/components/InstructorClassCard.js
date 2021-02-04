@@ -1,33 +1,99 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledClassCard = styled.div`
-display:flex;
-flex-flow:column nowrap;
-align-items:center;
-justify-content:center;
-padding: 10px;
-border: 4px solid red;
-
-`
-
-const InstructorClassCard = props => {
-  const { deleteWorkout, editWorkout, workout : { name, type, time, duration, intensityLvl , location, attendees, maxSize } } = props;
+const InstructorClassCard = (props) => {
+  const {
+    deleteWorkout,
+    workout: {
+      name,
+      type,
+      time,
+      duration,
+      intensityLvl,
+      location,
+      attendees,
+      maxSize,
+    },
+  } = props;
 
   return (
-    <StyledClassCard className="classCard">
+    <ClassCard className='classCard'>
       <h2>{name}</h2>
-      <p>Exercise: {type}</p>
-      <p>Time: {time}</p>
-      <p>Duration: {duration}</p>
-      <p>Intensity: {intensityLvl}</p>
-      <p>Location: {location}</p>
-      <p>Attending: {attendees}</p>
-      <p>Class Limit: {maxSize}</p>
-      <button onClick={editWorkout}>Edit</button>
+      <div className='text-wrapper'>
+        <p>
+          <span>Exercise:</span> {type}
+        </p>
+        <p>
+          <span>Time:</span> {time}
+        </p>
+        <p>
+          <span>Duration:</span> {duration}
+        </p>
+        <p>
+          <span>Intensity:</span> {intensityLvl}
+        </p>
+        <p>
+          <span>Location:</span> {location}
+        </p>
+        <p>
+          <span>Attending:</span> {attendees}
+        </p>
+        <p>
+          <span>Class Limit:</span> {maxSize}
+        </p>
+      </div>
       <button onClick={deleteWorkout}>Delete</button>
-    </StyledClassCard>
-  )
-}
+    </ClassCard>
+  );
+};
 
 export default InstructorClassCard;
+
+const ClassCard = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  color: whitesmoke;
+  font-family: ${(props) => props.theme.bodyFont};
+  width: 400px;
+  background-color: ${(props) => props.theme.midGray};
+  margin: 20px 0;
+  text-align: left;
+  padding: 15px;
+
+  h2 {
+    color: ${(props) => props.theme.yellow};
+    font-family: ${(props) => props.theme.titleFont};
+  }
+  p {
+    margin: 10px;
+  }
+
+  span {
+    color: ${(props) => props.theme.yellow};
+    display: block;
+  }
+
+  .text-wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  button {
+    margin: 20px;
+    padding: 5px;
+    width: 80px;
+    font-family: ${(props) => props.theme.bodyFont};
+    border: 1px solid ${(props) => props.theme.yellow};
+    background-color: ${(props) => props.theme.midGray};
+    color: whitesmoke;
+
+    &:hover {
+      background-color: ${(props) => props.theme.yellow};
+      color: ${(props) => props.theme.midGray};
+    }
+  }
+`;

@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 
 import SearchBar from './SearchBar';
 import ClientClassCard from './ClientClassCard';
+import CustomizedSteppers from '../components/Onboarding';
 
 const StyledClientProfile = styled.div`
 display:flex;
@@ -88,6 +89,12 @@ const ClientProfile = props => { // eslint-disable-next-line
   const [ workouts, setWorkouts ] = useState([]);
   const [ searchValue, setSearchValue ] = useState("");
 
+  //turn onboarding On and Off.
+  const [displayOnboard, setDisplayOnboard] = useState(true);
+  const onboardSwitch = () => {
+    setDisplayOnboard(!displayOnboard)
+  };
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -111,29 +118,36 @@ const ClientProfile = props => { // eslint-disable-next-line
   };
 
   return (
-    <StyledClientProfile>
-      <h1>Welcome! {props.user.username}</h1>
-      <div className="searchContainer">
-        <SearchBar
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-        searchFor={searchFor}
-        />
-      </div>
-    <h2>Upcoming Workouts!</h2>
-      <div className="classContainer">
-        {props.isLoading && !undefined? <h2>Loading Classes...</h2> : (
-        workouts.map(workout => {
-          return (
-            <ClientClassCard
-            key={workout.id}
-            workout={workout}
-            leaveClass={leaveClass}
-            signUp={signUp}
-            />
-          )}))}
-      </div>
-    </StyledClientProfile>
+    <>
+      {displayOnboard && <CustomizedSteppers onboardSwitch={onboardSwitch} />}
+      <StyledClientProfile>
+        <h1>Welcome! {props.user.username}</h1>
+        <div className="searchContainer">
+          <SearchBar
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          searchFor={searchFor}
+          />
+        </div>
+        <button onClick={onboardSwitch} style={{
+          color:'#FAED26',
+          backgroundColor:'#252629'
+        }}>Turn Onboarding On</button>
+      <h2>Upcoming Workouts!</h2>
+        <div className="classContainer">
+          {props.isLoading && !undefined? <h2>Loading Classes...</h2> : (
+          workouts.map(workout => {
+            return (
+              <ClientClassCard
+              key={workout.id}
+              workout={workout}
+              leaveClass={leaveClass}
+              signUp={signUp}
+              />
+            )}))}
+        </div>
+      </StyledClientProfile>
+    </>
   )
 }
 

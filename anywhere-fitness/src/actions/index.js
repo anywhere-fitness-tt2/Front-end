@@ -199,10 +199,10 @@ export const searchForClass = ({ dropValue, textValue }) => dispatch => {
   axiosAuth()
   .get(`/api/classes/`)
   .then(res => {
-    console.log('api action', res)
+    console.log('api action', res) //eslint-disable-next-line
     const searchData = res.data.filter( workout => {
 
-      for ( const [ key , value ] of Object.entries(workout)) {
+      for ( const [ key , value ] of Object.entries(workout)) { //eslint-disable-next-line
         if(key === dropValue && value == textValue){
           return workout;
         }

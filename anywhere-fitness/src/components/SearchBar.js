@@ -48,8 +48,9 @@ const handleSubmit = event => {
     <StyledSearchBar onSubmit={handleSubmit}>
       <select className="searchInput" name="dropValue" onChange={handleChange} value={searchValue.dropValue}>
         <option value=''>-----Select-----</option>
-        <option value='time'>Class Time</option>
+        <option value='type'>Type</option>
         <option value='duration'>Duration</option>
+        <option value='username'>Instructor</option>
         <option value='intensityLvl'>Intensity</option>
         <option value='location'>Location</option>
       </select>

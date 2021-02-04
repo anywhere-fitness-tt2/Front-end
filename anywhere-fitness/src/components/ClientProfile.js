@@ -83,6 +83,17 @@ min-height: 88vh;
     }
   }
 }
+
+.searchHeader {
+    text-align:center;
+  }
+
+  .searchCardContainer {
+    display:flex;
+    flex-flow:row wrap;
+    justify-content:space-between;
+    align-items:stretch;
+    align-content:center;
 `
 
 const initialSearchValues = {
@@ -138,13 +149,24 @@ const ClientProfile = props => { // eslint-disable-next-line
           backgroundColor:'#252629'
         }}>Turn Onboarding On</button>
         {props.classes && null ? null : (
-          <div className="searchResults">
-            {
-            props.classes.map( workout => {
-              return <h2 key={workout.id}>{workout.name}</h2>
-            })
-            }
-          </div>
+          <section className="searchResults">
+          <h2 className="searchHeader">Search Results</h2>
+          <hr/>
+            <div className="searchCardContainer">
+                {
+                props.classes.map( workout => {
+                  return (
+                    <ClientClassCard
+                      key={workout.id}
+                      workout={workout}
+                      leaveClass={leaveClass}
+                      signUp={signUp}
+                      />
+                    )
+                })
+                }
+            </div>
+          </section>
         )}
       <h2>Upcoming Workouts</h2>
         <div className="classContainer">

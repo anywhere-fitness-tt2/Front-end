@@ -7,6 +7,8 @@ import InstructorClassCard from './InstructorClassCard';
 import InstructorEditClass from './InstructorEditClass';
 import ClassForm from './ClassForm';
 
+import CustomizedSteppers from '../components/Onboarding';
+
 const initialWorkouts = [
   {
     id: 123, // added id for dummy data
@@ -72,6 +74,12 @@ const InstructorProfile = (props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [workoutToEdit, setWorkoutToEdit] = useState('');
 
+   //turn onboarding On and Off.
+   const [displayOnboard, setDisplayOnboard] = useState(true);
+   const onboardSwitch = () => {
+     setDisplayOnboard(!displayOnboard)
+   };
+
   // Will render upcoming classes by instructor id
   // useEffect(() => {
 
@@ -112,40 +120,47 @@ const InstructorProfile = (props) => {
   };
 
   return (
-    <StyledInstructorProfile>
-      <h1>Welcome! _username_</h1>
-      <h2>Click below to start a new class! -(hard-coded for now)-</h2>
-      {/* add Link and Route to button | match url/ user id /"new Event"? or w/e endpoint is called */}
-      <button className='formBtn'>Create new Class!</button>
-      <ClassForm
-        formValues={formValues}
-        handleChange={handleChange}
-        handleClassSubmit={handleClassSubmit}
-      />
-      <div className='classContainer'>
-        {workouts.map((workout) => {
-          return (
-            <InstructorClassCard
-              key={workout.id}
-              className='classCard'
-              workout={workout}
-              editWorkout={editWorkout}
-              deleteWorkout={deleteWorkout}
+    <>
+      {displayOnboard && <CustomizedSteppers onboardSwitch={onboardSwitch} />}
+      <StyledInstructorProfile>
+        <h1>Welcome! _username_</h1>
+        <h2>Click below to start a new class! -(hard-coded for now)-</h2>
+        {/* add Link and Route to button | match url/ user id /"new Event"? or w/e endpoint is called */}
+        <button className='formBtn'>Create new Class!</button>
+        <button onClick={onboardSwitch} style={{
+          color:'#FAED26',
+          backgroundColor:'#252629'
+        }}>Turn Onboarding On</button>
+        <ClassForm
+          formValues={formValues}
+          handleChange={handleChange}
+          handleClassSubmit={handleClassSubmit}
+        />
+        <div className='classContainer'>
+          {workouts.map((workout) => {
+            return (
+              <InstructorClassCard
+                key={workout.id}
+                className='classCard'
+                workout={workout}
+                editWorkout={editWorkout}
+                deleteWorkout={deleteWorkout}
+              />
+            );
+          })}
+        </div>
+        <div className='editMenu'>
+          {isEditing && (
+            <InstructorEditClass
+              setIsEditing={setIsEditing}
+              workoutToEdit={workoutToEdit}
+              setWorkoutToEdit={setWorkoutToEdit}
+              saveEdit={saveEdit}
             />
-          );
-        })}
-      </div>
-      <div className='editMenu'>
-        {isEditing && (
-          <InstructorEditClass
-            setIsEditing={setIsEditing}
-            workoutToEdit={workoutToEdit}
-            setWorkoutToEdit={setWorkoutToEdit}
-            saveEdit={saveEdit}
-          />
-        )}
-      </div>
-    </StyledInstructorProfile>
+          )}
+        </div>
+      </StyledInstructorProfile>
+    </>
   );
 };
 

@@ -56,6 +56,8 @@ min-height: 88vh;
   background:${(props) => props.theme.midGray};
   font-family: ${(props) => props.theme.bodyFont};
   border: #FAED26 2px solid;
+  margin:10px;
+  flex-basis: 20%;
 
   h2 {
     padding:0px 15px;
@@ -88,12 +90,13 @@ min-height: 88vh;
     text-align:center;
   }
 
-  .searchCardContainer {
-    display:flex;
-    flex-flow:row wrap;
-    justify-content:space-between;
-    align-items:stretch;
-    align-content:center;
+.searchCardContainer {
+  display:flex;
+  flex-flow:row wrap;
+  justify-content:space-around;
+  align-items:stretch;
+  align-content:center;
+}
 `
 
 const initialSearchValues = {
@@ -148,7 +151,8 @@ const ClientProfile = props => { // eslint-disable-next-line
           color:'#FAED26',
           backgroundColor:'#252629'
         }}>Turn Onboarding On</button>
-        {props.classes && null ? null : (
+        {
+          props.classes && null ? null : (
           <section className="searchResults">
           <h2 className="searchHeader">Search Results</h2>
           <hr/>
@@ -162,9 +166,7 @@ const ClientProfile = props => { // eslint-disable-next-line
                       leaveClass={leaveClass}
                       signUp={signUp}
                       />
-                    )
-                })
-                }
+                    )})}
             </div>
           </section>
         )}

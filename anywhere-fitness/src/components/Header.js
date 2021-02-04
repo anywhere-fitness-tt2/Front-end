@@ -18,7 +18,7 @@ function Header(props) {
   }, []);
 
   const profileClickHandler = () => {
-    props.loggedIn === true && props.user.role === 'instructor'
+    localStorage.getItem('token') && props.user.role === 'instructor'
       ? push(`/instructor-profile/${props.user.userId}`)
       : push(`/client-profile/${props.user.userId}`);
   };
@@ -28,45 +28,33 @@ function Header(props) {
     push('/');
   };
 
+  const inSetting = location.pathname === '/' ? fadeIn : true;
+  const timeoutSetting = location.pathname === '/' ? 1000 : 0;
+
   return (
     <Container>
-      <Fade
-        in={location.pathname === '/' ? fadeIn : true}
-        timeout={location.pathname === '/' ? 1000 : 0}
-      >
+      <Fade in={inSetting} timeout={timeoutSetting}>
         <div onClick={() => push('/')} className='logo'>
           <h1>
             Anywhere<span>Fitness</span>
           </h1>
         </div>
       </Fade>
-      {props.loggedIn === true ? (
+      {localStorage.getItem('token') ? (
         <div className='buttons'>
-          <Fade
-            in={location.pathname === '/' ? fadeIn : true}
-            timeout={location.pathname === '/' ? 1000 : 0}
-          >
+          <Fade in={inSetting} timeout={timeoutSetting}>
             <button onClick={profileClickHandler}>Profile</button>
           </Fade>
-          <Fade
-            in={location.pathname === '/' ? fadeIn : true}
-            timeout={location.pathname === '/' ? 1000 : 0}
-          >
+          <Fade in={inSetting} timeout={timeoutSetting}>
             <button onClick={logOutHandler}>Logout</button>
           </Fade>
         </div>
       ) : (
         <div className='buttons'>
-          <Fade
-            in={location.pathname === '/' ? fadeIn : true}
-            timeout={location.pathname === '/' ? 1000 : 0}
-          >
+          <Fade in={inSetting} timeout={timeoutSetting}>
             <button onClick={() => push('/registration')}>Sign up</button>
           </Fade>
-          <Fade
-            in={location.pathname === '/' ? fadeIn : true}
-            timeout={location.pathname === '/' ? 1000 : 0}
-          >
+          <Fade in={inSetting} timeout={timeoutSetting}>
             <button onClick={() => push('/login')}>Login</button>
           </Fade>
         </div>

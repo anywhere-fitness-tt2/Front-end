@@ -45,9 +45,9 @@ const Login = (props) => {
   return (
     <Container>
       <Form onSubmit={onSubmit}>
-        <h1>Login Page</h1>
+        <h1>Login</h1>
         <label>
-          <span className='input-name'>Username</span>
+          <span className='input-name'>Username:</span>
           <input
             name='username'
             value={formValues.username}
@@ -56,7 +56,7 @@ const Login = (props) => {
           ></input>
         </label>
         <label>
-          <span className='input-name'>Password</span>
+          <span className='input-name'>Password:</span>
           <input
             name='password'
             value={formValues.password}
@@ -113,15 +113,24 @@ const Form = styled.form`
   }
   select {
     width: 157px;
-    background-color: ${(props) => props.theme.lightGray};
+    background-color: ${(props) => props.theme.midGray};
   }
 
   button {
-    background-color: ${(props) => props.theme.yellow};
+    background-color: ${(props) => props.theme.midGray};
+    border: 1px solid ${(props) => props.theme.yellow};
+    color: whitesmoke;
+    padding: 7px 0;
+
+    :hover {
+      background-color: ${(props) => props.theme.yellow};
+      color: ${(props) => props.theme.midGray};
+    }
   }
   //div button ("already have an account?")
   .button {
     padding: 4px 0;
+    margin-top: 5px;
     font-size: 0.9em;
     :hover {
       color: whitesmoke;

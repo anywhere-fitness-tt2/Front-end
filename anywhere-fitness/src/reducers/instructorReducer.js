@@ -8,9 +8,9 @@ import {
   DELETE_CLASS_START,
   DELETE_CLASS_SUCCESS,
   DELETE_CLASS_FAILURE,
-  GET_INSTRUCTOR_CLASS_BY_ID_START,
-  GET_INSTRUCTOR_CLASS_BY_ID_SUCCESS,
-  GET_INSTRUCTOR_CLASS_BY_ID_FAILURE,
+  GET_CLASSES_INSTRUCTOR_START,
+  GET_CLASSES_INSTRUCTOR_SUCCESS,
+  GET_CLASSES_INSTRUCTOR_FAILURE,
 } from '../actions';
 
 const initialState = {
@@ -24,14 +24,18 @@ export const instructorReducer = (state = initialState, action) => {
     case CREATE_CLASS_START:
       return {
         ...state,
+        isLoading: true,
       };
     case CREATE_CLASS_SUCCESS:
       return {
         ...state,
+        isLoading: false,
       };
     case CREATE_CLASS_FAILURE:
       return {
         ...state,
+        isLoading: false,
+        error: action.payload,
       };
     case UPDATE_CLASS_START:
       return {
@@ -57,18 +61,19 @@ export const instructorReducer = (state = initialState, action) => {
       return {
         ...state,
       };
-    case GET_INSTRUCTOR_CLASS_BY_ID_START:
+    case GET_CLASSES_INSTRUCTOR_START:
       return {
         ...state,
+        instructorClasses: [],
         isLoading: true,
       };
-    case GET_INSTRUCTOR_CLASS_BY_ID_SUCCESS:
+    case GET_CLASSES_INSTRUCTOR_SUCCESS:
       return {
         ...state,
         instructorClasses: action.payload,
         isLoading: false,
       };
-    case GET_INSTRUCTOR_CLASS_BY_ID_FAILURE:
+    case GET_CLASSES_INSTRUCTOR_FAILURE:
       return {
         ...state,
         isLoading: false,

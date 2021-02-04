@@ -1,38 +1,16 @@
-// eslint-disable-next-line
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components'; // eslint-disable-next-line
-import axiosAuth from '../utils/axiosWithAuth';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 import InstructorClassCard from './InstructorClassCard';
 import InstructorEditClass from './InstructorEditClass';
 import ClassForm from './ClassForm';
 
-import CustomizedSteppers from '../components/Onboarding';
+import { getInstructorClasses } from '../actions';
+import { createClass } from '../actions';
 
-const initialWorkouts = [
-  {
-    id: 123, // added id for dummy data
-    name: "Billy's Bootcamp",
-    type: 'Boxing',
-    time: '2pm', // use datetime input for instructor form?
-    duration: '3 minutes',
-    intensityLvl: 'Medium',
-    location: "Billy's Basement",
-    attendees: '3',
-    maxSize: '6',
-  },
-  {
-    id: 321, // added id for dummy data
-    name: "Gump's Cross Country",
-    type: 'Running',
-    time: '3pm', // use datetime input for instructor form?
-    duration: '1 Year',
-    intensityLvl: 'High',
-    location: 'Highway 61',
-    attendees: '1',
-    maxSize: '20',
-  },
-];
+
+import CustomizedSteppers from '../components/Onboarding';
 
 const initialFormValues = {
   name: '',
@@ -41,38 +19,20 @@ const initialFormValues = {
   duration: '',
   intensityLvl: '',
   location: '',
-  attendees: '',
+  attendees: 0,
   maxSize: '',
 };
 
-const StyledInstructorProfile = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  background-color: gray;
-  align-items: center;
-
-  .classContainer {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-  }
-
-  .classCard {
-    display: flex;
-    padding: 10px;
-    margin: 20px;
-    color: black;
-    background: cornsilk;
-  }
-`;
-
 const InstructorProfile = (props) => {
-  // eslint-disable-next-line
-  const [formValues, setFormValues] = useState(initialFormValues); // eslint-disable-next-line
-  const [workouts, setWorkouts] = useState(initialWorkouts); // eslint-disable-next-line
-  const [userWorkouts, setUserWorkouts] = useState(initialWorkouts); // eslint-disable-next-line
+  const [formValues, setFormValues] = useState(initialFormValues);
   const [isEditing, setIsEditing] = useState(false);
   const [workoutToEdit, setWorkoutToEdit] = useState('');
+
+
+  useEffect(() => {
+    props.getInstructorClasses(props.user.username);
+    //eslint-disable-next-line
+  }, []);
 
    //turn onboarding On and Off.
    const [displayOnboard, setDisplayOnboard] = useState(true);
@@ -85,8 +45,6 @@ const InstructorProfile = (props) => {
 
   // no action yet, getallclassbyid
 
-  // },[])
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormValues({
@@ -98,8 +56,10 @@ const InstructorProfile = (props) => {
   const handleClassSubmit = (event) => {
     event.preventDefault();
     console.log('form submitted!');
-    // no action yet, addClass
-    // history.push to instructor profile
+    const newClass = {
+      ...formValues,
+    };
+    props.createClass(newClass, props.user.username);
   };
 
   const editWorkout = (workout) => {
@@ -120,48 +80,84 @@ const InstructorProfile = (props) => {
   };
 
   return (
-    <>
+        <>
       {displayOnboard && <CustomizedSteppers onboardSwitch={onboardSwitch} />}
-      <StyledInstructorProfile>
-        <h1>Welcome! _username_</h1>
-        <h2>Click below to start a new class! -(hard-coded for now)-</h2>
-        {/* add Link and Route to button | match url/ user id /"new Event"? or w/e endpoint is called */}
-        <button className='formBtn'>Create new Class!</button>
-        <button onClick={onboardSwitch} style={{
+    <Container>
+      <h1>Welcome {props.user.username}</h1>
+            <button onClick={onboardSwitch} style={{
           color:'#FAED26',
           backgroundColor:'#252629'
         }}>Turn Onboarding On</button>
-        <ClassForm
-          formValues={formValues}
-          handleChange={handleChange}
-          handleClassSubmit={handleClassSubmit}
-        />
-        <div className='classContainer'>
-          {workouts.map((workout) => {
-            return (
-              <InstructorClassCard
-                key={workout.id}
-                className='classCard'
-                workout={workout}
-                editWorkout={editWorkout}
-                deleteWorkout={deleteWorkout}
-              />
-            );
-          })}
-        </div>
-        <div className='editMenu'>
-          {isEditing && (
-            <InstructorEditClass
-              setIsEditing={setIsEditing}
-              workoutToEdit={workoutToEdit}
-              setWorkoutToEdit={setWorkoutToEdit}
-              saveEdit={saveEdit}
+      <ClassForm
+        formValues={formValues}
+        handleChange={handleChange}
+        handleClassSubmit={handleClassSubmit}
+      />
+
+      <div className='classContainer'>
+        {props.classes.map((workout) => {
+          return (
+            <InstructorClassCard
+              key={workout.classId}
+              className='classCard'
+              workout={workout}
+              editWorkout={editWorkout}
+              deleteWorkout={deleteWorkout}
             />
-          )}
-        </div>
-      </StyledInstructorProfile>
-    </>
+          );
+        })}
+      </div>
+      <div className='editMenu'>
+        {isEditing && (
+          <InstructorEditClass
+            setIsEditing={setIsEditing}
+            workoutToEdit={workoutToEdit}
+            setWorkoutToEdit={setWorkoutToEdit}
+            saveEdit={saveEdit}
+          />
+        )}
+      </div>
+    </Container>
+</>
+
   );
 };
 
-export default InstructorProfile;
+const mapStateToProps = (state) => {
+  return {
+    user: state.loginReducer.user,
+    classes: state.instructorReducer.instructorClasses,
+  };
+};
+
+export default connect(mapStateToProps, { getInstructorClasses, createClass })(
+  InstructorProfile,
+);
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('https://i.imgur.com/8FndkHz.jpg');
+  background-size: cover;
+  min-height: 88vh;
+  max-height: 88vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  h1 {
+    background-color: ${(props) => props.theme.midGray};
+    color: ${(props) => props.theme.yellow};
+    padding: 15px 30px;
+    font-family: ${(props) => props.theme.titleFont};
+    font-size: 3rem;
+  }
+
+  ::-webkit-scrollbar {
+    width: 1em;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #252629;
+  }
+`;

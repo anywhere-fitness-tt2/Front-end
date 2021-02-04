@@ -4,7 +4,7 @@ const colors = {
   yellow: '#FAED26',
   darkGray: '#46344E',
   midGray: '#252629',
-  lightGray: '#9D8D8F',
+  lightGray: '#7A7B7E',
   tan: '#9B786F',
 };
 

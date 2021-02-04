@@ -51,7 +51,7 @@ const Registration = (props) => {
       <Form className='signup-form' onSubmit={onSubmit}>
         <h1>Create an Account</h1>
         <label>
-          <span className='input-name'>Username</span>
+          <span className='input-name'>Username:</span>
           <input
             name='username'
             type='text'
@@ -60,7 +60,7 @@ const Registration = (props) => {
           ></input>
         </label>
         <label>
-          <span className='input-name'>Role</span>
+          <span className='input-name'>Role:</span>
           <select onChange={onChange} value={formValues.role} name='role'>
             <option value=''>--- Role ---</option>
             <option value='student'>Student</option>
@@ -68,7 +68,7 @@ const Registration = (props) => {
           </select>
         </label>
         <label>
-          <span className='input-name'>Password</span>
+          <span className='input-name'>Password:</span>
           <input
             name='password'
             type='password'
@@ -76,16 +76,8 @@ const Registration = (props) => {
             onChange={onChange}
           ></input>
         </label>
-        {/* <label><span className='input-name'>Confirm Password</span>
-          <input
-            name='confirmPassword'
-            type='password'
-            value={formValues.confirmPassword}
-            onChange={onChange}
-          ></input>
-        </label> */}
         <label>
-          <span className='input-name'>Email</span>
+          <span className='input-name'>Email:</span>
           <input
             name='email'
             type='email'
@@ -143,11 +135,20 @@ const Form = styled.form`
   }
 
   button {
-    background-color: ${(props) => props.theme.yellow};
+    background-color: ${(props) => props.theme.midGray};
+    border: 1px solid ${(props) => props.theme.yellow};
+    color: whitesmoke;
+    padding: 7px 0;
+
+    :hover {
+      background-color: ${(props) => props.theme.yellow};
+      color: ${(props) => props.theme.midGray};
+    }
   }
   //div button ("already have an account?")
   .button {
     padding: 4px 0;
+    margin-top: 5px;
     font-size: 0.9em;
     :hover {
       color: whitesmoke;

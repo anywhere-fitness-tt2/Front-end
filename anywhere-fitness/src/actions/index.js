@@ -61,8 +61,35 @@ export const CREATE_CLASS_START = 'CREATE_CLASS_START';
 export const CREATE_CLASS_SUCCESS = 'CREATE_CLASS_SUCCESS';
 export const CREATE_CLASS_FAILURE = 'CREATE_CLASS_FAILURE';
 
-export const createClass = (singleClass) => (dispatch) => {
+export const createClass = (newClass, currentUsername) => (dispatch) => {
   dispatch({ type: CREATE_CLASS_START });
+
+  axiosAuth()
+    .post('/api/classes/', newClass)
+    .then((res) => {
+      dispatch({ type: CREATE_CLASS_SUCCESS, payload: res.data });
+      axiosAuth()
+        .get('api/classes/')
+        .then((res) => {
+          console.log(res);
+          const filteredData = res.data.filter(
+            (workout) => workout.username === currentUsername,
+          );
+          dispatch({
+            type: GET_CLASSES_INSTRUCTOR_SUCCESS,
+            payload: filteredData,
+          });
+        })
+        .catch((err) => {
+          dispatch({
+            type: GET_CLASSES_INSTRUCTOR_FAILURE,
+            payload: err.message,
+          });
+        });
+    })
+    .catch((err) => {
+      dispatch({ type: CREATE_CLASS_FAILURE, payload: err.message });
+    });
 };
 
 export const UPDATE_CLASS_START = 'UPDATE_CLASS_START';
@@ -123,25 +150,24 @@ export const quitClass = classId => dispatch => {
   })
 }
 
-export const GET_INSTRUCTOR_CLASS_BY_ID_START =
-  'GET_INSTRUCTOR_CLASS_BY_ID_START';
-export const GET_INSTRUCTOR_CLASS_BY_ID_SUCCESS =
-  'GET_INSTRUCTOR_CLASS_BY_ID_SUCCESS';
-export const GET_INSTRUCTOR_CLASS_BY_ID_FAILURE =
-  'GET_INSTRUCTOR_CLASS_BY_ID_FAILURE';
+export const GET_CLASSES_INSTRUCTOR_START = 'GET_CLASSES_INSTRUCTOR_START';
+export const GET_CLASSES_INSTRUCTOR_SUCCESS = 'GET_CLASSES_INSTRUCTOR_SUCCESS';
+export const GET_CLASSES_INSTRUCTOR_FAILURE = 'GET_CLASSES_INSTRUCTOR_FAILURE';
 
-export const getInstructorClassById = (id) => (dispatch) => {
-  dispatch({ type: GET_INSTRUCTOR_CLASS_BY_ID_START });
+export const getInstructorClasses = (currentUsername) => (dispatch) => {
+  dispatch({ type: GET_CLASSES_INSTRUCTOR_START });
 
   axiosAuth()
-    .get(`api/classes/${id}/students`)
+    .get('api/classes/')
     .then((res) => {
-      console.log(res);
-      dispatch({ type: GET_INSTRUCTOR_CLASS_BY_ID_SUCCESS, payload: res.data });
+      const filteredData = res.data.filter(
+        (workout) => workout.username === currentUsername,
+      );
+      dispatch({ type: GET_CLASSES_INSTRUCTOR_SUCCESS, payload: filteredData });
     })
     .catch((err) => {
       dispatch({
-        type: GET_INSTRUCTOR_CLASS_BY_ID_FAILURE,
+        type: GET_CLASSES_INSTRUCTOR_FAILURE,
         payload: err.message,
       });
     });

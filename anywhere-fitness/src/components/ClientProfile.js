@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react' 
 import styled from 'styled-components'; // eslint-disable-next-line
 import { connect } from 'react-redux';
-import { getClientClassById, signupClass, quitClass } from '../actions';
+import { getClientClassById, signupClass, quitClass, searchForClass } from '../actions';
 import { useParams } from 'react-router-dom';
 
 import SearchBar from './SearchBar';
@@ -108,8 +108,8 @@ const ClientProfile = props => { // eslint-disable-next-line
   },[]);
 
   const searchFor = () => {
-    console.log(searchValue);
-    
+    console.log('search values', searchValue);
+    props.searchForClass();
     setSearchValue(initialSearchValues);
   };
 
@@ -166,4 +166,4 @@ const mapStateToProps = state => {
   } 
 }
 
-export default connect(mapStateToProps, { getClientClassById, signupClass, quitClass })(ClientProfile);
+export default connect(mapStateToProps, { getClientClassById, signupClass, quitClass, searchForClass })(ClientProfile);

@@ -189,4 +189,24 @@ export const getClassById = (id) => (dispatch) => {
   dispatch({ type: GET_CLASS_BY_ID_START });
 };
 
+export const SEARCH_START = "SEARCH_START";
+export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
+export const SEARCH_FAILURE = "SEARCH_FAILURE";
 
+export const searchForClass = ( dropValue, textValue ) => dispatch => {
+  dispatch({ type: SEARCH_START })
+
+  axiosAuth()
+  .get(`/api/classes/`)
+  .then(res => {
+    dispatch({ type: SEARCH_SUCCESS, payload: res.data })
+    console.log(res)
+  })
+  .catch(err => {
+    dispatch({ type: SEARCH_FAILURE, payload: err.message })
+    console.log(err)
+  })
+  // get all classes,
+  // filter by dropValue
+  // return classes containing === drop value
+}

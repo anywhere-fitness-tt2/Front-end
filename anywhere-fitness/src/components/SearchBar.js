@@ -33,18 +33,16 @@ const { searchValue, setSearchValue, searchFor } = props;
 
 const handleChange = event => {
   const { name, value } = event.target;
-  
-  console.log('change value')
   setSearchValue({
     ...searchValue,
     [name] :  value
-  })
-}
+  });
+};
 
 const handleSubmit = event => {
   event.preventDefault();
   searchFor();
-}
+};
 
   return (
     <StyledSearchBar onSubmit={handleSubmit}>

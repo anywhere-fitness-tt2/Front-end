@@ -85,9 +85,13 @@ min-height: 88vh;
 }
 `
 
+const initialSearchValues = {
+  dropValue:"", textValue:""
+}
+
 const ClientProfile = props => { // eslint-disable-next-line
   const [ workouts, setWorkouts ] = useState([]);
-  const [ searchValue, setSearchValue ] = useState("");
+  const [ searchValue, setSearchValue ] = useState(initialSearchValues);
 
   //turn onboarding On and Off.
   const [displayOnboard, setDisplayOnboard] = useState(true);
@@ -105,7 +109,8 @@ const ClientProfile = props => { // eslint-disable-next-line
 
   const searchFor = () => {
     console.log(searchValue);
-    setSearchValue("");
+    
+    setSearchValue(initialSearchValues);
   };
 
   const leaveClass = id => {

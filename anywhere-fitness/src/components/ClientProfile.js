@@ -15,14 +15,14 @@ align-items:center;
 background:url('https://i.imgur.com/8FndkHz.jpg');
 background-size: cover;
 background-repeat: no-repeat;
-min-height: 100vh;
+min-height: 88vh;
 
   h1 {
     background-color: ${(props) => props.theme.midGray};
     font-family: ${(props) => props.theme.titleFont};
     color: ${(props) => props.theme.yellow};
     font-size: 3rem;
-    padding: 2% 3%;
+    padding: 2% 4%;
   }
 
   h2 {
@@ -42,7 +42,9 @@ min-height: 100vh;
 .classContainer {
   display:flex;
   flex-flow: row wrap;
-  justify-content:space-between;
+  justify-content:center;
+  min-width: 80%;
+  margin:auto;
 }
 
 .classCard {
@@ -52,14 +54,19 @@ min-height: 100vh;
   color: whitesmoke;
   background:${(props) => props.theme.midGray};
   font-family: ${(props) => props.theme.bodyFont};
-  padding: 10px;
+  border: #FAED26 2px solid;
 
   h2 {
     padding:0px 15px;
+    text-decoration:underline;
   }
 
   .label {
+    margin:3px;
+    margin-bottom: -8px;
     color: ${(props) => props.theme.yellow};
+    letter-spacing: 2px;
+    font-size: 1.3rem;
   }
 
   button {
@@ -67,6 +74,7 @@ min-height: 100vh;
     border: #FAED26 2px solid;
     color: whitesmoke;
     padding: 5px;
+    margin-bottom: 5px;
 
     &:hover {
       color: ${(props) => props.theme.midGray};

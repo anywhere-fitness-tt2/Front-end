@@ -5,6 +5,7 @@ const StyledClassCard = styled.div`
 display:flex;
 flex-flow:column nowrap;
 align-items:center;
+
 `
 
 const ClientClassCard = props => { //eslint-disable-next-line
@@ -12,14 +13,19 @@ const ClientClassCard = props => { //eslint-disable-next-line
 
   return (
     <StyledClassCard className="classCard">
-      <h2 className="label">{name}</h2>
-      <p className="label">Exercise Type: {type}</p>
-      <p className="label">Time: {time}</p>
-      <p className="label">Duration: {duration}</p>
-      <p className="label">Intensity: {intensityLvl}</p>
-      <p className="label">Location: {location}</p>
-      <p className="label">Attending: {attendees}</p>
-      <p className="label">Class Limit: {maxSize}</p>
+      <h2 className="title">{name}</h2>
+      <h3 className="label">Time</h3>
+      <p>{time}</p>
+      <h3 className="label">Duration</h3>
+      <p>{duration}</p>
+      <h3 className="label">Intensity</h3>
+      <p>{intensityLvl}</p>
+      <h3 className="label">Location</h3>
+      <p>{location}</p>
+      <h3 className="label">Attending</h3>
+      <p>{attendees}</p>
+      <h3 className="label">Class Limit</h3>
+      <p>{maxSize}</p>
       <button onClick={leaveClass}>Leave Class</button>
     </StyledClassCard>
   )

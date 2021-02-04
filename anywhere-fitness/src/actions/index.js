@@ -201,16 +201,12 @@ export const searchForClass = ({ dropValue, textValue }) => dispatch => {
   .then(res => {
     console.log('api action', res)
     const searchData = res.data.filter( workout => {
+
       for ( const [ key , value ] of Object.entries(workout)) {
-        console.log(`${key},${value} ||| ${dropValue}, ${textValue}`)
         if(key === dropValue && value == textValue){
-          console.log('MATCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
           return workout;
-          
         }
-        
       }
-      return workout
     })
     dispatch({ type: SEARCH_SUCCESS, payload: searchData})
 

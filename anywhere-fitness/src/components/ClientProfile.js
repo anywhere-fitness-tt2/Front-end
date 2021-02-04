@@ -99,8 +99,8 @@ const ClientProfile = props => { // eslint-disable-next-line
     setDisplayOnboard(!displayOnboard)
   };
 
-  const { id } = useParams();
 
+  const { id } = useParams();
   useEffect(() => {
     props.getClientClassById(id);
       setWorkouts(props.clientClasses);
@@ -108,8 +108,6 @@ const ClientProfile = props => { // eslint-disable-next-line
   },[]);
 
   const searchFor = () => {
-    console.log('search values', searchValue);
-    const { dropValue, textValue } = searchValue;
     props.searchForClass(searchValue);
     setSearchValue(initialSearchValues);
   };
@@ -139,9 +137,18 @@ const ClientProfile = props => { // eslint-disable-next-line
           color:'#FAED26',
           backgroundColor:'#252629'
         }}>Turn Onboarding On</button>
-      <h2>Upcoming Workouts!</h2>
+        {props.classes && null ? null : (
+          <div className="searchResults">
+            {
+            props.classes.map( workout => {
+              return <h2 key={workout.id}>{workout.name}</h2>
+            })
+            }
+          </div>
+        )}
+      <h2>Upcoming Workouts</h2>
         <div className="classContainer">
-          {props.isLoading && !undefined? <h2>Loading Classes...</h2> : (
+          {props.isLoading && !undefined ? <h2>Loading Classes...</h2> : (
           workouts.map(workout => {
             return (
               <ClientClassCard
@@ -163,7 +170,8 @@ const mapStateToProps = state => {
   loggingIn: state.loginReducer.logginIn,
   isLoading: state.clientReducer.isLoading,
   clientClasses: state.clientReducer.clientClasses,
-  error:state.clientReducer.error
+  error:state.clientReducer.error,
+  classes:state.searchReducer.classes
   } 
 }
 

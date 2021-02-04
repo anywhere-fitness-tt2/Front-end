@@ -193,25 +193,25 @@ export const SEARCH_START = "SEARCH_START";
 export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
 export const SEARCH_FAILURE = "SEARCH_FAILURE";
 
-export const searchForClass = ( dropValue, textValue ) => dispatch => {
-   dispatch({ type: SEARCH_START })
+export const searchForClass = ({ dropValue, textValue }) => dispatch => {
+  dispatch({ type: SEARCH_START })
 
   axiosAuth()
   .get(`/api/classes/`)
   .then(res => {
     console.log('api action', res)
-    const searchData = [];
-    res.data.map(workout => {
-      Object.entries(workout => {
-        if (workout === dropValue && dropValue.value === textValue) {
-          searchData.push(workout);
+    const searchData = res.data.filter( workout => {
+      for ( const [ key , value ] of Object.entries(workout)) {
+        console.log(`${key},${value} ||| ${dropValue}, ${textValue}`)
+        if(key === dropValue && value == textValue){
+          console.log('MATCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+          return workout;
+          
         }
-        return workout;
-      })
-      return searchData;
+        
+      }
+      return workout
     })
-
-    console.log('filtered data', searchData)
     dispatch({ type: SEARCH_SUCCESS, payload: searchData})
 
   })

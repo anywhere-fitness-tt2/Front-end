@@ -109,7 +109,8 @@ const ClientProfile = props => { // eslint-disable-next-line
 
   const searchFor = () => {
     console.log('search values', searchValue);
-    props.searchForClass();
+    const { dropValue, textValue } = searchValue;
+    props.searchForClass(searchValue);
     setSearchValue(initialSearchValues);
   };
 

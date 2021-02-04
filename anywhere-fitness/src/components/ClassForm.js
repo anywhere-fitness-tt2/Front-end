@@ -20,95 +20,79 @@ const ClassForm = ({ formValues, handleChange, handleClassSubmit }) => {
       <FormWrapper>
         <form className={hidden} onSubmit={handleClassSubmit}>
           <div className='form-input'>
-            <label htmlFor='name'> Name :</label>
+            <label htmlFor='name'> Name:</label>
             <input
               type='text'
               name='name'
-              placeholder='Enter Name'
               onChange={handleChange}
               value={formValues.name}
             />
           </div>
           <div className='form-input'>
-            <label htmlFor='type'>Type :</label>
+            <label htmlFor='type'>Excercise Type:</label>
             <input
               type='text'
               name='type'
               className='form-input'
-              placeholder='Enter Type'
               onChange={handleChange}
               value={formValues.type}
             />
           </div>
           <div className='form-input'>
-            <label htmlFor='time'>Time :</label>
+            <label htmlFor='time'>Time:</label>
             <input
               type='time'
               name='time'
               className='form-input'
-              placeholder='Enter Time'
               onChange={handleChange}
               value={formValues.time}
             />
           </div>
           <div className='form-input'>
-            <label htmlFor='duration'>Duration :</label>
+            <label htmlFor='duration'>Duration:</label>
             <input
               type='text'
               name='duration'
               className='form-input'
-              placeholder='Enter Duration'
               onChange={handleChange}
               value={formValues.duration}
             />
           </div>
           <div className='form-input'>
-            <label htmlFor='intensityLvl'>Intensity :</label>
-            <input
-              type='range'
-              min='0'
-              max='10'
-              name='intensityLvl'
+            <label htmlFor='intensityLvl'>Intensity:</label>
+            <select
               className='form-input'
-              placeholder='Enter Intensity'
               onChange={handleChange}
               value={formValues.intensityLvl}
-            />
+              name='intensityLvl'
+            >
+              <option value=''>--- Intensity ---</option>
+              <option value='Easy'>Easy</option>
+              <option value='Normal'>Normal</option>
+              <option value='Extreme'>Extreme</option>
+            </select>
           </div>
           <div className='form-input'>
-            <label htmlFor='location'>Location :</label>
+            <label htmlFor='location'>Location:</label>
             <input
               type='text'
               name='location'
               className='form-input'
-              placeholder='Enter Location'
               onChange={handleChange}
               value={formValues.location}
             />
           </div>
-          {/* <label className="formLabel"> Attending :
-          <input
-          type="number"
-          name="attendees"
-          className="form-input"
-          placeholder="Enter Attendees"
-          onChange={handleChange}
-          value={formValues.attendees}
-          />
-        </label> */}
           <div className='form-input'>
-            <label htmlFor='maxSize'>Class Limit :</label>
+            <label htmlFor='maxSize'>Attendance Limit:</label>
             <input
               type='number'
               name='maxSize'
               className='form-input'
-              placeholder='Enter Class Limit'
               onChange={handleChange}
               value={formValues.maxSize}
             />
           </div>
-
-          <button className='submitBtn'>Add Class!</button>
+          <button className='submitBtn'>Add Class</button>
         </form>
       </FormWrapper>
     </Container>
@@ -166,15 +150,15 @@ const FormWrapper = styled.div`
 
     input {
       text-align: center;
-      padding: 5px;
       margin: 8px;
-      background-color: ${(props) => props.theme.midGray};
-      border: 1px solid ${(props) => props.theme.yellow};
+      background-color: ${(props) => props.theme.lightGray};
       color: whitesmoke;
+    }
 
-      &::placeholder {
-        color: whitesmoke;
-      }
+    select {
+      text-align: center;
+      margin: 8px;
+      background-color: ${(props) => props.theme.lightGray};
     }
   }
 

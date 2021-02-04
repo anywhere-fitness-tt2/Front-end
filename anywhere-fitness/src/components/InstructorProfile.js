@@ -1,13 +1,12 @@
-// eslint-disable-next-line
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-// import { useParams } from 'react-router-dom';
 
 import InstructorClassCard from './InstructorClassCard';
 import InstructorEditClass from './InstructorEditClass';
 import ClassForm from './ClassForm';
 import { getInstructorClasses } from '../actions';
+import { createClass } from '../actions';
 
 const initialFormValues = {
   name: '',
@@ -16,19 +15,14 @@ const initialFormValues = {
   duration: '',
   intensityLvl: '',
   location: '',
-  attendees: '',
+  attendees: 0,
   maxSize: '',
 };
 
 const InstructorProfile = (props) => {
-  // eslint-disable-next-line
-  const [formValues, setFormValues] = useState(initialFormValues); // eslint-disable-next-line
-  // const [workouts, setWorkouts] = useState([]); // eslint-disable-next-line
-  // const [userWorkouts, setUserWorkouts] = useState(initialWorkouts); // eslint-disable-next-line
+  const [formValues, setFormValues] = useState(initialFormValues);
   const [isEditing, setIsEditing] = useState(false);
   const [workoutToEdit, setWorkoutToEdit] = useState('');
-
-  // const { id } = useParams();
 
   useEffect(() => {
     props.getInstructorClasses(props.user.username);
@@ -46,8 +40,10 @@ const InstructorProfile = (props) => {
   const handleClassSubmit = (event) => {
     event.preventDefault();
     console.log('form submitted!');
-    // no action yet, addClass
-    // history.push to instructor profile
+    const newClass = {
+      ...formValues,
+    };
+    props.createClass(newClass, props.user.username);
   };
 
   const editWorkout = (workout) => {
@@ -66,8 +62,6 @@ const InstructorProfile = (props) => {
     console.log('workout deleted');
     setIsEditing(false);
   };
-
-  console.log(props.classes);
 
   return (
     <Container>
@@ -112,7 +106,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { getInstructorClasses })(
+export default connect(mapStateToProps, { getInstructorClasses, createClass })(
   InstructorProfile,
 );
 

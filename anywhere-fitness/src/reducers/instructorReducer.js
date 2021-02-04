@@ -24,14 +24,18 @@ export const instructorReducer = (state = initialState, action) => {
     case CREATE_CLASS_START:
       return {
         ...state,
+        isLoading: true,
       };
     case CREATE_CLASS_SUCCESS:
       return {
         ...state,
+        isLoading: false,
       };
     case CREATE_CLASS_FAILURE:
       return {
         ...state,
+        isLoading: false,
+        error: action.payload,
       };
     case UPDATE_CLASS_START:
       return {

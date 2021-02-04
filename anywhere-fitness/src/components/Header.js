@@ -28,12 +28,12 @@ function Header(props) {
     push('/');
   };
 
+  const inSetting = location.pathname === '/' ? fadeIn : true;
+  const timeoutSetting = location.pathname === '/' ? 1000 : 0;
+
   return (
     <Container>
-      <Fade
-        in={location.pathname === '/' ? fadeIn : true}
-        timeout={location.pathname === '/' ? 1000 : 0}
-      >
+      <Fade in={inSetting} timeout={timeoutSetting}>
         <div onClick={() => push('/')} className='logo'>
           <h1>
             Anywhere<span>Fitness</span>
@@ -42,31 +42,19 @@ function Header(props) {
       </Fade>
       {localStorage.getItem('token') ? (
         <div className='buttons'>
-          <Fade
-            in={location.pathname === '/' ? fadeIn : true}
-            timeout={location.pathname === '/' ? 1000 : 0}
-          >
+          <Fade in={inSetting} timeout={timeoutSetting}>
             <button onClick={profileClickHandler}>Profile</button>
           </Fade>
-          <Fade
-            in={location.pathname === '/' ? fadeIn : true}
-            timeout={location.pathname === '/' ? 1000 : 0}
-          >
+          <Fade in={inSetting} timeout={timeoutSetting}>
             <button onClick={logOutHandler}>Logout</button>
           </Fade>
         </div>
       ) : (
         <div className='buttons'>
-          <Fade
-            in={location.pathname === '/' ? fadeIn : true}
-            timeout={location.pathname === '/' ? 1000 : 0}
-          >
+          <Fade in={inSetting} timeout={timeoutSetting}>
             <button onClick={() => push('/registration')}>Sign up</button>
           </Fade>
-          <Fade
-            in={location.pathname === '/' ? fadeIn : true}
-            timeout={location.pathname === '/' ? 1000 : 0}
-          >
+          <Fade in={inSetting} timeout={timeoutSetting}>
             <button onClick={() => push('/login')}>Login</button>
           </Fade>
         </div>

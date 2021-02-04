@@ -4,14 +4,28 @@ import styled from 'styled-components';
 
 
 const StyledSearchBar = styled.form`
+font-family: ${(props) => props.theme.bodyFont};
+border: #FAED26 1px solid;
+margin: 0px 25px;
 
-#searchBar {
+.searchInput {
   text-align:center;
-  border-radius: 10px;
+  padding: 5px 10px;
+  color:${(props) => props.theme.midGray};
+  font-size: 1rem;
 }
 
-.search {
-  border-radius: 10px;
+.searchBtn {
+  
+  background:${(props) => props.theme.midGray};
+  border-left: #FAED26 2px solid;
+  color: whitesmoke;
+  padding: 5px;
+
+  &:hover {
+    color: ${(props) => props.theme.midGray};
+    background:${(props) => props.theme.yellow};
+  }
 }
 `
 const SearchBar = props => {
@@ -31,13 +45,13 @@ const handleSubmit = event => {
     <StyledSearchBar onSubmit={handleSubmit}>
       <input
       type="text"
-      id="searchBar"
-      name="searchBar"
+      className="searchInput"
+      name="searchInput"
       placeholder="Search for Workouts..."
       onChange={handleChange}
       value={searchValue}
       />
-      <button className="search">Search</button>
+      <button className="searchBtn">Search</button>
     </StyledSearchBar>
   )
 }

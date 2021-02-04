@@ -8,37 +8,36 @@ import { useParams } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import ClientClassCard from './ClientClassCard';
 
-// const initialWorkouts = [
-//   {
-//     id:123, // added id for dummy data
-//     name:"Billy's Bootcamp",
-//     type:"Boxing",
-//     time:"2pm", // use datetime input for instructor form?
-//     duration:"3 minutes",
-//     intensityLvl:"Medium",
-//     location:"Billy's Basement",
-//     attendees:"3",
-//     maxSize:"6"
-//   },
-//   {
-//     id: 321, // added id for dummy data
-//     name:"Gump's Cross Country",
-//     type:"Running",
-//     time:"3pm", // use datetime input for instructor form?
-//     duration:"1 Year",
-//     intensityLvl:"High",
-//     location:"Highway 61",
-//     attendees:"1",
-//     maxSize:"20"
-//   },
-// ]
-
 const StyledClientProfile = styled.div`
 display:flex;
 flex-flow:column nowrap;
-background-color:grey;
 align-items:center;
-height: 100vh;
+background:url('https://i.imgur.com/8FndkHz.jpg');
+background-size: cover;
+background-repeat: no-repeat;
+min-height: 100vh;
+
+  h1 {
+    background-color: ${(props) => props.theme.midGray};
+    font-family: ${(props) => props.theme.titleFont};
+    color: ${(props) => props.theme.yellow};
+    font-size: 3rem;
+    padding: 2% 3%;
+  }
+
+  h2 {
+    background-color: ${(props) => props.theme.midGray};
+    font-family: ${(props) => props.theme.titleFont};
+    color: ${(props) => props.theme.yellow};
+    font-size: 2.5rem;
+    padding: 2% 3%;
+  }
+
+.searchContainer {
+  background-color: ${(props) => props.theme.midGray};
+  padding: 10px 20px;
+  border: 2px #FAED26 solid;
+}
 
 .classContainer {
   display:flex;
@@ -48,10 +47,32 @@ height: 100vh;
 
 .classCard {
   display:flex;
+  flex-flow: column nowrap;
+  text-align:center;
+  color: whitesmoke;
+  background:${(props) => props.theme.midGray};
+  font-family: ${(props) => props.theme.bodyFont};
   padding: 10px;
-  margin: 20px;
-  color: cornsilk;
-  background:green;
+
+  h2 {
+    padding:0px 15px;
+  }
+
+  .label {
+    color: ${(props) => props.theme.yellow};
+  }
+
+  button {
+    background:${(props) => props.theme.midGray};
+    border: #FAED26 2px solid;
+    color: whitesmoke;
+    padding: 5px;
+
+    &:hover {
+      color: ${(props) => props.theme.midGray};
+      background:${(props) => props.theme.yellow};
+    }
+  }
 }
 `
 
@@ -84,19 +105,20 @@ const ClientProfile = props => { // eslint-disable-next-line
   return (
     <StyledClientProfile>
       <h1>Welcome! {props.user.username}</h1>
-      <SearchBar
-      searchValue={searchValue}
-      setSearchValue={setSearchValue}
-      searchFor={searchFor}
-      />
+      <div className="searchContainer">
+        <SearchBar
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+        searchFor={searchFor}
+        />
+      </div>
     <h2>Upcoming Workouts!</h2>
       <div className="classContainer">
-      { props.isLoading && !undefined? <h2>Loading Classes...</h2> : (
+        {props.isLoading && !undefined? <h2>Loading Classes...</h2> : (
         workouts.map(workout => {
           return (
             <ClientClassCard
             key={workout.id}
-            className="classCard"
             workout={workout}
             leaveClass={leaveClass}
             signUp={signUp}

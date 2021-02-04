@@ -128,6 +128,16 @@ const Container = styled.div`
 
   .hide-button {
     padding: 15px 25px;
+    margin: 8px auto;
+    width: 200px;
+    background-color: ${(props) => props.theme.midGray};
+    border: 1px solid ${(props) => props.theme.yellow};
+    color: whitesmoke;
+
+    &:hover {
+      background-color: ${(props) => props.theme.yellow};
+      color: ${(props) => props.theme.midGray};
+    }
   }
 `;
 
@@ -137,11 +147,11 @@ const FormWrapper = styled.div`
   justify-content: center;
   background-color: ${(props) => props.theme.midGray};
   margin: 20px;
-  padding: 20px;
 
   form {
     display: flex;
     flex-direction: column;
+    margin: 20px;
   }
 
   .form-input {

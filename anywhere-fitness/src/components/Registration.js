@@ -143,11 +143,20 @@ const Form = styled.form`
   }
 
   button {
-    background-color: ${(props) => props.theme.yellow};
+    background-color: ${(props) => props.theme.midGray};
+    border: 1px solid ${(props) => props.theme.yellow};
+    color: whitesmoke;
+    padding: 7px 0;
+
+    :hover {
+      background-color: ${(props) => props.theme.yellow};
+      color: ${(props) => props.theme.midGray};
+    }
   }
   //div button ("already have an account?")
   .button {
     padding: 4px 0;
+    margin-top: 5px;
     font-size: 0.9em;
     :hover {
       color: whitesmoke;

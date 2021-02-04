@@ -2,35 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+// import { useParams } from 'react-router-dom';
 
 import InstructorClassCard from './InstructorClassCard';
 import InstructorEditClass from './InstructorEditClass';
 import ClassForm from './ClassForm';
-
-const initialWorkouts = [
-  {
-    id: 123, // added id for dummy data
-    name: "Billy's Bootcamp",
-    type: 'Boxing',
-    time: '2pm', // use datetime input for instructor form?
-    duration: '3 minutes',
-    intensityLvl: 'Medium',
-    location: "Billy's Basement",
-    attendees: '3',
-    maxSize: '6',
-  },
-  {
-    id: 321, // added id for dummy data
-    name: "Gump's Cross Country",
-    type: 'Running',
-    time: '3pm', // use datetime input for instructor form?
-    duration: '1 Year',
-    intensityLvl: 'High',
-    location: 'Highway 61',
-    attendees: '1',
-    maxSize: '20',
-  },
-];
+import { getInstructorClasses } from '../actions';
 
 const initialFormValues = {
   name: '',
@@ -46,17 +23,17 @@ const initialFormValues = {
 const InstructorProfile = (props) => {
   // eslint-disable-next-line
   const [formValues, setFormValues] = useState(initialFormValues); // eslint-disable-next-line
-  const [workouts, setWorkouts] = useState(initialWorkouts); // eslint-disable-next-line
-  const [userWorkouts, setUserWorkouts] = useState(initialWorkouts); // eslint-disable-next-line
+  // const [workouts, setWorkouts] = useState([]); // eslint-disable-next-line
+  // const [userWorkouts, setUserWorkouts] = useState(initialWorkouts); // eslint-disable-next-line
   const [isEditing, setIsEditing] = useState(false);
   const [workoutToEdit, setWorkoutToEdit] = useState('');
 
-  // Will render upcoming classes by instructor id
-  // useEffect(() => {
+  // const { id } = useParams();
 
-  // no action yet, getallclassbyid
-
-  // },[])
+  useEffect(() => {
+    props.getInstructorClasses(props.user.username);
+    //eslint-disable-next-line
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -90,6 +67,8 @@ const InstructorProfile = (props) => {
     setIsEditing(false);
   };
 
+  console.log(props.classes);
+
   return (
     <Container>
       <h1>Welcome {props.user.username}</h1>
@@ -100,10 +79,10 @@ const InstructorProfile = (props) => {
       />
 
       <div className='classContainer'>
-        {workouts.map((workout) => {
+        {props.classes.map((workout) => {
           return (
             <InstructorClassCard
-              key={workout.id}
+              key={workout.classId}
               className='classCard'
               workout={workout}
               editWorkout={editWorkout}
@@ -129,13 +108,38 @@ const InstructorProfile = (props) => {
 const mapStateToProps = (state) => {
   return {
     user: state.loginReducer.user,
+    classes: state.instructorReducer.instructorClasses,
   };
 };
 
-export default connect(mapStateToProps)(InstructorProfile);
+export default connect(mapStateToProps, { getInstructorClasses })(
+  InstructorProfile,
+);
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-image: url('https://i.imgur.com/8FndkHz.jpg');
+  background-size: cover;
+  min-height: 88vh;
+  max-height: 88vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  h1 {
+    background-color: ${(props) => props.theme.midGray};
+    color: ${(props) => props.theme.yellow};
+    padding: 15px 30px;
+    font-family: ${(props) => props.theme.titleFont};
+    font-size: 3rem;
+  }
+
+  ::-webkit-scrollbar {
+    width: 1em;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #252629;
+  }
 `;

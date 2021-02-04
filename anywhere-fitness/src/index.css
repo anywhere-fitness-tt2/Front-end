@@ -10,3 +10,7 @@ body::-webkit-scrollbar-thumb {
   background-color: #252629;
   outline: 1px solid slategrey;
 }
+
+.MuiStepLabel-label{
+  color: whitesmoke !important;
+}

@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 
 import SearchBar from './SearchBar';
 import ClientClassCard from './ClientClassCard';
+import CustomizedSteppers from '../components/Onboarding';
 
 // const initialWorkouts = [
 //   {
@@ -59,6 +60,12 @@ const ClientProfile = props => { // eslint-disable-next-line
   const [ workouts, setWorkouts ] = useState([]);
   const [ searchValue, setSearchValue ] = useState("");
 
+  //turn onboarding On and Off.
+  const [displayOnboard, setDisplayOnboard] = useState(true);
+  const onboardSwitch = () => {
+    setDisplayOnboard(!displayOnboard)
+  };
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -66,27 +73,35 @@ const ClientProfile = props => { // eslint-disable-next-line
       setWorkouts(props.clientClasses)
   //eslint-disable-next-line
   },[]);
+
   
   return (
-    <StyledClientProfile>
-      <h1>Welcome! {props.user.username}</h1>
-      <SearchBar
-      searchValue={searchValue}
-      setSearchValue={setSearchValue}
-      />
-    <h2>Upcoming Workouts!</h2>
-      <div className="classContainer">
-      { props.isLoading ? <h2>Loading Classes...</h2> : (
-        workouts.map(workout => {
-          return (
-            <ClientClassCard
-            key={workout.id}
-            className="classCard"
-            workout={workout}
-            />
-          )}))}
-      </div>
-    </StyledClientProfile>
+    <>
+      <StyledClientProfile>
+        <h1>Welcome! {props.user.username}</h1>
+        <button onClick={onboardSwitch} style={{
+          color:'#FAED26',
+          backgroundColor:'#252629'
+        }}>Turn Onboarding On</button>
+        <SearchBar
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+        />
+      <h2>Upcoming Workouts!</h2>
+        <div className="classContainer">
+        { props.isLoading ? <h2>Loading Classes...</h2> : (
+          workouts.map(workout => {
+            return (
+              <ClientClassCard
+              key={workout.id}
+              className="classCard"
+              workout={workout}
+              />
+            )}))}
+        </div>
+      </StyledClientProfile>
+      {displayOnboard && <CustomizedSteppers onboardSwitch={onboardSwitch} />}
+    </>
   )
 }
 

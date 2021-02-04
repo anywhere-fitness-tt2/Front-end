@@ -23,8 +23,8 @@ const Registration = (props) => {
 
   const registerRedirect = (id, role) => {
     role === 'instructor'
-      ? push(`/instructor-profile/${id}`)
-      : push(`/client-profile/${id}`);
+      ? push(`/instructor-profile/${id}/onboarding`)
+      : push(`/client-profile/${id}/onboarding`);
   };
 
   const onSubmit = (evt) => {

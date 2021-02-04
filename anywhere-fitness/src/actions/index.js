@@ -61,31 +61,42 @@ export const CREATE_CLASS_START = 'CREATE_CLASS_START';
 export const CREATE_CLASS_SUCCESS = 'CREATE_CLASS_SUCCESS';
 export const CREATE_CLASS_FAILURE = 'CREATE_CLASS_FAILURE';
 
-export const createClass = (newClass, currentUsername) => (dispatch) => {
+export const createClass = (formValues, currentUsername) => (dispatch) => {
   dispatch({ type: CREATE_CLASS_START });
 
   axiosAuth()
-    .post('/api/classes/', newClass)
+    .post('/api/classes/', formValues)
     .then((res) => {
-      dispatch({ type: CREATE_CLASS_SUCCESS, payload: res.data });
+      console.log(res.data);
+      const test = res.data.classId;
+      dispatch({
+        type: CREATE_CLASS_SUCCESS,
+        payload: res.data,
+      });
       axiosAuth()
-        .get('api/classes/')
+        .post('/api/users/enrollment', { classId: test })
         .then((res) => {
-          console.log(res);
-          const filteredData = res.data.filter(
-            (workout) => workout.username === currentUsername,
-          );
-          dispatch({
-            type: GET_CLASSES_INSTRUCTOR_SUCCESS,
-            payload: filteredData,
-          });
+          axiosAuth()
+            .get('/api/classes/')
+            .then((res) => {
+              console.log(res.data);
+              const filteredData = res.data.filter(
+                (workout) => workout.username === currentUsername,
+              );
+              console.log(filteredData);
+              dispatch({
+                type: GET_CLASSES_INSTRUCTOR_SUCCESS,
+                payload: filteredData,
+              });
+            })
+            .catch((err) => {
+              dispatch({
+                type: GET_CLASSES_INSTRUCTOR_FAILURE,
+                payload: err.message,
+              });
+            });
         })
-        .catch((err) => {
-          dispatch({
-            type: GET_CLASSES_INSTRUCTOR_FAILURE,
-            payload: err.message,
-          });
-        });
+        .catch((err) => console.log(err.response));
     })
     .catch((err) => {
       dispatch({ type: CREATE_CLASS_FAILURE, payload: err.message });
@@ -117,38 +128,38 @@ export const SIGNUP_CLASS_START = 'SIGNUP_CLASS_START';
 export const SIGNUP_CLASS_SUCCESS = 'SIGNUP_CLASS_SUCCESS';
 export const SIGNUP_CLASS_FAILURE = 'SIGNUP_CLASS_FAILURE';
 
-export const signupClass = classId => (dispatch) => {
+export const signupClass = (classId) => (dispatch) => {
   dispatch({ type: SIGNUP_CLASS_START });
 
   axiosAuth()
-  .post('/api/users/enrollment', classId)
-  .then(res => {
-    dispatch({ type: SIGNUP_CLASS_SUCCESS, payload: res.data })
-    console.log(res)
-  })
-  .catch(err => {
-    dispatch({ type:SIGNUP_CLASS_FAILURE, payload: err.message })
-  })
+    .post('/api/users/enrollment', classId)
+    .then((res) => {
+      dispatch({ type: SIGNUP_CLASS_SUCCESS, payload: res.data });
+      console.log(res);
+    })
+    .catch((err) => {
+      dispatch({ type: SIGNUP_CLASS_FAILURE, payload: err.message });
+    });
 };
 
-export const QUIT_CLASS_START = "QUIT_CLASS_START";
-export const QUIT_CLASS_SUCCESS = "QUIT_CLASS_SUCCESS";
-export const QUIT_CLASS_FAILURE = "QUIT_CLASS_FAILURE"; 
+export const QUIT_CLASS_START = 'QUIT_CLASS_START';
+export const QUIT_CLASS_SUCCESS = 'QUIT_CLASS_SUCCESS';
+export const QUIT_CLASS_FAILURE = 'QUIT_CLASS_FAILURE';
 
-export const quitClass = classId => dispatch => {
-  dispatch({ type: QUIT_CLASS_START })
+export const quitClass = (classId) => (dispatch) => {
+  dispatch({ type: QUIT_CLASS_START });
 
   axiosAuth()
-  .delete(`/api/users/enrollment/${classId}`)
-  .then(res => {
-    dispatch({ type: QUIT_CLASS_SUCCESS, payload: res.data })
-    console.log(res)
-  })
-  .catch(err => {
-    dispatch({ type: QUIT_CLASS_FAILURE, payload: err.message })
-    console.log('quit fail', err)
-  })
-}
+    .delete(`/api/users/enrollment/${classId}`)
+    .then((res) => {
+      dispatch({ type: QUIT_CLASS_SUCCESS, payload: res.data });
+      console.log(res);
+    })
+    .catch((err) => {
+      dispatch({ type: QUIT_CLASS_FAILURE, payload: err.message });
+      console.log('quit fail', err);
+    });
+};
 
 export const GET_CLASSES_INSTRUCTOR_START = 'GET_CLASSES_INSTRUCTOR_START';
 export const GET_CLASSES_INSTRUCTOR_SUCCESS = 'GET_CLASSES_INSTRUCTOR_SUCCESS';
@@ -158,7 +169,7 @@ export const getInstructorClasses = (currentUsername) => (dispatch) => {
   dispatch({ type: GET_CLASSES_INSTRUCTOR_START });
 
   axiosAuth()
-    .get('api/classes/')
+    .get('/api/classes/')
     .then((res) => {
       const filteredData = res.data.filter(
         (workout) => workout.username === currentUsername,
@@ -188,5 +199,3 @@ export const GET_CLASS_BY_ID_FAILURE = 'GET_CLASS_BY_ID_FAILURE';
 export const getClassById = (id) => (dispatch) => {
   dispatch({ type: GET_CLASS_BY_ID_START });
 };
-
-

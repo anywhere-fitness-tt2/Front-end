@@ -67,9 +67,9 @@ const ClassForm = ({ formValues, handleChange, handleClassSubmit }) => {
               name='intensityLvl'
             >
               <option value=''>--- Intensity ---</option>
-              <option value='Easy'>Easy</option>
-              <option value='Normal'>Normal</option>
-              <option value='Extreme'>Extreme</option>
+              <option value='easy'>Easy</option>
+              <option value='normal'>Normal</option>
+              <option value='extreme'>Extreme</option>
             </select>
           </div>
           <div className='form-input'>

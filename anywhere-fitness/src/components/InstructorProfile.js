@@ -47,11 +47,8 @@ const InstructorProfile = (props) => {
 
   const handleClassSubmit = (event) => {
     event.preventDefault();
-    console.log('form submitted!');
-    const newClass = {
-      ...formValues,
-    };
-    props.createClass(newClass, props.user.username);
+    console.log(props.newClass);
+    props.createClass(formValues, props.user.username);
   };
 
   const editWorkout = (workout) => {
@@ -111,6 +108,7 @@ const mapStateToProps = (state) => {
   return {
     user: state.loginReducer.user,
     classes: state.instructorReducer.instructorClasses,
+    newClass: state.instructorReducer.newClass,
   };
 };
 

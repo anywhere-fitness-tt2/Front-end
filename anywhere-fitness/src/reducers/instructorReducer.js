@@ -16,6 +16,7 @@ import {
 const initialState = {
   instructorClasses: [],
   isLoading: false,
+  newClass: {},
   error: '',
 };
 
@@ -24,11 +25,13 @@ export const instructorReducer = (state = initialState, action) => {
     case CREATE_CLASS_START:
       return {
         ...state,
+        newClass: {},
         isLoading: true,
       };
     case CREATE_CLASS_SUCCESS:
       return {
         ...state,
+        newClass: action.payload,
         isLoading: false,
       };
     case CREATE_CLASS_FAILURE:

@@ -37,7 +37,7 @@ const StyledClientProfile = styled.div`
     background-color: ${(props) => props.theme.midGray};
     font-family: ${(props) => props.theme.titleFont};
     color: ${(props) => props.theme.yellow};
-    font-size: 2.5rem;
+    font-size: 1.7rem;
     padding: 2% 3%;
   }
 
@@ -128,16 +128,11 @@ const initialSearchValues = {
 };
 
 const ClientProfile = (props) => {
-  // eslint-disable-next-line
-  const [workouts, setWorkouts] = useState([]);
   const [searchValue, setSearchValue] = useState(initialSearchValues);
-
-  //turn onboarding On and Off.
 
   const { id } = useParams();
   useEffect(() => {
     props.getClientClassById(id);
-    setWorkouts(props.clientClasses);
     //eslint-disable-next-line
   }, []);
 
@@ -182,10 +177,10 @@ const ClientProfile = (props) => {
       )}
       <h2>Upcoming Workouts</h2>
       <div className='classContainer'>
-        {props.isLoading && !undefined ? (
+        {props.isLoading ? (
           <h2>Loading Classes...</h2>
         ) : (
-          workouts.map((workout) => {
+          props.clientClasses.map((workout) => {
             return (
               <ClientClassCard
                 key={workout.classId}

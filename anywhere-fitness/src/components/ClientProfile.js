@@ -57,7 +57,7 @@ min-height: 88vh;
   font-family: ${(props) => props.theme.bodyFont};
   border: #FAED26 2px solid;
   margin:10px;
-  flex-basis: 20%;
+  min-width: 400px;
 
   h2 {
     padding:0px 15px;
@@ -152,7 +152,7 @@ const ClientProfile = props => { // eslint-disable-next-line
           backgroundColor:'#252629'
         }}>Turn Onboarding On</button>
         {
-          props.classes && null ? null : (
+          props.classes.length === 0 ? null : (
           <section className="searchResults">
           <h2 className="searchHeader">Search Results</h2>
           <hr/>

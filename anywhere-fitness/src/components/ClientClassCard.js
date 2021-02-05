@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 const StyledClassCard = styled.div`
 display:flex;
@@ -10,7 +11,7 @@ align-items:center;
 
 const ClientClassCard = props => { //eslint-disable-next-line
   const { signUp, leaveClass, workout : { name, type, time, duration, intensityLvl , location, attendees, maxSize } } = props;
-
+  
   return (
     <StyledClassCard className="classCard">
       <h2 className="title">{name}</h2>
@@ -26,9 +27,20 @@ const ClientClassCard = props => { //eslint-disable-next-line
       <p>{attendees}</p>
       <h3 className="label">Class Limit</h3>
       <p>{maxSize}</p>
-      <button onClick={leaveClass}>Leave Class</button>
+      { console.log(props.clientClasses.includes(props.workout.id)) 
+      ? <button onClick={leaveClass}>Leave Class</button>
+      : <button onClick={signUp}>Sign Up</button>
+      }
+      
     </StyledClassCard>
   )
 }
 
-export default ClientClassCard;
+const mapStateToProps = state => {
+  return {
+    clientClasses: state.clientReducer.clientClasses,
+    classes: state.searchReducer.classes
+  }
+}
+
+export default connect(mapStateToProps,{})(ClientClassCard);

@@ -17,7 +17,7 @@ const StyledClientProfile = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  background: url('https://i.imgur.com/8FndkHz.jpg');
+  background-image: url(${(props) => props.theme.backgroundImage});
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 88vh;

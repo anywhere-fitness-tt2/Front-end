@@ -158,7 +158,7 @@ const Form = styled.form`
 `;
 
 const Container = styled.div`
-  background-image: url('https://i.imgur.com/8FndkHz.jpg');
+  background-image: url(${(props) => props.theme.backgroundImage});
   background-size: cover;
   background-repeat: no-repeat;
   height: 88vh;

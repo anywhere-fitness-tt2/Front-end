@@ -16,6 +16,7 @@ const theme = {
   tan: colors.tan,
   titleFont: `'Montserrat', sans-serif;`,
   bodyFont: `'Roboto Condensed', sans-serif;`,
+  backgroundImage: 'https://i.imgur.com/aBDb9qd.jpg',
 };
 
 export default theme;

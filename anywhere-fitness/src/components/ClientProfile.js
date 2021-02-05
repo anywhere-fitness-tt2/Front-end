@@ -8,7 +8,6 @@ import { useParams } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import ClientClassCard from './ClientClassCard';
 import SearchCard from './SearchCard';
-import CustomizedSteppers from '../components/Onboarding';
 
 const StyledClientProfile = styled.div`
   display: flex;

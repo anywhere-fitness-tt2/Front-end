@@ -2,10 +2,8 @@ import {
   CREATE_CLASS_START,
   CREATE_CLASS_SUCCESS,
   CREATE_CLASS_FAILURE,
-  UPDATE_CLASS_START,
-  UPDATE_CLASS_SUCCESS,
-  UPDATE_CLASS_FAILURE,
   DELETE_CLASS_START,
+  DELETE_CLASS_PROCESSING,
   DELETE_CLASS_SUCCESS,
   DELETE_CLASS_FAILURE,
   GET_CLASSES_INSTRUCTOR_START,
@@ -16,6 +14,8 @@ import {
 const initialState = {
   instructorClasses: [],
   isLoading: false,
+  deletingClass: {},
+  enrolledClasses: [],
   error: '',
 };
 
@@ -29,6 +29,7 @@ export const instructorReducer = (state = initialState, action) => {
     case CREATE_CLASS_SUCCESS:
       return {
         ...state,
+        newClass: action.payload,
         isLoading: false,
       };
     case CREATE_CLASS_FAILURE:
@@ -37,21 +38,15 @@ export const instructorReducer = (state = initialState, action) => {
         isLoading: false,
         error: action.payload,
       };
-    case UPDATE_CLASS_START:
-      return {
-        ...state,
-      };
-    case UPDATE_CLASS_SUCCESS:
-      return {
-        ...state,
-      };
-    case UPDATE_CLASS_FAILURE:
-      return {
-        ...state,
-      };
     case DELETE_CLASS_START:
       return {
         ...state,
+        deletingClass: action.payload,
+      };
+    case DELETE_CLASS_PROCESSING:
+      return {
+        ...state,
+        enrolledClasses: action.payload,
       };
     case DELETE_CLASS_SUCCESS:
       return {

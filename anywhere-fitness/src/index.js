@@ -17,6 +17,7 @@ import theme from './theme/theme';
 import ClientProfile from './components/ClientProfile';
 import InstructorProfile from './components/InstructorProfile';
 import PrivateRoute from './utils/PrivateRoute';
+import CustomizedSteppers from './components/Onboarding';
 
 import 'normalize.css';
 import './index.css';
@@ -33,6 +34,16 @@ ReactDOM.render(
       <Provider store={store}>
         <Header />
         <Switch>
+          <PrivateRoute
+            exact
+            path='/instructor-profile/:id/onboarding'
+            component={CustomizedSteppers}
+          />
+          <PrivateRoute
+            exact
+            path='/client-profile/:id/onboarding'
+            component={CustomizedSteppers}
+          />
           <PrivateRoute
             exact
             path='/instructor-profile/:id'

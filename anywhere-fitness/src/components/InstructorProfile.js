@@ -3,11 +3,9 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 import InstructorClassCard from './InstructorClassCard';
-import InstructorEditClass from './InstructorEditClass';
 import ClassForm from './ClassForm';
 
-import { getInstructorClasses } from '../actions';
-import { createClass } from '../actions';
+import { getInstructorClasses, createClass, deleteClass } from '../actions';
 
 const initialFormValues = {
   name: '',
@@ -22,20 +20,11 @@ const initialFormValues = {
 
 const InstructorProfile = (props) => {
   const [formValues, setFormValues] = useState(initialFormValues);
-  const [isEditing, setIsEditing] = useState(false);
-  const [workoutToEdit, setWorkoutToEdit] = useState('');
 
   useEffect(() => {
     props.getInstructorClasses(props.user.username);
     //eslint-disable-next-line
   }, []);
-
-  //turn onboarding On and Off.
-
-  // Will render upcoming classes by instructor id
-  // useEffect(() => {
-
-  // no action yet, getallclassbyid
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -47,28 +36,13 @@ const InstructorProfile = (props) => {
 
   const handleClassSubmit = (event) => {
     event.preventDefault();
-    console.log('form submitted!');
-    const newClass = {
-      ...formValues,
-    };
-    props.createClass(newClass, props.user.username);
+    console.log(props.newClass);
+    props.createClass(formValues, props.user.username);
+    setFormValues(initialFormValues);
   };
 
-  const editWorkout = (workout) => {
-    setIsEditing(true);
-    setWorkoutToEdit(workout);
-  };
-
-  const saveEdit = (workout) => {
-    // action needed
-    // put
-  };
-
-  const deleteWorkout = () => {
-    // action needed
-    // delete
-    console.log('workout deleted');
-    setIsEditing(false);
+  const deleteWorkout = (classId, workout) => {
+    props.deleteClass(classId, workout, props.user.userId, props.user.username);
   };
 
   return (
@@ -80,29 +54,18 @@ const InstructorProfile = (props) => {
         handleClassSubmit={handleClassSubmit}
       />
 
-      <div className='classContainer'>
+      <CardWrapper>
         {props.classes.map((workout) => {
           return (
             <InstructorClassCard
               key={workout.classId}
               className='classCard'
               workout={workout}
-              editWorkout={editWorkout}
               deleteWorkout={deleteWorkout}
             />
           );
         })}
-      </div>
-      <div className='editMenu'>
-        {isEditing && (
-          <InstructorEditClass
-            setIsEditing={setIsEditing}
-            workoutToEdit={workoutToEdit}
-            setWorkoutToEdit={setWorkoutToEdit}
-            saveEdit={saveEdit}
-          />
-        )}
-      </div>
+      </CardWrapper>
     </Container>
   );
 };
@@ -111,12 +74,15 @@ const mapStateToProps = (state) => {
   return {
     user: state.loginReducer.user,
     classes: state.instructorReducer.instructorClasses,
+    newClass: state.instructorReducer.newClass,
   };
 };
 
-export default connect(mapStateToProps, { getInstructorClasses, createClass })(
-  InstructorProfile,
-);
+export default connect(mapStateToProps, {
+  getInstructorClasses,
+  createClass,
+  deleteClass,
+})(InstructorProfile);
 
 const Container = styled.div`
   display: flex;
@@ -144,4 +110,10 @@ const Container = styled.div`
   ::-webkit-scrollbar-thumb {
     background-color: #252629;
   }
+`;
+
+const CardWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 `;

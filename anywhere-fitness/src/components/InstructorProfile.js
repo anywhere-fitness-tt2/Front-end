@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import InstructorClassCard from './InstructorClassCard';
 import ClassForm from './ClassForm';
 
-import { getInstructorClasses } from '../actions';
-import { createClass } from '../actions';
+import { getInstructorClasses, createClass, deleteClass } from '../actions';
 
 const initialFormValues = {
   name: '',
@@ -42,10 +41,8 @@ const InstructorProfile = (props) => {
     setFormValues(initialFormValues);
   };
 
-  const deleteWorkout = () => {
-    // action needed
-    // delete
-    console.log('workout deleted');
+  const deleteWorkout = (classId, workout) => {
+    props.deleteClass(classId, workout, props.user.userId, props.user.username);
   };
 
   return (
@@ -81,9 +78,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { getInstructorClasses, createClass })(
-  InstructorProfile,
-);
+export default connect(mapStateToProps, {
+  getInstructorClasses,
+  createClass,
+  deleteClass,
+})(InstructorProfile);
 
 const Container = styled.div`
   display: flex;

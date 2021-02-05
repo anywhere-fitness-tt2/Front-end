@@ -103,10 +103,6 @@ export const createClass = (formValues, currentUsername) => (dispatch) => {
     });
 };
 
-export const UPDATE_CLASS_START = 'UPDATE_CLASS_START';
-export const UPDATE_CLASS_SUCCESS = 'UPDATE_CLASS_SUCCESS';
-export const UPDATE_CLASS_FAILURE = 'UPDATE_CLASS_FAILURE';
-
 export const GET_CLIENT_CLASS_BY_ID_START = 'GET_CLIENT_CLASS_BY_ID_START';
 export const GET_CLIENT_CLASS_BY_ID_SUCCESS = 'GET_CLIENT_CLASS_BY_ID_SUCCESS';
 export const GET_CLIENT_CLASS_BY_ID_FAILURE = 'GET_CLIENT_CLASS_BY_ID_FAILURE';
@@ -185,11 +181,62 @@ export const getInstructorClasses = (currentUsername) => (dispatch) => {
 };
 
 export const DELETE_CLASS_START = 'DELETE_CLASS_START';
+export const DELETE_CLASS_PROCESSING = 'DELETE_CLASS_PROCESSING';
 export const DELETE_CLASS_SUCCESS = 'DELETE_CLASS_SUCCESS';
 export const DELETE_CLASS_FAILURE = 'DELETE_CLASS_FAILURE';
 
-export const deleteClass = (classId) => (dispatch) => {
-  dispatch({ type: DELETE_CLASS_START });
+export const deleteClass = (classId, workout, userId, currentUsername) => (
+  dispatch,
+) => {
+  dispatch({ type: DELETE_CLASS_START, payload: workout });
+  axiosAuth()
+    .get(`api/users/${userId}/classes`)
+    .then((res) => {
+      console.log(res);
+      dispatch({ type: DELETE_CLASS_PROCESSING, payload: res.data });
+      const filteredClasses = res.data.filter(
+        (event) => event.name === workout.name,
+      );
+      const enrollmentId = filteredClasses[0]['id'];
+      axiosAuth()
+        .delete(`/api/users/enrollment/${enrollmentId}`)
+        .then((res) => {
+          console.log(res.data);
+          axiosAuth()
+            .delete(`/api/classes/${classId}`)
+            .then((res) => {
+              dispatch({ type: DELETE_CLASS_SUCCESS });
+              console.log(res.data);
+              dispatch({ type: GET_CLASSES_INSTRUCTOR_START });
+              axiosAuth()
+                .get('/api/classes/')
+                .then((res) => {
+                  const filteredData = res.data.filter(
+                    (workout) => workout.username === currentUsername,
+                  );
+                  dispatch({
+                    type: GET_CLASSES_INSTRUCTOR_SUCCESS,
+                    payload: filteredData,
+                  });
+                })
+                .catch((err) => {
+                  dispatch({
+                    type: GET_CLASSES_INSTRUCTOR_FAILURE,
+                    payload: err.message,
+                  });
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+              dispatch({ type: DELETE_CLASS_FAILURE });
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => console.log(err));
+  console.log(workout);
 };
 
 export const GET_CLASS_BY_ID_START = 'GET_CLASS_BY_ID_START';

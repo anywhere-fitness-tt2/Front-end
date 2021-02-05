@@ -13,8 +13,13 @@ const InstructorClassCard = (props) => {
       location,
       attendees,
       maxSize,
+      classId,
     },
   } = props;
+
+  const deleteHandler = () => {
+    deleteWorkout(classId, props.workout);
+  };
 
   return (
     <ClassCard className='classCard'>
@@ -42,7 +47,7 @@ const InstructorClassCard = (props) => {
           <span>Class Limit:</span> {maxSize}
         </p>
       </div>
-      <button onClick={deleteWorkout}>Delete</button>
+      <button onClick={deleteHandler}>Delete</button>
     </ClassCard>
   );
 };
@@ -58,7 +63,7 @@ const ClassCard = styled.div`
   font-family: ${(props) => props.theme.bodyFont};
   width: 400px;
   background-color: ${(props) => props.theme.midGray};
-  margin: 20px 0;
+  margin: 20px;
   text-align: left;
   padding: 15px;
 

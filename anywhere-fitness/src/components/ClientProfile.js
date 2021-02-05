@@ -2,11 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'; // eslint-disable-next-line
 import { connect } from 'react-redux';
-import { getClientClassById, signupClass, quitClass } from '../actions';
+import { getClientClassById, signupClass, quitClass, searchForClass } from '../actions';
 import { useParams } from 'react-router-dom';
 
 import SearchBar from './SearchBar';
 import ClientClassCard from './ClientClassCard';
+import SearchCard from './SearchCard';
 
 const StyledClientProfile = styled.div`
   display: flex;
@@ -33,10 +34,34 @@ const StyledClientProfile = styled.div`
     padding: 2% 3%;
   }
 
-  .searchContainer {
-    background-color: ${(props) => props.theme.midGray};
-    padding: 10px 20px;
-    border: 2px #faed26 solid;
+
+.searchContainer {
+  background-color: ${(props) => props.theme.midGray};
+  padding: 10px 20px;
+  border: 2px #FAED26 solid;
+}
+
+.classContainer {
+  display:flex;
+  flex-flow: row wrap;
+  justify-content:center;
+  min-width: 80%;
+  margin:auto;
+}
+
+.classCard {
+  display:flex;
+  flex-flow: column nowrap;
+  text-align:center;
+  color: whitesmoke;
+  background:${(props) => props.theme.midGray};
+  font-family: ${(props) => props.theme.bodyFont};
+  margin:10px;
+  min-width: 400px;
+
+  h2 {
+    padding:0px 15px;
+
   }
 
   .classContainer {
@@ -82,17 +107,33 @@ const StyledClientProfile = styled.div`
       }
     }
   }
-`;
+}
 
-const ClientProfile = (props) => {
-  // eslint-disable-next-line
-  const [workouts, setWorkouts] = useState([]);
-  const [searchValue, setSearchValue] = useState('');
+.searchHeader {
+    text-align:center;
+  }
+
+.searchCardContainer {
+  display:flex;
+  flex-flow:row wrap;
+  justify-content:space-around;
+  align-items:stretch;
+  align-content:center;
+}
+`
+
+const initialSearchValues = {
+  dropValue:"", textValue:""
+}
+
+const ClientProfile = props => { // eslint-disable-next-line
+  const [ workouts, setWorkouts ] = useState([]);
+  const [ searchValue, setSearchValue ] = useState(initialSearchValues);
 
   //turn onboarding On and Off.
 
-  const { id } = useParams();
 
+  const { id } = useParams();
   useEffect(() => {
     props.getClientClassById(id);
     setWorkouts(props.clientClasses);
@@ -100,18 +141,21 @@ const ClientProfile = (props) => {
   }, []);
 
   const searchFor = () => {
-    console.log(searchValue);
-    setSearchValue('');
+
+    props.searchForClass(searchValue);
+    setSearchValue(initialSearchValues);
+
   };
 
   const leaveClass = (id) => {
     props.quitClass(id);
   };
 
-  const signUp = () => {
-    console.log('signed up!');
-    props.signupClass(id);
-  };
+  
+  const signUp = classId => {
+    props.signupClass(classId);
+  }
+
 
   return (
     <StyledClientProfile>
@@ -121,20 +165,35 @@ const ClientProfile = (props) => {
           searchValue={searchValue}
           setSearchValue={setSearchValue}
           searchFor={searchFor}
-        />
-      </div>
-      <h2>Upcoming Workouts!</h2>
-      <div className='classContainer'>
-        {props.isLoading && !undefined ? (
-          <h2>Loading Classes...</h2>
-        ) : (
-          workouts.map((workout) => {
+          />
+        </div>
+        {
+          props.classes.length === 0 ? null : (
+          <section className="searchResults">
+          <h2 className="searchHeader">Search Results</h2>
+            <div className="searchCardContainer">
+                {
+                props.classes.map( workout => {
+                  return (
+                    <SearchCard
+                      key={workout.classId}
+                      workout={workout}
+                      signUp={signUp}
+                      />
+                    )})}
+            </div>
+          </section>
+        )}
+      <h2>Upcoming Workouts</h2>
+        <div className="classContainer">
+          {props.isLoading && !undefined ? <h2>Loading Classes...</h2> : (
+          workouts.map(workout => {
             return (
               <ClientClassCard
-                key={workout.id}
-                workout={workout}
-                leaveClass={leaveClass}
-                signUp={signUp}
+              key={workout.classId}
+              workout={workout}
+              leaveClass={leaveClass}
+
               />
             );
           })
@@ -146,16 +205,14 @@ const ClientProfile = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.loginReducer.user,
-    loggingIn: state.loginReducer.logginIn,
-    isLoading: state.clientReducer.isLoading,
-    clientClasses: state.clientReducer.clientClasses,
-    error: state.clientReducer.error,
-  };
-};
 
-export default connect(mapStateToProps, {
-  getClientClassById,
-  signupClass,
-  quitClass,
-})(ClientProfile);
+  user: state.loginReducer.user,
+  loggingIn: state.loginReducer.logginIn,
+  isLoading: state.clientReducer.isLoading,
+  clientClasses: state.clientReducer.clientClasses,
+  error:state.clientReducer.error,
+  classes:state.searchReducer.classes
+  } 
+}
+
+export default connect(mapStateToProps, { getClientClassById, signupClass, quitClass, searchForClass })(ClientProfile);

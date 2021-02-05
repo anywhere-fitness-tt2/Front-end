@@ -5,6 +5,7 @@ import { logoutReducer } from './logoutReducer';
 import { registerReducer } from './registerReducer';
 import { instructorReducer } from './instructorReducer';
 import { clientReducer } from './clientReducer';
+import { searchReducer } from './searchReducer';
 
 export default combineReducers({
   // export reducers below
@@ -13,4 +14,5 @@ export default combineReducers({
   registerReducer,
   instructorReducer,
   clientReducer,
+  searchReducer,
 });

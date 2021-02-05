@@ -7,7 +7,7 @@ import { instructorReducer } from './instructorReducer';
 import { clientReducer } from './clientReducer';
 import { searchReducer } from './searchReducer';
 
-export default combineReducers({
+const rootReducer = combineReducers({
   // export reducers below
   loginReducer,
   logoutReducer,
@@ -16,3 +16,5 @@ export default combineReducers({
   clientReducer,
   searchReducer,
 });
+
+export default rootReducer;

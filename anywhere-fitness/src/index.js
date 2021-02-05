@@ -3,10 +3,6 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import logger from 'redux-logger';
-import reducer from './reducers';
 
 import App from './App';
 import Login from './components/Login';
@@ -22,11 +18,21 @@ import CustomizedSteppers from './components/Onboarding';
 import 'normalize.css';
 import './index.css';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(
-  reducer,
-  composeEnhancers(applyMiddleware(thunk, logger)),
-);
+import store from './utils/Store';
+
+const saveState = (state) => {
+  try {
+    const serializedState = JSON.stringify(state);
+    localStorage.setItem('state', serializedState);
+  } catch (err) {
+    // ...error handling
+  }
+};
+
+window.onbeforeunload = (e) => {
+  const state = store.getState();
+  saveState(state);
+};
 
 ReactDOM.render(
   <Router>

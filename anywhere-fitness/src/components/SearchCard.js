@@ -1,17 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledClassCard = styled.div`
+const StyledSearchCard = styled.div`
 display:flex;
 flex-flow:column nowrap;
 align-items:center;
+
 `
 
-const ClientClassCard = props => { //eslint-disable-next-line
-  const {leaveClass, workout : { name, type, time, duration, intensityLvl , location, attendees, maxSize} } = props;
+const SearchCard = props => { //eslint-disable-next-line
+  const { signUp, workout : { name, type, time, duration, intensityLvl , location, attendees, maxSize, classId } } = props;
+
+  const handleEnroll = () => {
+    console.log('signed up!!!!!')
+    signUp(classId)
+  }
 
   return (
-    <StyledClassCard className="classCard">
+    <StyledSearchCard className="classCard">
       <h2 className="title">{name}</h2>
       <h3 className="label">Time</h3>
       <p>{time}</p>
@@ -25,9 +31,9 @@ const ClientClassCard = props => { //eslint-disable-next-line
       <p>{attendees}</p>
       <h3 className="label">Class Limit</h3>
       <p>{maxSize}</p>
-      <button onClick={leaveClass}>Leave</button>
-    </StyledClassCard>
+      <button onClick={handleEnroll}>Sign Up</button>
+    </StyledSearchCard>
   )
 }
 
-export default ClientClassCard;
+export default SearchCard;

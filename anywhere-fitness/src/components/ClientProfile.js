@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 
 import SearchBar from './SearchBar';
 import ClientClassCard from './ClientClassCard';
+import SearchCard from './SearchCard';
 import CustomizedSteppers from '../components/Onboarding';
 
 const StyledClientProfile = styled.div`
@@ -55,13 +56,11 @@ min-height: 88vh;
   color: whitesmoke;
   background:${(props) => props.theme.midGray};
   font-family: ${(props) => props.theme.bodyFont};
-  border: #FAED26 2px solid;
   margin:10px;
   min-width: 400px;
 
   h2 {
     padding:0px 15px;
-    text-decoration:underline;
   }
 
   .label {
@@ -130,10 +129,9 @@ const ClientProfile = props => { // eslint-disable-next-line
     props.quitClass(id);
   };
   
-  const signUp = () => {
-    console.log('signed up!');
-    props.signupClass(id);
-  };
+  const signUp = classId => {
+    props.signupClass(classId);
+  }
 
   return (
     <>
@@ -155,15 +153,13 @@ const ClientProfile = props => { // eslint-disable-next-line
           props.classes.length === 0 ? null : (
           <section className="searchResults">
           <h2 className="searchHeader">Search Results</h2>
-          <hr/>
             <div className="searchCardContainer">
                 {
                 props.classes.map( workout => {
                   return (
-                    <ClientClassCard
-                      key={workout.id}
+                    <SearchCard
+                      key={workout.classId}
                       workout={workout}
-                      leaveClass={leaveClass}
                       signUp={signUp}
                       />
                     )})}
@@ -176,10 +172,9 @@ const ClientProfile = props => { // eslint-disable-next-line
           workouts.map(workout => {
             return (
               <ClientClassCard
-              key={workout.id}
+              key={workout.classId}
               workout={workout}
               leaveClass={leaveClass}
-              signUp={signUp}
               />
             )}))}
         </div>

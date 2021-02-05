@@ -88,7 +88,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: url('https://i.imgur.com/8FndkHz.jpg');
+  background-image: url(${(props) => props.theme.backgroundImage});
   background-size: cover;
   min-height: 88vh;
   max-height: 88vh;

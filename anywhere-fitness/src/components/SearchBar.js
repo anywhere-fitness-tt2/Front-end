@@ -32,24 +32,35 @@ const SearchBar = props => {
 const { searchValue, setSearchValue, searchFor } = props;
 
 const handleChange = event => {
-  const { value } = event.target;
-  setSearchValue(value)
-}
+  const { name, value } = event.target;
+  setSearchValue({
+    ...searchValue,
+    [name] :  value
+  });
+};
 
 const handleSubmit = event => {
   event.preventDefault();
   searchFor();
-}
+};
 
   return (
     <StyledSearchBar onSubmit={handleSubmit}>
+      <select className="searchInput" name="dropValue" onChange={handleChange} value={searchValue.dropValue}>
+        <option value=''>-----Select-----</option>
+        <option value='type'>Type</option>
+        <option value='duration'>Duration</option>
+        <option value='username'>Instructor</option>
+        <option value='intensityLvl'>Intensity</option>
+        <option value='location'>Location</option>
+      </select>
       <input
       type="text"
       className="searchInput"
-      name="searchInput"
-      placeholder="Search for Workouts..."
+      name="textValue"
+      placeholder="Search..."
       onChange={handleChange}
-      value={searchValue}
+      value={searchValue.textValue}
       />
       <button className="searchBtn">Search</button>
     </StyledSearchBar>

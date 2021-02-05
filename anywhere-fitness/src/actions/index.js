@@ -117,7 +117,7 @@ export const SIGNUP_CLASS_START = 'SIGNUP_CLASS_START';
 export const SIGNUP_CLASS_SUCCESS = 'SIGNUP_CLASS_SUCCESS';
 export const SIGNUP_CLASS_FAILURE = 'SIGNUP_CLASS_FAILURE';
 
-export const signupClass = classId => (dispatch) => {
+export const signupClass = classId => dispatch => {
   dispatch({ type: SIGNUP_CLASS_START });
 
   axiosAuth()
@@ -189,4 +189,30 @@ export const getClassById = (id) => (dispatch) => {
   dispatch({ type: GET_CLASS_BY_ID_START });
 };
 
+export const SEARCH_START = "SEARCH_START";
+export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
+export const SEARCH_FAILURE = "SEARCH_FAILURE";
 
+export const searchForClass = ({ dropValue, textValue }) => dispatch => {
+  dispatch({ type: SEARCH_START })
+
+  axiosAuth()
+  .get(`/api/classes/`)
+  .then(res => {
+    console.log('api action', res) //eslint-disable-next-line
+    const searchData = res.data.filter( workout => {
+
+      for ( const [ key , value ] of Object.entries(workout)) { //eslint-disable-next-line
+        if(key === dropValue && value == textValue){
+          return workout;
+        }
+      }
+    })
+    dispatch({ type: SEARCH_SUCCESS, payload: searchData})
+
+  })
+  .catch(err => {
+    dispatch({ type: SEARCH_FAILURE, payload: err.message })
+    console.log(err)
+  })
+};

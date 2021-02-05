@@ -11,6 +11,21 @@ body::-webkit-scrollbar-thumb {
   outline: 1px solid slategrey;
 }
 
-.MuiStepLabel-label{
+.MuiStepLabel-label {
   color: whitesmoke !important;
+}
+
+.div-test {
+  display: flex;
+  justify-content: center;
+}
+
+.test {
+  width: 400px;
+  text-align: center;
+  margin: 0;
+}
+
+.test p {
+  margin: 0;
 }

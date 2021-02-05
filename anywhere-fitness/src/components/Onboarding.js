@@ -107,30 +107,54 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function getSteps() {
-  return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+function getSteps(props) {
+  if(props.includes('instructor')){
+    return [`Hello Instructor`, `This is`, `Your onboarding!`]
+  }
+  if(props.includes('client')){
+    return [`Hello Client`, `This is`, `Your onboarding!`]
+  }
+  
 }
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return 'Select campaign settings...';
-    case 1:
-      return 'What is an ad group anyways?';
-    case 2:
-      return 'This is the bit I really care about!';
-    default:
-      return 'Unknown step';
+function getStepContent(step, pathname) {
+  console.log("GET STEP CONTENT: ", pathname)
+  if(pathname.includes('instructor')){
+    switch (step) {
+      case 0:
+        return 'Select instructor settings...';
+      case 1:
+        return 'What is an instructor anyways?';
+      case 2:
+        return 'This is the "INSTRUCTOR" I really care about!';
+      default:
+        return 'Unknown step';
+    }
+  }
+  else if(pathname.includes('client')){
+    switch (step) {
+      case 0:
+        return 'Select client settings...';
+      case 1:
+        return 'What is a client anyways?';
+      case 2:
+        return 'This is the "CLIENT" I really client about!';
+      default:
+        return 'Unknown step';
+    }
   }
 }
 
 export default function CustomizedSteppers() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
-  const steps = getSteps();
-
+  
   const { pathname } = useLocation();
   const { push } = useHistory();
+  
+  //moved steps here so it can use pathname,
+  //and display appropriate text depending on user/instructor.
+  const steps = getSteps(pathname);
 
   let splicedPath = pathname.split('/');
   splicedPath.pop();
@@ -192,7 +216,7 @@ export default function CustomizedSteppers() {
           </div>
         ) : (
           <div>
-            <Typography>{getStepContent(activeStep)}</Typography>
+            <Typography>{getStepContent(activeStep, pathname)}</Typography>
             <div
               className='buttons-line'
               style={{
